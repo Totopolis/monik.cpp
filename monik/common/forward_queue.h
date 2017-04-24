@@ -7,7 +7,7 @@
 #include "monik/common/common.h"
 #include <forward_list>
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 template<class T>
 class forward_queue : noncopyable { // movable
@@ -118,7 +118,7 @@ void forward_queue<T>::push_back(other_type && v) {
 }
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_COMMON_FORWARD_QUEUE_H__
 

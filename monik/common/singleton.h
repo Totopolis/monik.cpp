@@ -4,7 +4,7 @@
 #ifndef __MONIK_LOG_COMMON_SINGLETON_H__
 #define __MONIK_LOG_COMMON_SINGLETON_H__
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 template <class T>
 class singleton : private T {
@@ -21,6 +21,6 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_COMMON_SINGLETON_H__

@@ -8,7 +8,7 @@
 #include <time.h>  /* time_t, struct tm, time, localtime, strftime */
 #include <chrono>
 
-namespace sdl {
+namespace monik {
 
 class time_span {
     time_t m_start;
@@ -54,6 +54,6 @@ inline auto time_since_epoch_milliseconds() {
         std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_TIME_UTIL_H__

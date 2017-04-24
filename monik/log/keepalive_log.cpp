@@ -11,7 +11,7 @@
 #endif
 #include "monik/log/protobuf/monik.pb.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class keepalive_log::data_type : noncopyable {
     using this_error = sdl_exception_t<keepalive_log>;
@@ -96,7 +96,7 @@ second_t keepalive_log::get_period() const
 }
 
 } // log
-} // sdl
+} // monik
 
 #endif // MONIK_INCLUDE_AMQP
 

@@ -2,7 +2,7 @@
 //
 #include "monik/log/log_thread.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 log_thread::log_thread(const std::launch policy,
         const buf_size_t max_size,
@@ -126,10 +126,10 @@ bool log_thread::write_value(value_type const & value) const
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -138,5 +138,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

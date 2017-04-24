@@ -3,7 +3,7 @@
 #include "monik/log/log_define.h"
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
 
 inline constexpr const char * maybe_constexpr(const char * s) { 
     return s;
@@ -71,7 +71,7 @@ public:
 };
 static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG
 
 

@@ -2,7 +2,7 @@
 //
 #include "monik/common/time_util.h"
 
-namespace sdl {
+namespace monik {
 
 bool time_util::safe_gmtime(struct tm & dest, const time_t value) {
     memset_zero(dest);
@@ -17,7 +17,7 @@ bool time_util::safe_gmtime(struct tm & dest, const time_t value) {
 #endif
 }
 
-} // sdl
+} // monik
 
 
 

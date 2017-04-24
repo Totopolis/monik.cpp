@@ -2,7 +2,7 @@
 //
 #include "monik/log/spinlock.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 #if MONIK_DEBUG
 namespace {
@@ -37,4 +37,4 @@ namespace {
 #endif // MONIK_DEBUG
 
 } // log
-} // sdl
+} // monik

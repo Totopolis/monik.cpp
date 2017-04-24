@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 template<class T, size_t N>
 class circular_buffer {
@@ -122,6 +122,6 @@ private:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_COMMON_CIRCULAR_BUFFER_H__

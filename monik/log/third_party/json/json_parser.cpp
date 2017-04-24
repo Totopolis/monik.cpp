@@ -5,7 +5,7 @@
 #include "monik/log/third_party/json/writer.h"  
 #include <fstream>
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 std::string json_parser::read_text_file(const char * const filename)
 {
@@ -78,5 +78,5 @@ std::string json_parser::json_to_proto(std::string const & json, proto_syntax co
     return{};
 }
 
-}} // sdl
+}} // monik
 

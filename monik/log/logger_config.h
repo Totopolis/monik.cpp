@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class logger;
 class logger_config : is_static {
@@ -16,7 +16,7 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_LOGGER_CONFIG_H__
 

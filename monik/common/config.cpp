@@ -2,6 +2,6 @@
 //
 #include "monik/common/config.h"
 
-namespace sdl {
+namespace monik {
 }
 

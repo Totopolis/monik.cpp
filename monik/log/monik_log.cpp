@@ -10,7 +10,7 @@
 #endif
 #include "monik/log/protobuf/monik.pb.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 monik_log::monik_log(Params && p)
     : m_log(std::move(p))
@@ -106,7 +106,7 @@ void monik_log::test()
 #endif
 
 } // log
-} // sdl
+} // monik
 
 #endif // MONIK_INCLUDE_AMQP
 

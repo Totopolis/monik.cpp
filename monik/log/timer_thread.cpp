@@ -2,7 +2,7 @@
 //
 #include "monik/log/timer_thread.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 timer_thread::timer_thread(
         const std::launch policy, 
@@ -76,10 +76,10 @@ void timer_thread::worker_thread()
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -101,5 +101,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

@@ -6,7 +6,7 @@
 #include <chrono>
 #include <ctime>
 
-namespace sdl { namespace log { namespace pattern_formatter_ {
+namespace monik { namespace log { namespace pattern_formatter_ {
 
 /* struct tm {
     int tm_sec;   // seconds after the minute - [0, 60] including leap second
@@ -72,7 +72,7 @@ const char * const ABBREVIATED_MONTH[] = {
 
 template<class T>
 void convert_time_since_epoch(const T & tt, ::tm * utc_tm, ::tm * local_tm = nullptr) {
-    A_STATIC_ASSERT_TYPE(std::time_t, time_t);
+    M_STATIC_ASSERT_TYPE(std::time_t, time_t);
     MONIK_ASSERT(utc_tm || local_tm);
     static std::mutex m_mutex;
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -202,7 +202,7 @@ public:
     mutable bool use_local_tm = false;
     explicit time_state(now_type && t): now(std::move(t)) {
         const auto tt = std::chrono::system_clock::to_time_t(now);
-        A_STATIC_CHECK_TYPE(const std::time_t, tt);
+        M_STATIC_CHECK_TYPE(const std::time_t, tt);
         convert_time_since_epoch(tt, &utc_tm, &local_tm);
         current_year = 1900 + utc_tm.tm_year;
     }
@@ -375,10 +375,10 @@ void pattern_formatter::format(std::string & text, const std::string & pattern,
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -388,7 +388,7 @@ namespace sdl { namespace log { namespace {
                 ::tm utc_tm, local_tm;
                 const auto now = std::chrono::system_clock::now();
                 const auto tt = std::chrono::system_clock::to_time_t(now);
-                A_STATIC_CHECK_TYPE(const std::time_t, tt);
+                M_STATIC_CHECK_TYPE(const std::time_t, tt);
                 convert_time_since_epoch(tt, &utc_tm, &local_tm);
                 MONIK_ASSERT(is_str_valid(get_month(utc_tm)));
                 MONIK_ASSERT(is_str_valid(get_weekday(utc_tm)));
@@ -421,5 +421,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

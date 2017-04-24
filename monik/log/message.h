@@ -7,7 +7,7 @@
 #include "monik/common/common.h"
 #include "monik/common/array_enum.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 enum class severity : uint8 {
     trace = 0,
@@ -104,9 +104,9 @@ typedef quantity<unit::log_size, size_t> log_size_t;
 typedef quantity<unit::second, int> second_t;
 
 } // log
-} // sdl
+} // monik
 
-namespace sdl {
+namespace monik {
 MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::buf_size_t);
 MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::log_size_t);
 MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::second_t);

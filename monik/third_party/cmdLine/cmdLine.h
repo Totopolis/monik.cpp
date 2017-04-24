@@ -30,7 +30,7 @@
 #include <sstream>
 #include <cassert>
 
-namespace sdl {
+namespace monik {
 
 /// Base class for option/switch
 class Option {
@@ -198,6 +198,6 @@ public:
     }
 };
 
-} // sdl 
+} // monik 
 
 #endif

@@ -7,7 +7,7 @@
 #include "monik/common/common.h"
 #include <thread>
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 template<typename T, bool one_writer>
 class writelock_t: noncopyable { // spinlock
@@ -97,6 +97,6 @@ using writelock = writelock_t<uint32, false>;
 using readlock = readlock_t<uint32>;
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_SPINLOCK_H__

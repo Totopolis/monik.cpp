@@ -2,7 +2,7 @@
 //
 #include "monik/log/log_buffer.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 log_buffer::log_buffer(const buf_size_t max_size, const overflow_policy p)
     : m_capacity(max_size.value() > 0 ? max_size.value() : default_capacity)
@@ -109,10 +109,10 @@ size_t log_buffer::append(container_type && data, container_type::iterator first
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -150,5 +150,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

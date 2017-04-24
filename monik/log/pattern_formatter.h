@@ -6,7 +6,7 @@
 
 #include "monik/log/message.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 /*
 The format pattern is used as a template to format the message
@@ -67,7 +67,7 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_PATTERN_FORMATTER_H__
 

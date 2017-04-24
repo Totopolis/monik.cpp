@@ -14,7 +14,7 @@
 #error constexpr does not compiled in Visual Studio 2013 
 #endif
 
-namespace sdl {
+namespace monik {
 
 using int8 = std::int8_t;
 using uint8 = std::uint8_t;
@@ -28,17 +28,6 @@ using uint64 = std::uint64_t;
 struct limits {
     limits() = delete;
     static constexpr double fepsilon = 1e-12;
-    static constexpr double PI = 3.14159265358979323846;
-    static constexpr double PI_2 = 2.0 * PI;
-    static constexpr double RAD_TO_DEG = 57.295779513082321;
-    static constexpr double DEG_TO_RAD = 0.017453292519943296;
-    static constexpr double SQRT_2 = 1.41421356237309504880;        // = sqrt(2)
-    static constexpr double ATAN_1_2 = 0.46364760900080609;         // = std::atan2(1, 2)
-    static constexpr double EARTH_RADIUS = 6371000;                 // in meters
-    static constexpr double EARTH_RADIUS_2 = 2.0 * EARTH_RADIUS;    // in meters
-    static constexpr double EARTH_MAJOR_RADIUS = 6378137;           // in meters, WGS 84, Semi-major axis
-    static constexpr double EARTH_MINOR_RADIUS = 6356752.314245;    // in meters, WGS 84, Semi-minor axis
-    static constexpr double EARTH_MINOR_ARC = EARTH_MINOR_RADIUS * DEG_TO_RAD; // 1 degree arc in meters
     static constexpr int double_max_digits10 = std::numeric_limits<double>::max_digits10; // = 17
 };
 
@@ -282,22 +271,22 @@ struct binary
 template<class T>
 inline void memset_pod(T& dest, int value) noexcept
 {
-    A_STATIC_ASSERT_IS_POD(T);
+    M_STATIC_ASSERT_IS_POD(T);
     memset(&dest, value, sizeof(T));
 }
 
 template<class T> 
 inline void memset_zero(T& dest) noexcept
 {
-    A_STATIC_ASSERT_IS_POD(T);
+    M_STATIC_ASSERT_IS_POD(T);
     memset(&dest, 0, sizeof(T));
 }
 
 template<class Dest, class Source> inline 
 void memcpy_pod(Dest & dest, Source const & src) noexcept
 {
-    A_STATIC_ASSERT_IS_POD(Dest);
-    A_STATIC_ASSERT_IS_POD(Source);
+    M_STATIC_ASSERT_IS_POD(Dest);
+    M_STATIC_ASSERT_IS_POD(Source);
     static_assert(sizeof(Dest) == sizeof(Source), "");
     memcpy(&dest, &src, sizeof(dest));
 }
@@ -314,8 +303,8 @@ void memcpy_array(Type(&dest)[size], Type const(&src)[size], size_t const count)
 template<class T1, class T2> inline 
 int memcmp_pod(T1 const & x, T2 const & y) noexcept
 {
-    A_STATIC_ASSERT_IS_POD(T1);
-    A_STATIC_ASSERT_IS_POD(T2);
+    M_STATIC_ASSERT_IS_POD(T1);
+    M_STATIC_ASSERT_IS_POD(T2);
     static_assert(sizeof(T1) == sizeof(T2), "");
     return memcmp(&x, &y, sizeof(x));
 }
@@ -435,6 +424,6 @@ struct is_nothrow_copy_assignable {
 };
 #endif
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_STATIC_H__

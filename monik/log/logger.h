@@ -10,7 +10,7 @@
 #include "monik/log/keepalive_log.h"
 #endif
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class logger : noncopyable {
 public:
@@ -55,7 +55,7 @@ inline logger* get_logger() {
 }
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_LOGGER_H__
 

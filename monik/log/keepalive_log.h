@@ -8,7 +8,7 @@
 
 #if MONIK_INCLUDE_AMQP
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class keepalive_log final : noncopyable {
 public:
@@ -27,7 +27,7 @@ private:
 using shared_keepalive = std::shared_ptr<keepalive_log>;
 
 } // log
-} // sdl
+} // monik
 
 #endif // MONIK_INCLUDE_AMQP
 #endif // __MONIK_LOG_KEEPALIVE_LOG_H__

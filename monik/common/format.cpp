@@ -3,7 +3,7 @@
 #include "monik/common/format.h"
 
 #if MONIK_DEBUG
-namespace sdl { namespace {
+namespace monik { namespace {
     class unit_test {
     public:
         unit_test()
@@ -20,6 +20,6 @@ namespace sdl { namespace {
         }
     };
     static unit_test s_test;
-}} // sdl
+}} // monik
 #endif //#if SV_DEBUG
 

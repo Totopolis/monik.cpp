@@ -7,7 +7,7 @@
 #include "monik/common/forward_queue.h"
 #include "monik/log/message.h"
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class log_buffer : noncopyable { // thread safe
 public:
@@ -45,7 +45,7 @@ private:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_LOG_BUFFER_H__
 

@@ -4,7 +4,7 @@
 #ifndef __MONIK_COMMON_NONCOPYABLE_H__
 #define __MONIK_COMMON_NONCOPYABLE_H__
 
-namespace sdl {
+namespace monik {
 
 /*
 Using ADL, unqualified function names are looked up in the namespaces
@@ -37,6 +37,6 @@ namespace noncopyable_  // protection from unintended ADL
 typedef noncopyable_::noncopyable noncopyable;
 typedef noncopyable_::is_static is_static;
 
-} // namespace sdl
+} // namespace monik
 
 #endif // __MONIK_COMMON_NONCOPYABLE_H__

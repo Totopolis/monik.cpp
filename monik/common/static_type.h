@@ -6,7 +6,7 @@
 
 #include "monik/common/static.h"
 
-namespace sdl {
+namespace monik {
 
 #pragma pack(push, 1) 
 
@@ -79,7 +79,7 @@ template <class T>
 struct IsTypelist
 {
     enum { value = false };
-    A_STATIC_ASSERT_NOT_TYPE(T, NullType);
+    M_STATIC_ASSERT_NOT_TYPE(T, NullType);
 };
 
 template <> struct IsTypelist<NullType>
@@ -91,7 +91,7 @@ template <class Head, class Tail>
 struct IsTypelist<Typelist<Head, Tail>>
 {
     enum { value = true };
-    A_STATIC_ASSERT_NOT_TYPE(Head, NullType);
+    M_STATIC_ASSERT_NOT_TYPE(Head, NullType);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -533,7 +533,7 @@ typedef std::integral_constant<bool, value> type;
 };*/
 
 } // namespace TL
-} // namespace sdl
+} // namespace monik
 
 #endif // __MONIK_COMMON_STATIC_TYPE_H__
 

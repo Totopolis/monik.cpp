@@ -5,3 +5,7 @@
 [submodule "monik/log/third_party/rabbitmq-c"]
 	path = monik/log/third_party/rabbitmq-c
 	url = https://github.com/alanxz/rabbitmq-c
+[submodule "monik/log/third_party/protobuf"]
+	path = monik/log/third_party/protobuf
+	url = https://github.com/google/protobuf.git
+    branch = v3.2.0

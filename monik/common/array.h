@@ -6,7 +6,7 @@
 
 #include "monik/common/algorithm.h"
 
-namespace sdl {
+namespace monik {
 
 template<class T, size_t N>
 struct array_t { // fixed-size array of elements of type T
@@ -56,11 +56,11 @@ struct array_t { // fixed-size array of elements of type T
     T* data() noexcept { return elems; }
 
     void fill_0() noexcept {
-        A_STATIC_ASSERT_IS_POD(T);
+        M_STATIC_ASSERT_IS_POD(T);
         memset_zero(elems);
     }
     void fill_0(size_t const count) noexcept {
-        A_STATIC_ASSERT_IS_POD(T);
+        M_STATIC_ASSERT_IS_POD(T);
         MONIK_ASSERT(count <= N);
         memset(&elems, 0, sizeof(T) * count);
     }
@@ -153,10 +153,10 @@ public:
     typedef T&             reference;
     typedef const T&       const_reference;
 
-    A_STATIC_ASSERT_TYPE(value_type, typename buf_type::value_type);
-    A_STATIC_ASSERT_TYPE(iterator, typename buf_type::iterator);
-    A_STATIC_ASSERT_TYPE(const_iterator, typename buf_type::const_iterator);
-    A_STATIC_ASSERT_TYPE(const_reference, typename buf_type::const_reference);
+    M_STATIC_ASSERT_TYPE(value_type, typename buf_type::value_type);
+    M_STATIC_ASSERT_TYPE(iterator, typename buf_type::iterator);
+    M_STATIC_ASSERT_TYPE(const_iterator, typename buf_type::const_iterator);
+    M_STATIC_ASSERT_TYPE(const_reference, typename buf_type::const_reference);
     static_assert(sizeof(buf_type) <= LIMIT_BUF_SIZE, "limit stack usage");
 
     vector_buf() noexcept : m_size(0) {}
@@ -280,7 +280,7 @@ public:
         m_size = 0;
     }
     void fill_0() noexcept {
-        A_STATIC_ASSERT_IS_POD(T);
+        M_STATIC_ASSERT_IS_POD(T);
         memset(begin(), 0, sizeof(T) * size());
     }
     void fill(const T & value) {
@@ -446,7 +446,7 @@ template<class T, size_t N>
 void vector_buf<T, N>::insert(iterator const pos, const T & value) { // inserts value before pos
     MONIK_ASSERT(pos >= begin());
     MONIK_ASSERT(pos <= end());
-    A_STATIC_ASSERT_IS_POD(T);
+    M_STATIC_ASSERT_IS_POD(T);
     size_t const i = pos - begin();
     push_back(value); // alloc space
     MONIK_ASSERT(i < size());
@@ -480,6 +480,6 @@ public:
     }
 };
 
-} // namespace sdl
+} // namespace monik
 
 #endif // __MONIK_COMMON_ARRAY_H__

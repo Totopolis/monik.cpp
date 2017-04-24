@@ -3,7 +3,7 @@
 #include "monik/log/log_util.h"
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
 
 struct test_string {};
 
@@ -25,7 +25,7 @@ public:
     }
 };
 static unit_test s_test;
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG
 
 

@@ -8,7 +8,7 @@
 #include "monik/log/log_buffer.h"
 #include "monik/log/thread.h"
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class log_thread : noncopyable {
     using value_type = message_with_severity;
@@ -58,7 +58,7 @@ private:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_LOG_THREAD_H__
 

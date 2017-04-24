@@ -13,7 +13,7 @@
 
 #if MONIK_LOG_ENABLE
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 class log_define : is_static {
 public:
     template<typename T, typename... Ts>
@@ -61,7 +61,7 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #if 0 // todo
 #define MONIK_LOG_TRACE(...)      ((void)0)
@@ -72,49 +72,49 @@ public:
 #define MONIK_LOG_FATAL(...)      ((void)0)
 #endif
 
-#define MONIK_LOG_TRACE(...)      sdl::log::log_define::write(sdl::log::severity::trace, __VA_ARGS__)
-#define MONIK_LOG_DEBUG(...)      sdl::log::log_define::write(sdl::log::severity::debug, __VA_ARGS__)
-#define MONIK_LOG_INFO(...)       sdl::log::log_define::write(sdl::log::severity::info, __VA_ARGS__)
-#define MONIK_LOG_WARNING(...)    sdl::log::log_define::write(sdl::log::severity::warning, __VA_ARGS__)
-#define MONIK_LOG_ERROR(...)      sdl::log::log_define::write(sdl::log::severity::error, __VA_ARGS__)
-#define MONIK_LOG_FATAL(...)      sdl::log::log_define::write(sdl::log::severity::fatal, __VA_ARGS__)
+#define MONIK_LOG_TRACE(...)      monik::log::log_define::write(monik::log::severity::trace, __VA_ARGS__)
+#define MONIK_LOG_DEBUG(...)      monik::log::log_define::write(monik::log::severity::debug, __VA_ARGS__)
+#define MONIK_LOG_INFO(...)       monik::log::log_define::write(monik::log::severity::info, __VA_ARGS__)
+#define MONIK_LOG_WARNING(...)    monik::log::log_define::write(monik::log::severity::warning, __VA_ARGS__)
+#define MONIK_LOG_ERROR(...)      monik::log::log_define::write(monik::log::severity::error, __VA_ARGS__)
+#define MONIK_LOG_FATAL(...)      monik::log::log_define::write(monik::log::severity::fatal, __VA_ARGS__)
 
-#define MONIK_LOG_TRACE_SOURCE(...)      sdl::log::log_define::write_with_source(sdl::log::severity::trace, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_SOURCE(...)      sdl::log::log_define::write_with_source(sdl::log::severity::debug, __VA_ARGS__)
-#define MONIK_LOG_INFO_SOURCE(...)       sdl::log::log_define::write_with_source(sdl::log::severity::info, __VA_ARGS__)
-#define MONIK_LOG_WARNING_SOURCE(...)    sdl::log::log_define::write_with_source(sdl::log::severity::warning, __VA_ARGS__)
-#define MONIK_LOG_ERROR_SOURCE(...)      sdl::log::log_define::write_with_source(sdl::log::severity::error, __VA_ARGS__)
-#define MONIK_LOG_FATAL_SOURCE(...)      sdl::log::log_define::write_with_source(sdl::log::severity::fatal, __VA_ARGS__)
+#define MONIK_LOG_TRACE_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::trace, __VA_ARGS__)
+#define MONIK_LOG_DEBUG_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::debug, __VA_ARGS__)
+#define MONIK_LOG_INFO_SOURCE(...)       monik::log::log_define::write_with_source(monik::log::severity::info, __VA_ARGS__)
+#define MONIK_LOG_WARNING_SOURCE(...)    monik::log::log_define::write_with_source(monik::log::severity::warning, __VA_ARGS__)
+#define MONIK_LOG_ERROR_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::error, __VA_ARGS__)
+#define MONIK_LOG_FATAL_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::fatal, __VA_ARGS__)
 
-#define MONIK_LOG_TRACE_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::trace, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_TRACE_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::trace, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_TRACE_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::trace, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_TRACE_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::trace, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_TRACE_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::trace, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_TRACE_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::trace, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_TRACE_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::trace, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_TRACE_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::trace, monik_source::security, __VA_ARGS__)
 
-#define MONIK_LOG_DEBUG_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::debug, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::debug, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::debug, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::debug, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_DEBUG_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::debug, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_DEBUG_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::debug, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_DEBUG_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::debug, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_DEBUG_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::debug, monik_source::security, __VA_ARGS__)
 
-#define MONIK_LOG_INFO_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::info, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_INFO_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::info, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_INFO_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::info, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_INFO_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::info, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_INFO_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::info, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_INFO_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::info, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_INFO_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::info, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_INFO_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::info, monik_source::security, __VA_ARGS__)
 
-#define MONIK_LOG_WARNING_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::warning, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_WARNING_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::warning, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_WARNING_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::warning, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_WARNING_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::warning, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_WARNING_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::warning, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_WARNING_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::warning, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_WARNING_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::warning, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_WARNING_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::warning, monik_source::security, __VA_ARGS__)
 
-#define MONIK_LOG_ERROR_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::error, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_ERROR_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::error, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_ERROR_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::error, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_ERROR_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::error, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_ERROR_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::error, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_ERROR_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::error, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_ERROR_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::error, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_ERROR_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::error, monik_source::security, __VA_ARGS__)
 
-#define MONIK_LOG_FATAL_SYSTEM(...)       sdl::log::log_define::write_with_source(sdl::log::severity::fatal, monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_FATAL_APPLICATION(...)  sdl::log::log_define::write_with_source(sdl::log::severity::fatal, monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_FATAL_LOGIC(...)        sdl::log::log_define::write_with_source(sdl::log::severity::fatal, monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_FATAL_SECURITY(...)     sdl::log::log_define::write_with_source(sdl::log::severity::fatal, monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_FATAL_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::fatal, monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_FATAL_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::fatal, monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_FATAL_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::fatal, monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_FATAL_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::fatal, monik_source::security, __VA_ARGS__)
 
 #else // !MONIK_LOG_ENABLE
 

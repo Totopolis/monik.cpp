@@ -7,7 +7,7 @@
 #include "monik/common/common.h"
 #include "monik/common/time_util.h"
 
-namespace sdl { namespace algo { namespace scope_exit { 
+namespace monik { namespace algo { namespace scope_exit { 
 
 template<typename fun_type>
 struct scope_guard : noncopyable {
@@ -42,7 +42,7 @@ struct assert_guard {
 #define _MONIK_LINENAME(name, line) _MONIK_LINENAME_CAT(name, line)
 #define _MONIK_UTILITY_MAKE_GUARD(guard, ...) \
     auto _MONIK_LINENAME(scope_exit_fun_, __LINE__) = __VA_ARGS__; \
-    sdl::algo::scope_exit::guard<decltype(_MONIK_LINENAME(scope_exit_fun_, __LINE__))> \
+    monik::algo::scope_exit::guard<decltype(_MONIK_LINENAME(scope_exit_fun_, __LINE__))> \
     _MONIK_LINENAME(scope_exit_line_, __LINE__)(std::move(_MONIK_LINENAME(scope_exit_fun_, __LINE__)));
 #define MONIK_UTILITY_SCOPE_EXIT(...) _MONIK_UTILITY_MAKE_GUARD(scope_guard, __VA_ARGS__)
 #define MONIK_UTILITY_ASSERT_EXIT(...) _MONIK_UTILITY_MAKE_GUARD(assert_guard, __VA_ARGS__)
@@ -342,13 +342,13 @@ struct lex : is_static {
 
 #if MONIK_DEBUG
 #define MONIK_DEBUG_TIMER_SEC(timer, message) \
-    sdl::time_span timer; \
+    monik::time_span timer; \
     MONIK_UTILITY_SCOPE_EXIT([&timer](){ \
         MONIK_TRACE(message, timer.now()); })
 #else
 #define MONIK_DEBUG_TIMER_SEC(...)      ((void)0)
 #endif
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_ALGORITHM_H__

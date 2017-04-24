@@ -3,7 +3,7 @@
 #include "monik/log/console_log.h"
 #include "monik/log/log_thread.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class console_log::data_type : public log_thread {
 public:
@@ -55,10 +55,10 @@ void console_log::log(message_with_severity && s)
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -76,5 +76,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

@@ -8,7 +8,7 @@
 
 #if MONIK_INCLUDE_AMQP
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class monik_log final : public channel { // thread safe
 public:
@@ -27,7 +27,7 @@ private:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // MONIK_INCLUDE_AMQP
 #endif // __MONIK_LOG_MONIK_LOG_H__

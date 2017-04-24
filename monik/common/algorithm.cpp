@@ -2,7 +2,7 @@
 //
 #include "monik/common/algorithm.h"
 
-namespace sdl { namespace algo { namespace {
+namespace monik { namespace algo { namespace {
 
 static_assert('a' == 97, "");
 static_assert('z' == 122, "");
@@ -50,10 +50,10 @@ lex::split(std::string const & s, const char delim)
 }
 
 } // algo
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace algo { namespace {
+namespace monik { namespace algo { namespace {
     class unit_test {
     public:
         unit_test()
@@ -156,6 +156,6 @@ namespace sdl { namespace algo { namespace {
     static unit_test s_test;
 }
 } // algo
-} // sdl
+} // monik
 #endif //#if SV_DEBUG
 

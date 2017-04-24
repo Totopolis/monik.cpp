@@ -9,7 +9,7 @@
 
 namespace {
 
-using namespace sdl;
+using namespace monik;
 
 struct cmd_option : noncopyable {
     struct {

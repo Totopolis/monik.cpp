@@ -5,7 +5,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl {
+namespace monik {
 
 class setlocale_t final {
     setlocale_t(){}
@@ -56,6 +56,6 @@ public:
     };
 };
 
-} // namespace sdl
+} // namespace monik
 
 #endif // __MONIK_COMMON_LOCALE_H__

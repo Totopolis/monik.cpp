@@ -4,7 +4,7 @@
 #ifndef __MONIK_COMMON_QUANTITY_H__
 #define __MONIK_COMMON_QUANTITY_H__
 
-namespace sdl {
+namespace monik {
 
 template<class T> struct quantity_traits {
     enum { allow_default_ctor = false };
@@ -105,6 +105,6 @@ template<> struct quantity_traits<Type> { \
     enum { allow_increment = false }; \
     enum { allow_decrement = false }; }
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_QUANTITY_H__

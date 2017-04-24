@@ -9,7 +9,7 @@
 #include <future>
 #include <condition_variable>
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class joinable_thread : noncopyable {
     std::thread m_thread;
@@ -59,6 +59,6 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_THREAD_H__

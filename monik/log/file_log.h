@@ -6,7 +6,7 @@
 
 #include "monik/log/message.h"
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class file_log final : public channel { // thread safe
 public:
@@ -22,7 +22,7 @@ private:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_FILE_LOG_H__
 

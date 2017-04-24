@@ -8,7 +8,7 @@
 #include "monik/log/file_log.h"
 #endif
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class logger::impl final : noncopyable {
 public:
@@ -264,10 +264,10 @@ init_logger_t & init_logger() {
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         using T = singleton<logger>;
@@ -341,5 +341,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

@@ -7,9 +7,9 @@
 #include "monik/log/monik_log.h"
 #include "monik/log/third_party/json/json_parser.h"
 #include "monik/log/third_party/json/reader.h"
-#include "monik/common/algorithm.h" // for sdl::algo::lex::split
+#include "monik/common/algorithm.h" // for monik::algo::lex::split
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 bool logger_config::setup_logs_file(logger & dest, const char * const filename)
 {
@@ -114,10 +114,10 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
 }
 
 } // log
-} // sdl
+} // monik
 
 #if defined(MONIK_OS_WIN32) && MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
     public:
         unit_test()
@@ -138,5 +138,5 @@ namespace sdl { namespace log { namespace {
         }
     };
     static unit_test s_test;
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG

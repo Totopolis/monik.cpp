@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl {
+namespace monik {
 
 template<typename T, size_t N, class enum_type>
 struct array_enum
@@ -37,7 +37,7 @@ struct array_enum
     }
 };
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_ARRAY_ENUM_H__
 

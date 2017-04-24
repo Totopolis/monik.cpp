@@ -7,7 +7,7 @@
 #include "monik/log/message.h"
 #include "monik/log/thread.h"
 
-namespace sdl { namespace log { 
+namespace monik { namespace log { 
 
 class timer_thread : noncopyable {
     using this_error = sdl_exception_t<timer_thread>;
@@ -43,7 +43,7 @@ inline void timer_thread::period(second_t s) {
 }
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_TIMER_THREAD_H__
 

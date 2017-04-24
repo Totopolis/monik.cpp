@@ -6,7 +6,7 @@
 
 #include "monik/common/static_type.h"
 
-namespace sdl { namespace TL {
+namespace monik { namespace TL {
 
 #if 0 // before C++11
 template
@@ -50,6 +50,6 @@ template <typename... T>
 using Seq_t = typename Seq<T...>::Type;
 
 } // namespace TL
-} // namespace sdl
+} // namespace monik
 
 #endif // __MONIK_COMMON_TYPE_SEQ_H__

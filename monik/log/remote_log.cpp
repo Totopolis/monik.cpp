@@ -6,7 +6,7 @@
 #if MONIK_INCLUDE_AMQP
 #include "monik/log/third_party/amqp/MessageSender.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 #if MONIK_DEBUG
 void traceParams(remote_log::Params const & p) {
@@ -147,6 +147,6 @@ remote_log::params() const
 }
 
 } // log
-} // sdl
+} // monik
 
 #endif // MONIK_INCLUDE_AMQP

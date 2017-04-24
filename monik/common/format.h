@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl {
+namespace monik {
 
 inline size_t strcount(const char * str1, const char * str2) {
     MONIK_ASSERT(str1 && str2);
@@ -125,6 +125,6 @@ inline std::wstring trim_string(const std::wstring & s) {
     return impl_to_string_trim<std::wstring, L' '>(s);
 }
 
-} // sdl
+} // monik
 
 #endif // __MONIK_COMMON_FORMAT_H__

@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class is_std_to_string_ {
     template<typename T> static auto check(T && x) -> decltype(std::to_string(x));
@@ -59,7 +59,7 @@ public:
 };
 
 } // log
-} // sdl
+} // monik
 
 #endif // __MONIK_LOG_LOG_UTIL_H__
 

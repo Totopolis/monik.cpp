@@ -5,7 +5,7 @@
 #include "monik/log/log_util.h"
 #include <fstream>
 
-namespace sdl { namespace log {
+namespace monik { namespace log {
 
 class file_log::data_type : noncopyable {
     using pair_string = std::pair<std::string, std::string>;
@@ -154,10 +154,10 @@ void file_log::log(message_with_severity && s)
 }
 
 } // log
-} // sdl
+} // monik
 
 #if MONIK_DEBUG
-namespace sdl { namespace log { namespace {
+namespace monik { namespace log { namespace {
     class unit_test {
         size_t count = 0;
         void test_trace(file_log & test) {
@@ -199,5 +199,5 @@ namespace sdl { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // sdl
+}}} // monik
 #endif //#if SV_DEBUG
