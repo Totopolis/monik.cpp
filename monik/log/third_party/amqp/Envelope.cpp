@@ -2,7 +2,7 @@
 //
 #include "monik/log/third_party/amqp/Envelope.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 Envelope::Envelope(const BasicMessage::ptr_t message,
                    const std::string &consumer_tag,
@@ -19,4 +19,5 @@ Envelope::Envelope(const BasicMessage::ptr_t message,
       m_deliveryChannel(delivery_channel) {}
 
 Envelope::~Envelope() {}
-}
+
+}} // AmqpClient

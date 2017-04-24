@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/amqp_config.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 class MessageSenderImpl;
 class MessageSender final : noncopyable {
@@ -46,7 +46,7 @@ private:
     std::unique_ptr<MessageSenderImpl> impl_;
 };
 
-} // AmqpClient
+}} // AmqpClient
 
 #endif // __MONIK_LOG_AMQP_MESSAGESENDER_H__
 

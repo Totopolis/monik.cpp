@@ -7,8 +7,7 @@
 #include "monik/log/third_party/amqp/amqp_config.h"
 #include <map>
 
-namespace AmqpClient {
-
+namespace monik { namespace AmqpClient {
 namespace Detail { class TableValueImpl; }
 
 /**
@@ -341,6 +340,6 @@ class TableValue final {
   std::unique_ptr<Detail::TableValueImpl> m_impl;
 };
 
-}  // namespace AmqpClient
+}}  // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_TABLE_H

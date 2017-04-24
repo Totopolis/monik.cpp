@@ -19,8 +19,4 @@
 #define AMQP_NOEXCEPT   noexcept
 #endif
 
-namespace AmqpClient { 
-    using monik::noncopyable;
-}
-
 #endif // __MONIK_LOG_AMQP_INCLUDE_H__

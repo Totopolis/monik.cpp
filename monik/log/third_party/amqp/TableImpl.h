@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/Table.h"
 
-namespace AmqpClient { namespace Detail {
+namespace monik { namespace AmqpClient { namespace Detail {
 
 typedef std::shared_ptr<amqp_pool_t> amqp_pool_ptr_t;
 
@@ -91,5 +91,6 @@ class TableValueImpl final : noncopyable {
 };
 
 } // namespace Detail
-} // namespace AmqpClient
+}} // AmqpClient
+
 #endif  // SIMPLEAMQPCLIENT_TABLEIMPL_H

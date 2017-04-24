@@ -17,7 +17,7 @@
 
 #define BROKER_HEARTBEAT 0
 
-namespace AmqpClient { namespace Detail {
+namespace monik { namespace AmqpClient { namespace Detail {
 
 ChannelImpl::ChannelImpl()
     : m_last_used_channel(0), m_is_connected(false)
@@ -466,4 +466,4 @@ std::uint32_t ChannelImpl::ComputeBrokerVersion(
 }
 
 }  // namespace Detail
-}  // namespace AmqpClient
+}}  // AmqpClient

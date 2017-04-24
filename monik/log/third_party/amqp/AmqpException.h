@@ -10,7 +10,7 @@ struct amqp_rpc_reply_t_;
 struct amqp_channel_close_t_;
 struct amqp_connection_close_t_;
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 class AmqpException : public std::runtime_error {
  public:
@@ -345,6 +345,6 @@ class ConsumerTagNotFoundException : public std::runtime_error {
 
 //----------------------------------------------------------------------------
 
-}  // namespace AmqpClient
+}} // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_AMQPEXCEPTION_H

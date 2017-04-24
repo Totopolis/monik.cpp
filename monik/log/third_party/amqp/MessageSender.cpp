@@ -3,7 +3,7 @@
 #include "monik/log/third_party/amqp/MessageSender.h"
 #include "monik/log/third_party/amqp/Channel.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 class MessageSenderImpl final : noncopyable {
 public:
@@ -192,4 +192,4 @@ void MessageSender::create_queue(const char * const queue_name)
     impl_->create_queue(queue_name);
 }
 
-} // AmqpClient
+}} // AmqpClient

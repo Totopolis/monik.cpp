@@ -2,7 +2,7 @@
 //
 #include "monik/log/third_party/amqp/MessageReturnedException.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 MessageReturnedException::MessageReturnedException(
     BasicMessage::ptr_t message, std::uint32_t reply_code,
     const std::string &reply_text, const std::string &exchange,
@@ -18,4 +18,4 @@ MessageReturnedException::MessageReturnedException(
       m_exchange(exchange),
       m_routing_key(routing_key) {}
 
-}  // namespace AmqpClient
+}}  // AmqpClient

@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/Envelope.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 namespace Detail { class ChannelImpl; }
 
@@ -729,6 +729,6 @@ class Channel final : noncopyable {
   std::unique_ptr<Detail::ChannelImpl> m_impl;
 };
 
-}  // namespace AmqpClient
+}}  // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_CHANNEL_H

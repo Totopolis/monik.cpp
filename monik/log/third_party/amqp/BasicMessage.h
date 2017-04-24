@@ -9,8 +9,7 @@
 struct amqp_bytes_t_;
 struct amqp_basic_properties_t_;
 
-namespace AmqpClient {
-
+namespace monik { namespace AmqpClient {
 namespace Detail { class BasicMessageImpl; }
 
 class BasicMessage final : noncopyable {
@@ -329,6 +328,6 @@ class BasicMessage final : noncopyable {
   std::unique_ptr<Detail::BasicMessageImpl> m_impl;
 };
 
-}  // namespace AmqpClient
+}} // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_BASICMESSAGE_H

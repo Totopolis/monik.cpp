@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/BasicMessage.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 class Envelope final : noncopyable {
  public:
@@ -125,6 +125,6 @@ class Envelope final : noncopyable {
   const std::uint16_t m_deliveryChannel;
 };
 
-}  // namespace AmqpClient
+}}  // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_ENVELOPE_H

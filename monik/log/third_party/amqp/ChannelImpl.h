@@ -9,7 +9,7 @@
 #include "monik/log/third_party/amqp/MessageReturnedException.h"
 #include <map>
 
-namespace AmqpClient { namespace Detail {
+namespace monik { namespace AmqpClient { namespace Detail {
 
 class ChannelImpl final : noncopyable {
  public:
@@ -329,5 +329,5 @@ class ChannelImpl final : noncopyable {
 };
 
 }  // namespace Detail
-}  // namespace AmqpClient
+}}  // AmqpClient
 #endif  // SIMPLEAMQPCLIENT_CHANNELIMPL_H

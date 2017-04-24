@@ -15,7 +15,7 @@
 #include <queue>
 #include <sstream>
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 const char * const Channel::EXCHANGE_TYPE_DIRECT("direct");
 const char * const Channel::EXCHANGE_TYPE_FANOUT("fanout");
@@ -715,4 +715,4 @@ bool Channel::BasicConsumeMessage(Envelope::ptr_t &message, int timeout) {
   return m_impl->ConsumeMessageOnChannel(channels, message, timeout);
 }
 
-}  // namespace AmqpClient
+}}  // AmqpClient

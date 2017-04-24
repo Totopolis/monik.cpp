@@ -3,7 +3,7 @@
 #include "monik/log/third_party/amqp/BasicMessage.h"
 #include "monik/log/third_party/amqp/TableImpl.h"
 
-namespace AmqpClient { namespace Detail {
+namespace monik { namespace AmqpClient { namespace Detail {
 
 class BasicMessageImpl final : noncopyable {
  public:
@@ -12,7 +12,8 @@ class BasicMessageImpl final : noncopyable {
   amqp_bytes_t m_body;
   amqp_pool_ptr_t m_table_pool;
 };
-}
+
+} // Detail
 
 BasicMessage::BasicMessage() : m_impl(new Detail::BasicMessageImpl) {
   m_impl->m_body.bytes = NULL;
@@ -440,4 +441,4 @@ void BasicMessage::HeaderTableClear() {
   m_impl->m_properties._flags &= ~AMQP_BASIC_HEADERS_FLAG;
 }
 
-}  // namespace AmqpClient
+}} // AmqpClient

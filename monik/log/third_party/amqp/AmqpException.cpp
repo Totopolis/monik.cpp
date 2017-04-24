@@ -2,7 +2,7 @@
 //
 #include "monik/log/third_party/amqp/AmqpException.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 const std::uint16_t ContentTooLargeException::REPLY_CODE =  AMQP_CONTENT_TOO_LARGE;
 const std::uint16_t NoRouteException::REPLY_CODE = AMQP_NO_ROUTE;
@@ -200,4 +200,4 @@ AmqpResponseLibraryException::AmqpResponseLibraryException(
 
 //----------------------------------------------------------------------------
 
-}  // namespace AmqpClient
+}} // AmqpClient

@@ -3,7 +3,8 @@
 #include "monik/log/third_party/amqp/Table.h"
 #include "monik/log/third_party/amqp/TableImpl.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
+
 TableValue::TableValue()
     : m_impl(new Detail::TableValueImpl(Detail::void_t())) {}
 
@@ -193,4 +194,4 @@ void TableValue::Set(const std::vector<TableValue> &value) {
 
 void TableValue::Set(const Table &value) { m_impl->m_value = value; }
 
-}  // namespace AmqpClient
+}}  // AmqpClient

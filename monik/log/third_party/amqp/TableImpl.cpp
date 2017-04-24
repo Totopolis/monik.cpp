@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/TableImpl.h"
 
-namespace AmqpClient { namespace Detail {
+namespace monik { namespace AmqpClient { namespace Detail {
 
 bool value_t::operator == (value_t const & v) const
 {
@@ -317,4 +317,4 @@ amqp_field_value_t TableValueImpl::CopyValue(const amqp_field_value_t value,
   }
 }
 }
-}  // namespace AmqpClient
+}}  // AmqpClient

@@ -6,7 +6,7 @@
 
 #include "monik/log/third_party/amqp/BasicMessage.h"
 
-namespace AmqpClient {
+namespace monik { namespace AmqpClient {
 
 class MessageReturnedException : public std::runtime_error {
  public:
@@ -33,6 +33,6 @@ class MessageReturnedException : public std::runtime_error {
   std::string m_what;
 };
 
-}  // namespace AmqpClient
+}}  // AmqpClient
 
 #endif  // SIMPLEAMQPCLIENT_MESSAGERETURNEDEXCEPTION_H
