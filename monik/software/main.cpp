@@ -54,6 +54,7 @@ void trace_log(cmd_option const & opt)
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
+    std::cout << "\nDone\n";
 }
 
 void print_version()
