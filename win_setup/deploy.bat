@@ -12,5 +12,5 @@ mkdir %DEPLOY_DIR%
 cd %SCRIPTS_DIR%
 call deploy_dependencies.bat
 cd %SCRIPTS_DIR%
-rem call monik_build.bat
+call monik_build.bat
 

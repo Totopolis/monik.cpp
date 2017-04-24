@@ -10,7 +10,7 @@ endif(UNIX)
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-  message(FATAL_ERROR "In-source builds not allowed.")
+message(FATAL_ERROR "In-source builds not allowed.")
 endif()
 
 # Default build is in Release mode
@@ -38,7 +38,6 @@ endif(UNIX)
 if(APPLE)
   message(STATUS "APPLE: ${APPLE}")
   add_definitions(-DMONIK_OS_APPLE)
-  find_library(LIB_ICONV iconv)
 endif(APPLE) 
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
@@ -79,10 +78,13 @@ include_directories(
     ${ADDITIONAL_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}
     monik/log/third_party
-    monik/log/third_party/install/include )
+    "${DEPLOY_DIR}/include"
+  )
 
 set( MONIK_SOFTWARE_MAIN
-  monik/software/main.cpp )
+  monik/software/main.cpp
+  monik/third_party/cmdLine/cmdLine.h
+  )
 
 set( MONIK_SOURCE_COMMON
   monik/common/stdcommon.h
@@ -109,9 +111,6 @@ set( MONIK_SOURCE_COMMON
   monik/common/forward_queue.cpp
   monik/common/static.cpp
   )
-
-set( MONIK_HEADER_THIRD_PARTY
-  monik/third_party/cmdLine/cmdLine.h )
 
 set( MONIK_SOURCE_LOG
   monik/log/spinlock.h
@@ -192,27 +191,25 @@ set( MONIK_SOURCE_LOG_AMQP
   )  
 
 set( MONIK_SOURCE_LOG_PROTOBUF
-  monik/log/protobuf/monik.pb.cc
-  monik/log/protobuf/monik.pb.h
+  monik/protobuf/monik.pb.cc
+  monik/protobuf/monik.pb.h
   )
   
 set( MONIK_SOURCE_FILES
   ${MONIK_SOURCE_COMMON}
   ${MONIK_SOURCE_LOG}
   ${MONIK_SOURCE_LOG_JSON}
-  ${MONIK_HEADER_THIRD_PARTY}
   )
 
-source_group(third_party FILES ${MONIK_HEADER_THIRD_PARTY} )
 source_group(common FILES ${MONIK_SOURCE_COMMON} )
 source_group(software FILES ${MONIK_SOFTWARE_MAIN} )
 source_group(log FILES ${MONIK_SOURCE_LOG} )
 source_group(third_party/json FILES ${MONIK_SOURCE_LOG_JSON} )
 source_group(third_party/amqp FILES ${MONIK_SOURCE_LOG_AMQP} )
 
-set(LIBRARY_THIRD_PARTY ${CMAKE_SOURCE_DIR}/monik/log/third_party/install/lib)
-message(STATUS "LIBRARY_THIRD_PARTY: ${LIBRARY_THIRD_PARTY}") 
-link_directories(${LIBRARY_THIRD_PARTY})
+link_directories(
+   "${DEPLOY_DIR}/lib" 
+)
 
 if (Rabbitmqc_LIBRARY)
 message(STATUS "LIB_TYPE: ${LIB_TYPE}")
