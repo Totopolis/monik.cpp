@@ -211,8 +211,12 @@ link_directories(
    "${DEPLOY_DIR}/lib" 
 )
 
-if (Rabbitmqc_LIBRARY)
+IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
+set(LIB_TYPE "d")
+ENDIF()
 message(STATUS "LIB_TYPE: ${LIB_TYPE}")
+
+if (Rabbitmqc_LIBRARY)
 if(WIN32)
 set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} libprotobuf-lite${LIB_TYPE} libprotoc${LIB_TYPE})
 else(WIN32)

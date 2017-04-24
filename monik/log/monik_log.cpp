@@ -8,7 +8,7 @@
 #if defined(MONIK_OS_WIN32) && defined(ERROR)
 #undef ERROR // windows may conflict with monik.proto
 #endif
-#include "monik/log/protobuf/monik.pb.h"
+#include "monik/protobuf/monik.pb.h"
 
 namespace monik { namespace log {
 
