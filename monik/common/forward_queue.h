@@ -23,7 +23,7 @@ public:
         , m_last(src.m_last)
     {
         MONIK_ASSERT(empty() || (m_last != m_data.end()));
-        MONIK_ASSERT(m_size == std::distance(m_data.begin(), m_data.end()));
+        MONIK_ASSERT(m_size == (size_t)std::distance(m_data.begin(), m_data.end()));
     }
     forward_queue & operator=(forward_queue && src) noexcept {
         this->swap(src);
