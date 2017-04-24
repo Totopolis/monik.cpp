@@ -226,7 +226,7 @@ endif()
 
 if (Rabbitmqc_LIBRARY)
 message(STATUS "build monik/log/third_party/amqp")
-message(STATUS "build monik/log/protobuf")
+message(STATUS "build monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=1)
 add_library( monik STATIC 
   ${MONIK_SOURCE_FILES}
@@ -239,13 +239,13 @@ add_executable( test_monik
   ${MONIK_SOURCE_LOG_AMQP}
   ${MONIK_SOURCE_LOG_PROTOBUF}
   )
-source_group(log/protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
+source_group(protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
-message(STATUS "ignore monik/log/protobuf")
+message(STATUS "ignore monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=0)
-add_library( monik STATIC ${MONIK_SOURCE_FILES} ${MONIK_HEADER_FILES} )
-add_executable( test_monik ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} ${MONIK_HEADER_FILES} )
+add_library( monik STATIC ${MONIK_SOURCE_FILES} )
+add_executable( test_monik ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
 endif()
 
 if (UNIX)
