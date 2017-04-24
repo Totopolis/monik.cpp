@@ -88,28 +88,26 @@ set( MONIK_SOURCE_COMMON
   monik/common/stdcommon.h
   monik/common/common.h
   monik/common/config.h
+  monik/common/config.cpp
   monik/common/noncopyable.h
   monik/common/quantity.h
-  monik/common/array.h
   monik/common/array_enum.h
   monik/common/static.h
   monik/common/locale.h
   monik/common/format.h
+  monik/common/format.cpp
   monik/common/static_type.h
   monik/common/type_seq.h
   monik/common/time_util.h
+  monik/common/time_util.cpp
   monik/common/algorithm.h
+  monik/common/algorithm.cpp
   monik/common/singleton.h
   monik/common/circular_buffer.h
-  monik/common/forward_queue.h 
-  monik/common/config.cpp
-  monik/common/static.cpp
-  monik/common/array.cpp
-  monik/common/format.cpp
-  monik/common/algorithm.cpp
-  monik/common/time_util.cpp
   monik/common/circular_buffer.cpp
+  monik/common/forward_queue.h 
   monik/common/forward_queue.cpp
+  monik/common/static.cpp
   )
 
 set( MONIK_HEADER_THIRD_PARTY

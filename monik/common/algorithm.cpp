@@ -65,15 +65,6 @@ namespace monik { namespace algo { namespace {
             MONIK_UTILITY_ASSERT_EXIT([&unit_test_done](){
                 return unit_test_done;
             });
-            MONIK_DEBUG_TIMER_SEC(test_timer, "seconds = ");
-            MONIK_ASSERT(number_of_1(0x1) == 1);
-            MONIK_ASSERT(number_of_1(0x101) == 2);
-            MONIK_ASSERT(number_of_1(0x111) == 3);
-            MONIK_ASSERT(number_of_1<uint8>(0x80) == 1);
-            MONIK_ASSERT(number_of_1<uint8>(0x88) == 2);
-            MONIK_ASSERT(number_of_1<int16>(-1) == 16);
-            MONIK_ASSERT(number_of_1<int32>(-1) == 32);
-            MONIK_ASSERT(number_of_1<int64>(-1) == 64);
             {
                 constexpr const char s1[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 constexpr const char s2[] = "abcdefghijklmnopqrstuvwxyz";
