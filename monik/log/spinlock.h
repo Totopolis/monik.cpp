@@ -1,8 +1,8 @@
 // spinlock.h
 //
 #pragma once
-#ifndef __SDL_LOG_SPINLOCK_H__
-#define __SDL_LOG_SPINLOCK_H__
+#ifndef __MONIK_LOG_SPINLOCK_H__
+#define __MONIK_LOG_SPINLOCK_H__
 
 #include "monik/common/common.h"
 #include <thread>
@@ -25,10 +25,10 @@ private:
     void lock() {
         size_t i = 0;
         while (!(old = counter.exchange(locked_0))) { // try lock
-            SDL_ASSERT(!one_writer);
+            MONIK_ASSERT(!one_writer);
             yield(++i);
         }
-        SDL_ASSERT(old);
+        MONIK_ASSERT(old);
     }
     void unlock() {
         if (!(++old)) ++old;
@@ -99,4 +99,4 @@ using readlock = readlock_t<uint32>;
 } // log
 } // sdl
 
-#endif // __SDL_LOG_SPINLOCK_H__
+#endif // __MONIK_LOG_SPINLOCK_H__

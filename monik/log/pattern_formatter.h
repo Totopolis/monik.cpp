@@ -1,8 +1,8 @@
 // pattern_formatter.h
 //
 #pragma once
-#ifndef __SDL_LOG_PATTERN_FORMATTER_H__
-#define __SDL_LOG_PATTERN_FORMATTER_H__
+#ifndef __MONIK_LOG_PATTERN_FORMATTER_H__
+#define __MONIK_LOG_PATTERN_FORMATTER_H__
 
 #include "monik/log/message.h"
 
@@ -69,5 +69,5 @@ public:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_PATTERN_FORMATTER_H__
+#endif // __MONIK_LOG_PATTERN_FORMATTER_H__
 

@@ -1,7 +1,7 @@
 // locale.h
 #pragma once
-#ifndef __SDL_COMMON_LOCALE_H__
-#define __SDL_COMMON_LOCALE_H__
+#ifndef __MONIK_COMMON_LOCALE_H__
+#define __MONIK_COMMON_LOCALE_H__
 
 #include "monik/common/common.h"
 
@@ -25,7 +25,7 @@ public:
     static void set(std::string && s) {
         lock_guard lock(instance().mutex);
         if (s != instance().locale) {
-            SDL_TRACE("setlocale = \"", s, "\"");
+            MONIK_TRACE("setlocale = \"", s, "\"");
             setlocale(LC_ALL, s.c_str());
             instance().locale = std::move(s);
         }
@@ -36,7 +36,7 @@ public:
     static void set_default() {
         lock_guard lock(instance().mutex);
         if (!instance().locale.empty()) {
-            SDL_TRACE("setlocale = \"\"");
+            MONIK_TRACE("setlocale = \"\"");
             setlocale(LC_ALL, "");
             instance().locale.clear();
         }
@@ -58,4 +58,4 @@ public:
 
 } // namespace sdl
 
-#endif // __SDL_COMMON_LOCALE_H__
+#endif // __MONIK_COMMON_LOCALE_H__

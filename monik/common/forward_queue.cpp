@@ -2,7 +2,7 @@
 //
 #include "monik/common/forward_queue.h"
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -17,24 +17,24 @@ namespace sdl { namespace log { namespace {
             test.push_back(3);
             test.pop_front();
             test.pop_front();
-            SDL_ASSERT(test.empty());
+            MONIK_ASSERT(test.empty());
             for (int i = 0; i < N; ++i) {
                 test.push_front(i);
                 test.push_back(-i);
-                SDL_ASSERT(test.front() == i);
-                SDL_ASSERT(test.back() == -i);
+                MONIK_ASSERT(test.front() == i);
+                MONIK_ASSERT(test.back() == -i);
                 const T & t = test;
-                SDL_ASSERT(t.front() == i);
-                SDL_ASSERT(t.back() == -i);
+                MONIK_ASSERT(t.front() == i);
+                MONIK_ASSERT(t.back() == -i);
             }
-            SDL_ASSERT(test.size() == N * 2);
-            SDL_ASSERT(!test.empty());
+            MONIK_ASSERT(test.size() == N * 2);
+            MONIK_ASSERT(!test.empty());
             T test2;
             test2.swap(test);
-            SDL_ASSERT(!test.size());
-            SDL_ASSERT(test2.size());
+            MONIK_ASSERT(!test.size());
+            MONIK_ASSERT(test2.size());
             test2.clear();
-            SDL_ASSERT(test2.empty());
+            MONIK_ASSERT(test2.empty());
         }
     };
     static unit_test s_test;

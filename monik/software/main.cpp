@@ -35,17 +35,17 @@ void trace_log(cmd_option const & opt)
                 log::severity t = log::severity::trace;
                 if (!opt.log.severity.empty()) {
                     t = log::logger::from_string(opt.log.severity.c_str());
-                    SDL_ASSERT(log::logger::to_string(t) == opt.log.severity);
+                    MONIK_ASSERT(log::logger::to_string(t) == opt.log.severity);
                 }
                 T::cinstance().log(t, opt.log.message, opt.log.source.c_str());
             }
             if (0) { // test api
-                SDL_LOG_TRACE(__FUNCTION__, " at line ", __LINE__);
-                SDL_LOG_TRACE_SOURCE(__FILE__);
+                MONIK_LOG_TRACE(__FUNCTION__, " at line ", __LINE__);
+                MONIK_LOG_TRACE_SOURCE(__FILE__);
             }
         }
         else {
-            SDL_ASSERT(0);
+            MONIK_ASSERT(0);
         }
     }
     if (0) {
@@ -63,10 +63,10 @@ void print_version()
 #else
     std::cout << "\nDEBUG version";
 #endif
-#if SDL_DEBUG
-    std::cout << "\nSDL_DEBUG=1";
+#if MONIK_DEBUG
+    std::cout << "\nMONIK_DEBUG=1";
 #else
-    std::cout << "\nSDL_DEBUG=0";
+    std::cout << "\nMONIK_DEBUG=0";
 #endif
     std::cout
         << "\nBuild date: " << __DATE__
@@ -95,7 +95,7 @@ int run_main(int argc, char* argv[])
     setlocale_t::set("Russian");
     cmd_option opt{};
     CmdLine cmd;
-#if SDL_DEBUG
+#if MONIK_DEBUG
     cmd.add(make_option(0, debug::warning_level(), "warning"));
 #endif
     cmd.add(make_option(0, opt.log.config, "log_config"));    
@@ -135,12 +135,12 @@ int main(int argc, char* argv[])
     catch (sdl_exception & e) {
         (void)e;
         std::cout << "\ncatch exception [" << typeid(e).name() << "] = " << e.what();
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
     }
     catch (std::exception & e) {
         (void)e;
         std::cout << "\ncatch std::exception = " << e.what();
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
     }
 }
 

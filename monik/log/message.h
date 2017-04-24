@@ -1,8 +1,8 @@
 // message.h
 //
 #pragma once
-#ifndef __SDL_LOG_MESSAGE_H__
-#define __SDL_LOG_MESSAGE_H__
+#ifndef __MONIK_LOG_MESSAGE_H__
+#define __MONIK_LOG_MESSAGE_H__
 
 #include "monik/common/common.h"
 #include "monik/common/array_enum.h"
@@ -57,7 +57,7 @@ public:
         : m_message(src.m_message)
         , m_severity(src.m_severity) 
     {}
-#if 0 //SDL_DEBUG
+#if 0 //MONIK_DEBUG
     void trace() const {
         std::cout << m_message << std::endl;
     }
@@ -107,10 +107,10 @@ typedef quantity<unit::second, int> second_t;
 } // sdl
 
 namespace sdl {
-SDL_QUANTITY_ALLOW_DEFAULT_CTOR(log::buf_size_t);
-SDL_QUANTITY_ALLOW_DEFAULT_CTOR(log::log_size_t);
-SDL_QUANTITY_ALLOW_DEFAULT_CTOR(log::second_t);
+MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::buf_size_t);
+MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::log_size_t);
+MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(log::second_t);
 }
 
-#endif // __SDL_LOG_MESSAGE_H__
+#endif // __MONIK_LOG_MESSAGE_H__
 

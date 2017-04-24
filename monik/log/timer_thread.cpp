@@ -14,7 +14,7 @@ timer_thread::timer_thread(
     , m_period(period.value())
     , m_timer(std::move(fun))
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
     throw_error_if<this_error>(!m_timer, "bad params");
     if (policy != std::launch::deferred) {
         launch();
@@ -24,7 +24,7 @@ timer_thread::timer_thread(
 bool timer_thread::launch()
 {
     if (m_running) {
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return false;
     }
     m_running = true;
@@ -36,14 +36,14 @@ bool timer_thread::launch()
 
 timer_thread::~timer_thread()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
     shutdown();
     m_thread.reset();
 }
 
 void timer_thread::shutdown()
 {
-    SDL_WARNING(!m_shutdown);
+    MONIK_WARNING(!m_shutdown);
     m_shutdown = true;
     m_ready = true;
     m_cv.notify_one();
@@ -51,7 +51,7 @@ void timer_thread::shutdown()
 
 void timer_thread::worker_thread()
 {
-    SDL_TRACE("timer_thread id = ", std::this_thread::get_id());
+    MONIK_TRACE("timer_thread id = ", std::this_thread::get_id());
     while (!m_shutdown) {
         {
             const int period = m_period;
@@ -69,8 +69,8 @@ void timer_thread::worker_thread()
             }
         }
         catch (std::exception & e) {
-            SDL_TRACE("timer_thread exception: ", e.what()); (void)e;
-            SDL_WARNING(0); // some data may be lost
+            MONIK_TRACE("timer_thread exception: ", e.what()); (void)e;
+            MONIK_WARNING(0); // some data may be lost
         }
     }
 }
@@ -78,7 +78,7 @@ void timer_thread::worker_thread()
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -89,13 +89,13 @@ namespace sdl { namespace log { namespace {
                 static int count = 0;
                 enum { max_count = 10 };
                 test = std::make_unique<timer_thread>(std::launch::async, 1, [](){
-                        SDL_TRACE("count = ", count);
+                        MONIK_TRACE("count = ", count);
                         return (++count < max_count) ? bc::continue_ : bc::break_;
                 });
                 while (count < max_count) {
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 }
-                SDL_TRACE_FUNCTION;
+                MONIK_TRACE_FUNCTION;
             }
         }
     };

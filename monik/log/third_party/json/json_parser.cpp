@@ -9,14 +9,14 @@ namespace sdl { namespace log {
 
 std::string json_parser::read_text_file(const char * const filename)
 {
-    SDL_ASSERT(is_str_valid(filename));
+    MONIK_ASSERT(is_str_valid(filename));
     if (is_str_valid(filename)) {
         std::ifstream in(filename, std::ifstream::in | std::ifstream::binary);
         if (in.is_open()) {
             return std::string((std::istreambuf_iterator<char>(in)),
                 std::istreambuf_iterator<char>());
         }
-        SDL_WARNING(0);
+        MONIK_WARNING(0);
     }
     return{};
 }
@@ -74,7 +74,7 @@ std::string json_parser::json_to_proto(std::string const & json, proto_syntax co
             return ss.str();
         }
     }
-    SDL_ASSERT(0);
+    MONIK_ASSERT(0);
     return{};
 }
 

@@ -1,8 +1,8 @@
 // noncopyable.h
 //
 #pragma once
-#ifndef __SDL_COMMON_NONCOPYABLE_H__
-#define __SDL_COMMON_NONCOPYABLE_H__
+#ifndef __MONIK_COMMON_NONCOPYABLE_H__
+#define __MONIK_COMMON_NONCOPYABLE_H__
 
 namespace sdl {
 
@@ -39,4 +39,4 @@ typedef noncopyable_::is_static is_static;
 
 } // namespace sdl
 
-#endif // __SDL_COMMON_NONCOPYABLE_H__
+#endif // __MONIK_COMMON_NONCOPYABLE_H__

@@ -1,8 +1,8 @@
 // type_seq.h
 //
 #pragma once
-#ifndef __SDL_COMMON_TYPE_SEQ_H__
-#define __SDL_COMMON_TYPE_SEQ_H__
+#ifndef __MONIK_COMMON_TYPE_SEQ_H__
+#define __MONIK_COMMON_TYPE_SEQ_H__
 
 #include "monik/common/static_type.h"
 
@@ -52,4 +52,4 @@ using Seq_t = typename Seq<T...>::Type;
 } // namespace TL
 } // namespace sdl
 
-#endif // __SDL_COMMON_TYPE_SEQ_H__
+#endif // __MONIK_COMMON_TYPE_SEQ_H__

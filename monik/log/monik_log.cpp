@@ -3,9 +3,9 @@
 #include "monik/log/monik_log.h"
 #include "monik/common/time_util.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 
-#if defined(SDL_OS_WIN32) && defined(ERROR)
+#if defined(MONIK_OS_WIN32) && defined(ERROR)
 #undef ERROR // windows may conflict with monik.proto
 #endif
 #include "monik/log/protobuf/monik.pb.h"
@@ -15,12 +15,12 @@ namespace sdl { namespace log {
 monik_log::monik_log(Params && p)
     : m_log(std::move(p))
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 monik_log::~monik_log()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 bool monik_log::empty() const
@@ -49,7 +49,7 @@ tutorial::SeverityType monik_severity(const severity t)
     case severity::error:      return tutorial::SeverityType::ERROR;
     case severity::fatal:      return tutorial::SeverityType::FATAL;
     default:
-        SDL_ASSERT((t == severity::trace) || (t == severity::debug));
+        MONIK_ASSERT((t == severity::trace) || (t == severity::debug));
         return tutorial::SeverityType::VERBOSE;
     }
 }
@@ -73,11 +73,11 @@ std::string monik_log::to_string(const message_with_severity & s, const char * c
         }
         std::string out;
         if (event.SerializeToString(&out)) {
-            SDL_ASSERT(!out.empty());
+            MONIK_ASSERT(!out.empty());
             return out;
         }
     }
-    SDL_ASSERT(0);
+    MONIK_ASSERT(0);
     return{};
 }
 
@@ -94,12 +94,12 @@ void monik_log::log(message_with_severity && s, message_source_ptr source)
     }
 }
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 void monik_log::test()
 {
     if (1) {
         for (severity t : severity_all()) {
-            SDL_ASSERT(!this->to_string(message_with_severity(t, "test"), nullptr).empty());
+            MONIK_ASSERT(!this->to_string(message_with_severity(t, "test"), nullptr).empty());
         }
     }
 }
@@ -108,5 +108,5 @@ void monik_log::test()
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
+#endif // MONIK_INCLUDE_AMQP
 

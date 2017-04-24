@@ -2,7 +2,7 @@
 //
 #include "monik/log/log_util.h"
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
 
 struct test_string {};
@@ -21,7 +21,7 @@ public:
         static_assert(!is_std_to_string<test_string>::value, "");
         const std::string test = "apple";
         const auto s = log_util::to_string(1, "..", 2, "_", test, "_", test_string());
-        SDL_ASSERT(s == "1..2_apple_test_string");
+        MONIK_ASSERT(s == "1..2_apple_test_string");
     }
 };
 static unit_test s_test;

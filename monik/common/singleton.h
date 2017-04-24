@@ -1,8 +1,8 @@
 // singleton.h
 //
 #pragma once
-#ifndef __SDL_LOG_COMMON_SINGLETON_H__
-#define __SDL_LOG_COMMON_SINGLETON_H__
+#ifndef __MONIK_LOG_COMMON_SINGLETON_H__
+#define __MONIK_LOG_COMMON_SINGLETON_H__
 
 namespace sdl { namespace log {
 
@@ -23,4 +23,4 @@ public:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_COMMON_SINGLETON_H__
+#endif // __MONIK_LOG_COMMON_SINGLETON_H__

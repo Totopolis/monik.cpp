@@ -73,7 +73,7 @@ const char * const ABBREVIATED_MONTH[] = {
 template<class T>
 void convert_time_since_epoch(const T & tt, ::tm * utc_tm, ::tm * local_tm = nullptr) {
     A_STATIC_ASSERT_TYPE(std::time_t, time_t);
-    SDL_ASSERT(utc_tm || local_tm);
+    MONIK_ASSERT(utc_tm || local_tm);
     static std::mutex m_mutex;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (utc_tm) {
@@ -89,7 +89,7 @@ Type get_name_t(Type const(&names)[n], const int index) {
     if ((index >= 0) && (index < (int) count_of(names))) {
         return names[index];
     }
-    SDL_ASSERT(0);
+    MONIK_ASSERT(0);
     return {};
 }
 
@@ -131,15 +131,15 @@ inline const char * abbreviated_weekday(::tm const & t) {
 
 template<char pad>
 inline void append_padded_10(std::string & text, const int number) {
-    SDL_ASSERT(number >= 0);
+    MONIK_ASSERT(number >= 0);
     if (number < 10)
         text += pad;
     text += std::to_string(number);
 }
 
 inline int hour_AMPM(const int tm_hour) {
-    SDL_ASSERT(tm_hour >= 0);
-    SDL_ASSERT(tm_hour < 24);
+    MONIK_ASSERT(tm_hour >= 0);
+    MONIK_ASSERT(tm_hour < 24);
 	if (tm_hour < 1)
 		return 12;
 	else if (tm_hour > 12)
@@ -149,14 +149,14 @@ inline int hour_AMPM(const int tm_hour) {
 }
 
 inline bool hour_is_AM(const int tm_hour) {
-    SDL_ASSERT(tm_hour >= 0);
-    SDL_ASSERT(tm_hour < 24);
+    MONIK_ASSERT(tm_hour >= 0);
+    MONIK_ASSERT(tm_hour < 24);
 	return tm_hour < 12;
 }
 
 inline bool hour_is_PM(const int tm_hour) {
-    SDL_ASSERT(tm_hour >= 0);
-    SDL_ASSERT(tm_hour < 24);
+    MONIK_ASSERT(tm_hour >= 0);
+    MONIK_ASSERT(tm_hour < 24);
 	return tm_hour >= 12;
 }
 
@@ -185,7 +185,7 @@ inline long_long time_microseconds(const T & now) {
 
 template<size_t len>
 std::string pad_zero(std::string && s) {
-    SDL_ASSERT(s.size() <= len);
+    MONIK_ASSERT(s.size() <= len);
     if (s.size() < len) {
         return std::string(len - s.size(), '0') + s;
     }
@@ -330,7 +330,7 @@ void format_with_time(std::string & text, const char key,
                 state.use_local_tm = false;
                 break;
             default:
-                SDL_ASSERT_DEBUG_2(0);
+                MONIK_ASSERT_DEBUG_2(0);
                 text += '%';
                 text += key;
                 break;
@@ -346,11 +346,11 @@ void format_with_time(std::string & text, const char key,
 void pattern_formatter::format(std::string & text, const std::string & pattern,
     message_with_severity const & msg, const char * const source) 
 {
-    SDL_ASSERT(!msg.m_message.empty() || source);
+    MONIK_ASSERT(!msg.m_message.empty() || source);
     using namespace pattern_formatter_;
     unique_time_state state;
     const size_t pattern_size = pattern.size();
-    SDL_ASSERT(pattern_size);
+    MONIK_ASSERT(pattern_size);
     size_t start = 0;
     while (start < pattern_size) {
         size_t pos = pattern.find('%', start);
@@ -363,7 +363,7 @@ void pattern_formatter::format(std::string & text, const std::string & pattern,
                 start = pos + 1;
             }
             else {
-                SDL_ASSERT(0);
+                MONIK_ASSERT(0);
                 break;
             }
         }
@@ -377,7 +377,7 @@ void pattern_formatter::format(std::string & text, const std::string & pattern,
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -390,16 +390,16 @@ namespace sdl { namespace log { namespace {
                 const auto tt = std::chrono::system_clock::to_time_t(now);
                 A_STATIC_CHECK_TYPE(const std::time_t, tt);
                 convert_time_since_epoch(tt, &utc_tm, &local_tm);
-                SDL_ASSERT(is_str_valid(get_month(utc_tm)));
-                SDL_ASSERT(is_str_valid(get_weekday(utc_tm)));
-                SDL_ASSERT(is_str_valid(abbreviated_weekday(utc_tm)));
-                SDL_ASSERT(is_str_valid(abbreviated_month(utc_tm)));
+                MONIK_ASSERT(is_str_valid(get_month(utc_tm)));
+                MONIK_ASSERT(is_str_valid(get_weekday(utc_tm)));
+                MONIK_ASSERT(is_str_valid(abbreviated_weekday(utc_tm)));
+                MONIK_ASSERT(is_str_valid(abbreviated_month(utc_tm)));
             }
             {
                 const auto s = pattern_formatter::format("%t [%s]", 
                     message_with_severity(severity::trace, "msg"),
                     "source");
-                SDL_ASSERT(s == "msg [source]");
+                MONIK_ASSERT(s == "msg [source]");
             }
             {
                 const auto s = pattern_formatter::format(
@@ -407,7 +407,7 @@ namespace sdl { namespace log { namespace {
                     "microseconds %F, millisecond %i, thread %I, priority %q: %t [%s], day %e", 
                     message_with_severity(severity::trace, "msg"),
                     "source");
-                SDL_ASSERT(!s.empty());
+                MONIK_ASSERT(!s.empty());
             }
             {
                 const auto s = pattern_formatter::format(
@@ -415,7 +415,7 @@ namespace sdl { namespace log { namespace {
                     "microseconds %F, millisecond %i, thread %I, priority %q: %t [%s], day %e", 
                     message_with_severity(severity::trace, "msg"),
                     "source");
-                SDL_ASSERT(!s.empty());
+                MONIK_ASSERT(!s.empty());
             }
         }
     };

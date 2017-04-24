@@ -1,8 +1,8 @@
 // log_util.h
 //
 #pragma once
-#ifndef __SDL_LOG_LOG_UTIL_H__
-#define __SDL_LOG_LOG_UTIL_H__
+#ifndef __MONIK_LOG_LOG_UTIL_H__
+#define __MONIK_LOG_LOG_UTIL_H__
 
 #include "monik/common/common.h"
 
@@ -43,7 +43,7 @@ public:
         return std::move(value);
     }
     static std::string to_string(const char * value) {
-        SDL_ASSERT(value);
+        MONIK_ASSERT(value);
         return is_str_valid(value) ? std::string(value) : std::string();
     }
     template<typename T>
@@ -61,5 +61,5 @@ public:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_LOG_UTIL_H__
+#endif // __MONIK_LOG_LOG_UTIL_H__
 

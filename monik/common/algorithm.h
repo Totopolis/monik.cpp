@@ -1,8 +1,8 @@
 // algorithm.h
 //
 #pragma once
-#ifndef __SDL_COMMON_ALGORITHM_H__
-#define __SDL_COMMON_ALGORITHM_H__
+#ifndef __MONIK_COMMON_ALGORITHM_H__
+#define __MONIK_COMMON_ALGORITHM_H__
 
 #include "monik/common/common.h"
 #include "monik/common/time_util.h"
@@ -19,12 +19,12 @@ private:
     fun_type fun;
 };
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 template<typename fun_type>
 struct assert_guard : noncopyable {
     assert_guard(fun_type && f) : fun(std::move(f)) {}
     ~assert_guard() { 
-        SDL_ASSERT(fun());
+        MONIK_ASSERT(fun());
     }
 private:
     fun_type fun;
@@ -38,22 +38,22 @@ struct assert_guard {
 
 } // scope_exit
 
-#define _SDL_LINENAME_CAT(name, line) name##line
-#define _SDL_LINENAME(name, line) _SDL_LINENAME_CAT(name, line)
-#define _SDL_UTILITY_MAKE_GUARD(guard, ...) \
-    auto _SDL_LINENAME(scope_exit_fun_, __LINE__) = __VA_ARGS__; \
-    sdl::algo::scope_exit::guard<decltype(_SDL_LINENAME(scope_exit_fun_, __LINE__))> \
-    _SDL_LINENAME(scope_exit_line_, __LINE__)(std::move(_SDL_LINENAME(scope_exit_fun_, __LINE__)));
-#define SDL_UTILITY_SCOPE_EXIT(...) _SDL_UTILITY_MAKE_GUARD(scope_guard, __VA_ARGS__)
-#define SDL_UTILITY_ASSERT_EXIT(...) _SDL_UTILITY_MAKE_GUARD(assert_guard, __VA_ARGS__)
+#define _MONIK_LINENAME_CAT(name, line) name##line
+#define _MONIK_LINENAME(name, line) _MONIK_LINENAME_CAT(name, line)
+#define _MONIK_UTILITY_MAKE_GUARD(guard, ...) \
+    auto _MONIK_LINENAME(scope_exit_fun_, __LINE__) = __VA_ARGS__; \
+    sdl::algo::scope_exit::guard<decltype(_MONIK_LINENAME(scope_exit_fun_, __LINE__))> \
+    _MONIK_LINENAME(scope_exit_line_, __LINE__)(std::move(_MONIK_LINENAME(scope_exit_fun_, __LINE__)));
+#define MONIK_UTILITY_SCOPE_EXIT(...) _MONIK_UTILITY_MAKE_GUARD(scope_guard, __VA_ARGS__)
+#define MONIK_UTILITY_ASSERT_EXIT(...) _MONIK_UTILITY_MAKE_GUARD(assert_guard, __VA_ARGS__)
 
-#if SDL_DEBUG
-#define ASSERT_SCOPE_EXIT(...)  SDL_UTILITY_ASSERT_EXIT(__VA_ARGS__)
+#if MONIK_DEBUG
+#define ASSERT_SCOPE_EXIT(...)  MONIK_UTILITY_ASSERT_EXIT(__VA_ARGS__)
 #else
 #define ASSERT_SCOPE_EXIT(...)  ((void)0)
 #endif
 
-#if SDL_DEBUG > 1
+#if MONIK_DEBUG > 1
 #define ASSERT_SCOPE_EXIT_DEBUG_2(...)  ASSERT_SCOPE_EXIT(__VA_ARGS__)
 #else
 #define ASSERT_SCOPE_EXIT_DEBUG_2(...)  ((void)0)
@@ -76,7 +76,7 @@ inline bool is_sorted(T const & result, fun_type && compare) {
 
 template<class T>
 inline bool is_unique(T const & result) {
-    SDL_ASSERT(is_sorted(result));
+    MONIK_ASSERT(is_sorted(result));
     return std::adjacent_find(std::begin(result), std::end(result)) == std::end(result);
 }
 
@@ -108,7 +108,7 @@ bool binary_insertion(T & result, key_type && unique_key, fun_type && compare) {
         const auto pos = std::lower_bound(result.begin(), result.end(), unique_key, compare);
         if (pos != result.end()) {
             if (*pos == unique_key) {
-                SDL_ASSERT(!compare(*pos, unique_key) && !compare(unique_key, *pos));
+                MONIK_ASSERT(!compare(*pos, unique_key) && !compare(unique_key, *pos));
                 return false;
             }
             result.insert(pos, std::forward<key_type>(unique_key));
@@ -136,7 +136,7 @@ void insertion_sort(T & result, const key_type & value) {
             break;
         }
     }
-    SDL_ASSERT(left <= right);
+    MONIK_ASSERT(left <= right);
 }
 
 template<class T, class key_type, class fun_type>
@@ -156,7 +156,7 @@ void insertion_sort(T & result, const key_type & value, fun_type && compare) {
             break;
         }
     }
-    SDL_ASSERT(left <= right);
+    MONIK_ASSERT(left <= right);
 }
 
 template<class T, class value_type>
@@ -172,7 +172,7 @@ bool unique_insertion(T & result, value_type const & value)
     auto const left = result.begin();
     auto right = result.end(); --right;
     for (;;) {        
-        SDL_ASSERT(!(right < left));
+        MONIK_ASSERT(!(right < left));
         if (value < *right) {
             if (left == right) {
                 break;
@@ -183,7 +183,7 @@ bool unique_insertion(T & result, value_type const & value)
             return false;
         }
         else {
-            SDL_ASSERT(*right < value);
+            MONIK_ASSERT(*right < value);
             ++right;
             break;
         }
@@ -267,14 +267,14 @@ inline size_t strlen_t(std::string const & s) {
 
 template<class T>
 inline size_t strlen_t(T const & s) { // avoid array decay to pointer
-    SDL_ASSERT(s);
+    MONIK_ASSERT(s);
     return strlen(s);
 }
 
 template<size_t buf_size>
 inline size_t strlen_t(char const(&s)[buf_size]) {
-    SDL_ASSERT(s[buf_size - 1] == 0);
-    SDL_ASSERT(strlen(s) == buf_size - 1);
+    MONIK_ASSERT(s[buf_size - 1] == 0);
+    MONIK_ASSERT(strlen(s) == buf_size - 1);
     return buf_size - 1;
 }
 
@@ -283,7 +283,7 @@ inline const char * c_str(std::string const & s) {
 }
 
 inline const char * c_str(const char * s) {
-    SDL_ASSERT(s);
+    MONIK_ASSERT(s);
     return s;
 }
 
@@ -296,7 +296,7 @@ bool iequal_range(const char * first1, const char * last1, const char * first2);
 
 template<class T1, class T2>
 inline bool iequal_n(T1 const & str1, T2 const & str2, const size_t N) {
-    SDL_ASSERT(detail::strlen_t(str2) >= N);
+    MONIK_ASSERT(detail::strlen_t(str2) >= N);
     if (detail::strlen_t(str1) >= N) {
         const char * const first1 = detail::c_str(str1);
         return iequal_range(first1, first1 + N, detail::c_str(str2));
@@ -340,15 +340,15 @@ struct lex : is_static {
 
 } // algo
 
-#if SDL_DEBUG
-#define SDL_DEBUG_TIMER_SEC(timer, message) \
+#if MONIK_DEBUG
+#define MONIK_DEBUG_TIMER_SEC(timer, message) \
     sdl::time_span timer; \
-    SDL_UTILITY_SCOPE_EXIT([&timer](){ \
-        SDL_TRACE(message, timer.now()); })
+    MONIK_UTILITY_SCOPE_EXIT([&timer](){ \
+        MONIK_TRACE(message, timer.now()); })
 #else
-#define SDL_DEBUG_TIMER_SEC(...)      ((void)0)
+#define MONIK_DEBUG_TIMER_SEC(...)      ((void)0)
 #endif
 
 } // sdl
 
-#endif // __SDL_COMMON_ALGORITHM_H__
+#endif // __MONIK_COMMON_ALGORITHM_H__

@@ -1,8 +1,8 @@
 // static_type.h
 //
 #pragma once
-#ifndef __SDL_COMMON_STATIC_TYPE_H__
-#define __SDL_COMMON_STATIC_TYPE_H__
+#ifndef __MONIK_COMMON_STATIC_TYPE_H__
+#define __MONIK_COMMON_STATIC_TYPE_H__
 
 #include "monik/common/static.h"
 
@@ -535,7 +535,7 @@ typedef std::integral_constant<bool, value> type;
 } // namespace TL
 } // namespace sdl
 
-#endif // __SDL_COMMON_STATIC_TYPE_H__
+#endif // __MONIK_COMMON_STATIC_TYPE_H__
 
 #if 0
 template<class T1, class T2> struct make_pair;

@@ -1,8 +1,8 @@
 // json_parser.h
 //
 #pragma once
-#ifndef __SDL_LOG_JSON_PARSER_H__
-#define __SDL_LOG_JSON_PARSER_H__
+#ifndef __MONIK_LOG_JSON_PARSER_H__
+#define __MONIK_LOG_JSON_PARSER_H__
 
 #include "monik/common/common.h"
 
@@ -16,4 +16,4 @@ struct json_parser : is_static {
 
 }} // sdl
 
-#endif // __SDL_LOG_JSON_PARSER_H__
+#endif // __MONIK_LOG_JSON_PARSER_H__

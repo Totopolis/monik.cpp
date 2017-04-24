@@ -1,8 +1,8 @@
 // array_enum.h
 //
 #pragma once
-#ifndef __SDL_COMMON_ARRAY_ENUM_H__
-#define __SDL_COMMON_ARRAY_ENUM_H__
+#ifndef __MONIK_COMMON_ARRAY_ENUM_H__
+#define __MONIK_COMMON_ARRAY_ENUM_H__
 
 #include "monik/common/common.h"
 
@@ -16,11 +16,11 @@ struct array_enum
 
     static constexpr size_t size() { return N; }
     T const & operator[](enum_type t) const {
-        SDL_ASSERT(size_t(t) < N);
+        MONIK_ASSERT(size_t(t) < N);
         return elem[size_t(t)];
     }
     T & operator[](enum_type t) {
-        SDL_ASSERT(size_t(t) < N);
+        MONIK_ASSERT(size_t(t) < N);
         return elem[size_t(t)];
     }
     T const * begin() const {
@@ -39,5 +39,5 @@ struct array_enum
 
 } // sdl
 
-#endif // __SDL_COMMON_ARRAY_ENUM_H__
+#endif // __MONIK_COMMON_ARRAY_ENUM_H__
 

@@ -1,8 +1,8 @@
 // timer_thread.h
 //
 #pragma once
-#ifndef __SDL_LOG_TIMER_THREAD_H__
-#define __SDL_LOG_TIMER_THREAD_H__
+#ifndef __MONIK_LOG_TIMER_THREAD_H__
+#define __MONIK_LOG_TIMER_THREAD_H__
 
 #include "monik/log/message.h"
 #include "monik/log/thread.h"
@@ -45,5 +45,5 @@ inline void timer_thread::period(second_t s) {
 } // log
 } // sdl
 
-#endif // __SDL_LOG_TIMER_THREAD_H__
+#endif // __MONIK_LOG_TIMER_THREAD_H__
 

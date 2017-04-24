@@ -4,8 +4,8 @@
 //
 
 #pragma once
-#ifndef __SDL_COMMON_COMMON_H__
-#define __SDL_COMMON_COMMON_H__
+#ifndef __MONIK_COMMON_COMMON_H__
+#define __MONIK_COMMON_COMMON_H__
 
 #include "monik/common/stdcommon.h"
 #include "monik/common/noncopyable.h"
@@ -13,4 +13,4 @@
 #include "monik/common/static.h"
 #include "monik/common/quantity.h"
 
-#endif // __SDL_COMMON_COMMON_H__
+#endif // __MONIK_COMMON_COMMON_H__

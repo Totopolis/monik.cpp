@@ -1,8 +1,8 @@
 // quantity.h
 //
 #pragma once
-#ifndef __SDL_COMMON_QUANTITY_H__
-#define __SDL_COMMON_QUANTITY_H__
+#ifndef __MONIK_COMMON_QUANTITY_H__
+#define __MONIK_COMMON_QUANTITY_H__
 
 namespace sdl {
 
@@ -99,7 +99,7 @@ std::ostream & operator <<(std::ostream & out, quantity<U, T> const & i) {
     return out;
 }
 
-#define SDL_QUANTITY_ALLOW_DEFAULT_CTOR(Type) \
+#define MONIK_QUANTITY_ALLOW_DEFAULT_CTOR(Type) \
 template<> struct quantity_traits<Type> { \
     enum { allow_default_ctor = true }; \
     enum { allow_increment = false }; \
@@ -107,4 +107,4 @@ template<> struct quantity_traits<Type> { \
 
 } // sdl
 
-#endif // __SDL_COMMON_QUANTITY_H__
+#endif // __MONIK_COMMON_QUANTITY_H__

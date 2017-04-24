@@ -30,7 +30,7 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
             }
             for (const auto & m : root["loggers"]) {
                 const auto severity_arr = algo::lex::split(m["severity"].asString(), ',');
-                SDL_ASSERT(!severity_arr.empty());
+                MONIK_ASSERT(!severity_arr.empty());
                 if (!severity_arr.empty()) {
                     const buf_size_t bufsize = m["bufsize"].asInt(); // can be 0
                     const auto format = m["format"].asString();
@@ -47,10 +47,10 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
                             sp = std::make_shared<file_log>(logsize, bufsize, path1, path2);
                         }
                         else {
-                            SDL_ASSERT(0);
+                            MONIK_ASSERT(0);
                         }
                     }
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
                     else if (channel == "monik") {
                         const auto pp = m["params"];
                         if (!pp.isNull()) {
@@ -86,14 +86,14 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
                                 params.durable = pp["durable"].asBool();
                                 params.retrytimeout = pp["retrytimeout"].asInt();
                                 params.bufsize = bufsize;
-                                SDL_ASSERT(params.retrytimeout.value() > 0);
+                                MONIK_ASSERT(params.retrytimeout.value() > 0);
                                 for (const auto & s : severity_arr) {
                                     dest.add_keepalive(std::make_shared<keepalive_log>(
                                         logger::from_string(s), period, std::move(params)));
                                 }
                             }
                             else {
-                                SDL_ASSERT(!"keepalive period");
+                                MONIK_ASSERT(!"keepalive period");
                             }
                         }
                     }
@@ -107,16 +107,16 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
             }
             return true;
         }
-        SDL_ASSERT(!"Json::Reader::parse");
+        MONIK_ASSERT(!"Json::Reader::parse");
     }
-    SDL_WARNING(0);
+    MONIK_WARNING(0);
     return false;
 }
 
 } // log
 } // sdl
 
-#if defined(SDL_OS_WIN32) && SDL_DEBUG
+#if defined(MONIK_OS_WIN32) && MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:

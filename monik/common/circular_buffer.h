@@ -1,8 +1,8 @@
 // circular_buffer.h
 //
 #pragma once
-#ifndef __SDL_LOG_COMMON_CIRCULAR_BUFFER_H__
-#define __SDL_LOG_COMMON_CIRCULAR_BUFFER_H__
+#ifndef __MONIK_LOG_COMMON_CIRCULAR_BUFFER_H__
+#define __MONIK_LOG_COMMON_CIRCULAR_BUFFER_H__
 
 #include "monik/common/common.h"
 
@@ -22,8 +22,8 @@ public:
         static_assert(N, "");
     }
     void resize(const size_t s) { // init size
-        SDL_ASSERT(empty());
-        SDL_ASSERT(s <= capacity());
+        MONIK_ASSERT(empty());
+        MONIK_ASSERT(s <= capacity());
         m_size = s;
     }
     bool full() const noexcept {
@@ -39,11 +39,11 @@ public:
         m_size = 0;
     }
     T & front() {
-        SDL_ASSERT(m_size);
+        MONIK_ASSERT(m_size);
         return m_data[m_index];
     }
     const T & front() const {
-        SDL_ASSERT(m_size);
+        MONIK_ASSERT(m_size);
         return m_data[m_index];
     }
     T & back() {
@@ -56,22 +56,22 @@ public:
         decrement(m_index);
         m_data[m_index] = std::move(value);
         if (m_size < N) {
-            SDL_ASSERT(!full());
+            MONIK_ASSERT(!full());
             ++m_size;
         }
     }
     void pop_back() {
-        SDL_ASSERT(m_size);
+        MONIK_ASSERT(m_size);
         --m_size;
     }
     void pop_back(T & value) {
-        SDL_ASSERT(m_size);
+        MONIK_ASSERT(m_size);
         value = std::move(back());
         --m_size;
     }
     template<class fun_type>
     void for_each(size_t count, fun_type && fun) {
-        SDL_ASSERT(count <= m_size);
+        MONIK_ASSERT(count <= m_size);
         if (count > m_size)
             count = m_size;
         size_t i = m_index;
@@ -95,26 +95,26 @@ public:
     }
 private:
     static void increment(size_t & i) {
-        SDL_ASSERT(i < N);
+        MONIK_ASSERT(i < N);
         if (++i == N) 
             i = 0;
     }
     static void increment(size_t & i, const size_t count) {
-        SDL_ASSERT(i < N);
+        MONIK_ASSERT(i < N);
         i += count;
         if (i >= N) {
             i %= N;
         }
     }
     static void decrement(size_t & i) {
-        SDL_ASSERT(i < N);
+        MONIK_ASSERT(i < N);
         if (i)
             --i;
         else
             i = N - 1;
     }
     size_t back_index() const {
-        SDL_ASSERT(m_size);
+        MONIK_ASSERT(m_size);
         size_t i = m_index;
         increment(i, m_size - 1);
         return i;
@@ -124,4 +124,4 @@ private:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_COMMON_CIRCULAR_BUFFER_H__
+#endif // __MONIK_LOG_COMMON_CIRCULAR_BUFFER_H__

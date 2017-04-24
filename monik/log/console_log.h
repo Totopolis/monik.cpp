@@ -1,8 +1,8 @@
 // console_log.h
 //
 #pragma once
-#ifndef __SDL_LOG_CONSOLE_LOG_H__
-#define __SDL_LOG_CONSOLE_LOG_H__
+#ifndef __MONIK_LOG_CONSOLE_LOG_H__
+#define __MONIK_LOG_CONSOLE_LOG_H__
 
 #include "monik/log/message.h"
 
@@ -22,5 +22,5 @@ private:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_CONSOLE_LOG_H__
+#endif // __MONIK_LOG_CONSOLE_LOG_H__
 

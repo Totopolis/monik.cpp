@@ -1,12 +1,12 @@
 // keepalive_log.h
 //
 #pragma once
-#ifndef __SDL_LOG_KEEPALIVE_LOG_H__
-#define __SDL_LOG_KEEPALIVE_LOG_H__
+#ifndef __MONIK_LOG_KEEPALIVE_LOG_H__
+#define __MONIK_LOG_KEEPALIVE_LOG_H__
 
 #include "monik/log/remote_log.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 
 namespace sdl { namespace log { 
 
@@ -29,6 +29,6 @@ using shared_keepalive = std::shared_ptr<keepalive_log>;
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
-#endif // __SDL_LOG_KEEPALIVE_LOG_H__
+#endif // MONIK_INCLUDE_AMQP
+#endif // __MONIK_LOG_KEEPALIVE_LOG_H__
 

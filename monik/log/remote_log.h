@@ -1,12 +1,12 @@
 // remote_log.h
 //
 #pragma once
-#ifndef __SDL_LOG_REMOTE_LOG_H__
-#define __SDL_LOG_REMOTE_LOG_H__
+#ifndef __MONIK_LOG_REMOTE_LOG_H__
+#define __MONIK_LOG_REMOTE_LOG_H__
 
 #include "monik/log/message.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 namespace sdl { namespace log { 
 
 class remote_log final : public channel { // thread safe
@@ -37,6 +37,6 @@ private:
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
-#endif // __SDL_LOG_REMOTE_LOG_H__
+#endif // MONIK_INCLUDE_AMQP
+#endif // __MONIK_LOG_REMOTE_LOG_H__
 

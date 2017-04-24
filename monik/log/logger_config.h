@@ -1,8 +1,8 @@
 // logger_config.h
 //
 #pragma once
-#ifndef __SDL_LOG_LOGGER_CONFIG_H__
-#define __SDL_LOG_LOGGER_CONFIG_H__
+#ifndef __MONIK_LOG_LOGGER_CONFIG_H__
+#define __MONIK_LOG_LOGGER_CONFIG_H__
 
 #include "monik/common/common.h"
 
@@ -18,5 +18,5 @@ public:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_LOGGER_CONFIG_H__
+#endif // __MONIK_LOG_LOGGER_CONFIG_H__
 

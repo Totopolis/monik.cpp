@@ -13,8 +13,8 @@ private:
         std::cout << s.m_message << std::endl;
     }
     static void overflow(const message_with_severity & s) {
-        SDL_TRACE(s.m_message);
-        SDL_ASSERT(!"overflow");
+        MONIK_TRACE(s.m_message);
+        MONIK_ASSERT(!"overflow");
     }
 };
 
@@ -30,7 +30,7 @@ console_log::data_type::data_type(const buf_size_t max_size)
         }
     )
 {
-    SDL_ASSERT(this->running());
+    MONIK_ASSERT(this->running());
 }
 
 //--------------------------------------------------------
@@ -57,7 +57,7 @@ void console_log::log(message_with_severity && s)
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:

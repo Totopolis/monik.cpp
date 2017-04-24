@@ -3,24 +3,24 @@
 #include "monik/log/remote_log.h"
 #include "monik/log/log_thread.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 #include "monik/log/third_party/amqp/MessageSender.h"
 
 namespace sdl { namespace log {
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 void traceParams(remote_log::Params const & p) {
-    SDL_TRACE("host = ", p.host);
-    SDL_TRACE("port = ", p.port);
-    SDL_TRACE("user = ", p.user);
-    SDL_TRACE("password = ", p.password);
-    SDL_TRACE("exchange = ", p.exchange);
-    SDL_TRACE("source = ", p.source);
-    SDL_TRACE("instance = ", p.instance);
-    SDL_TRACE("tags = ", p.tags);
-    SDL_TRACE("durable = ", p.durable);
-    SDL_TRACE("bufsize = ", p.bufsize);
-    SDL_TRACE("retrytimeout = ", p.retrytimeout);
+    MONIK_TRACE("host = ", p.host);
+    MONIK_TRACE("port = ", p.port);
+    MONIK_TRACE("user = ", p.user);
+    MONIK_TRACE("password = ", p.password);
+    MONIK_TRACE("exchange = ", p.exchange);
+    MONIK_TRACE("source = ", p.source);
+    MONIK_TRACE("instance = ", p.instance);
+    MONIK_TRACE("tags = ", p.tags);
+    MONIK_TRACE("durable = ", p.durable);
+    MONIK_TRACE("bufsize = ", p.bufsize);
+    MONIK_TRACE("retrytimeout = ", p.retrytimeout);
 }
 #endif
 
@@ -53,7 +53,7 @@ private:
 remote_log::data_type::data_type(Params && p)
     : m_params(std::move(p))
 {
-#if SDL_DEBUG
+#if MONIK_DEBUG
     traceParams(m_params);
 #endif
     m_thread.reset(new log_thread(std::launch::async, 
@@ -67,7 +67,7 @@ remote_log::data_type::data_type(Params && p)
             this->overflow(s);
         }
     ));
-    SDL_ASSERT(m_thread->running());
+    MONIK_ASSERT(m_thread->running());
 }
 
 bool remote_log::data_type::connect()
@@ -79,8 +79,8 @@ bool remote_log::data_type::connect()
         return try_connect();
     }
     catch (std::exception & e) {
-        SDL_TRACE("remote_log exception: ", e.what()); (void)e;
-        SDL_WARNING(0); // some data may be lost
+        MONIK_TRACE("remote_log exception: ", e.what()); (void)e;
+        MONIK_WARNING(0); // some data may be lost
         throw;
     }
 }
@@ -101,13 +101,13 @@ bool remote_log::data_type::try_connect()
         m_sender.swap(sender);
         return true;
     }
-    SDL_WARNING(!"connect");
+    MONIK_WARNING(!"connect");
     return false;
 }
 
 void remote_log::data_type::write(const message_with_severity & s)
 {
-    SDL_ASSERT(!s.m_message.empty());
+    MONIK_ASSERT(!s.m_message.empty());
     if (connect()) {
         const bool persistent = (s.m_severity > severity::debug);
         m_sender->send(s.m_message.c_str(), s.m_message.size(), 
@@ -117,8 +117,8 @@ void remote_log::data_type::write(const message_with_severity & s)
 
 void remote_log::data_type::overflow(const message_with_severity & s)
 {
-    SDL_TRACE(s.m_message);
-    SDL_ASSERT(!"overflow");
+    MONIK_TRACE(s.m_message);
+    MONIK_ASSERT(!"overflow");
 }
 
 remote_log::remote_log(Params && p)
@@ -149,4 +149,4 @@ remote_log::params() const
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
+#endif // MONIK_INCLUDE_AMQP

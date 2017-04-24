@@ -4,9 +4,9 @@
 #include "monik/log/timer_thread.h"
 #include "monik/common/time_util.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 
-#if defined(SDL_OS_WIN32) && defined(ERROR)
+#if defined(MONIK_OS_WIN32) && defined(ERROR)
 #undef ERROR // windows may conflict with monik.proto
 #endif
 #include "monik/log/protobuf/monik.pb.h"
@@ -36,7 +36,7 @@ keepalive_log::data_type::data_type(const severity s, const second_t period, Par
             return this->on_timer();
         }
     ));
-    SDL_ASSERT(!m_thread->running());
+    MONIK_ASSERT(!m_thread->running());
 }
 
 keepalive_log::data_type::~data_type()
@@ -58,7 +58,7 @@ break_or_continue keepalive_log::data_type::on_timer()
             return bc::continue_;
         }
     }
-    SDL_ASSERT(!"keepalive_log");
+    MONIK_ASSERT(!"keepalive_log");
     return bc::break_;
 }
 
@@ -67,12 +67,12 @@ break_or_continue keepalive_log::data_type::on_timer()
 keepalive_log::keepalive_log(severity s, second_t period, Params && p)
     : m_data(new data_type(s, period, std::move(p)))
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 keepalive_log::~keepalive_log()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 bool keepalive_log::running() const
@@ -98,5 +98,5 @@ second_t keepalive_log::get_period() const
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
+#endif // MONIK_INCLUDE_AMQP
 

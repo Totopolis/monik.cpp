@@ -1,8 +1,8 @@
 // time_util.h
 //
 #pragma once
-#ifndef __SDL_COMMON_TIME_UTIL_H__
-#define __SDL_COMMON_TIME_UTIL_H__
+#ifndef __MONIK_COMMON_TIME_UTIL_H__
+#define __MONIK_COMMON_TIME_UTIL_H__
 
 #include "monik/common/common.h"
 #include <time.h>  /* time_t, struct tm, time, localtime, strftime */
@@ -56,4 +56,4 @@ inline auto time_since_epoch_milliseconds() {
 
 } // sdl
 
-#endif // __SDL_COMMON_TIME_UTIL_H__
+#endif // __MONIK_COMMON_TIME_UTIL_H__

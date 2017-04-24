@@ -1,8 +1,8 @@
 // forward_queue.h
 //
 #pragma once
-#ifndef __SDL_LOG_COMMON_FORWARD_QUEUE_H__
-#define __SDL_LOG_COMMON_FORWARD_QUEUE_H__
+#ifndef __MONIK_LOG_COMMON_FORWARD_QUEUE_H__
+#define __MONIK_LOG_COMMON_FORWARD_QUEUE_H__
 
 #include "monik/common/common.h"
 #include <forward_list>
@@ -22,8 +22,8 @@ public:
         , m_size(src.m_size)
         , m_last(src.m_last)
     {
-        SDL_ASSERT(empty() || (m_last != m_data.end()));
-        SDL_ASSERT(m_size == std::distance(m_data.begin(), m_data.end()));
+        MONIK_ASSERT(empty() || (m_last != m_data.end()));
+        MONIK_ASSERT(m_size == std::distance(m_data.begin(), m_data.end()));
     }
     forward_queue & operator=(forward_queue && src) noexcept {
         this->swap(src);
@@ -33,7 +33,7 @@ public:
         return m_size;
     }
     bool empty() const noexcept {
-        SDL_ASSERT((!m_size) == m_data.empty());
+        MONIK_ASSERT((!m_size) == m_data.empty());
         return !m_size;
     }
     explicit operator bool() const noexcept {
@@ -48,21 +48,21 @@ public:
         std::swap(m_last, src.m_last);
     }
     value_type & front() {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return * m_data.begin();
     }
     value_type const & front() const {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return * m_data.begin();
     }
     value_type & back() {
-        SDL_ASSERT(!empty());
-        SDL_ASSERT(m_last != m_data.end());
+        MONIK_ASSERT(!empty());
+        MONIK_ASSERT(m_last != m_data.end());
         return * m_last;
     }
     value_type const & back() const {
-        SDL_ASSERT(!empty());
-        SDL_ASSERT(m_last != m_data.end());
+        MONIK_ASSERT(!empty());
+        MONIK_ASSERT(m_last != m_data.end());
         return * m_last;
     }
     iterator begin() {
@@ -78,11 +78,11 @@ public:
         return m_data.end();
     }
     void pop_front() {
-        SDL_ASSERT(!empty());
-        SDL_ASSERT(m_last != m_data.end());
+        MONIK_ASSERT(!empty());
+        MONIK_ASSERT(m_last != m_data.end());
         m_data.pop_front();
         if (!(--m_size)) {
-            SDL_ASSERT(empty());
+            MONIK_ASSERT(empty());
             m_last = m_data.end();
         }
     }
@@ -99,7 +99,7 @@ template<class other_type>
 void forward_queue<T>::push_front(other_type && v) {
     m_data.push_front(std::forward<other_type>(v));
     if (!m_size++) {
-        SDL_ASSERT(1 == std::distance(m_data.begin(), m_data.end()));
+        MONIK_ASSERT(1 == std::distance(m_data.begin(), m_data.end()));
         m_last = m_data.begin();
     }
 }
@@ -108,7 +108,7 @@ template<class T>
 template<class other_type>
 void forward_queue<T>::push_back(other_type && v) {
     if (m_size++) { // not empty
-        SDL_ASSERT(m_last != m_data.end());
+        MONIK_ASSERT(m_last != m_data.end());
         m_last = m_data.insert_after(m_last, std::forward<other_type>(v));
     }
     else {
@@ -120,5 +120,5 @@ void forward_queue<T>::push_back(other_type && v) {
 } // log
 } // sdl
 
-#endif // __SDL_LOG_COMMON_FORWARD_QUEUE_H__
+#endif // __MONIK_LOG_COMMON_FORWARD_QUEUE_H__
 

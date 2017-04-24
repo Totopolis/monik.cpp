@@ -1,8 +1,8 @@
 // array.h
 //
 #pragma once
-#ifndef __SDL_COMMON_ARRAY_H__
-#define __SDL_COMMON_ARRAY_H__
+#ifndef __MONIK_COMMON_ARRAY_H__
+#define __MONIK_COMMON_ARRAY_H__
 
 #include "monik/common/algorithm.h"
 
@@ -33,11 +33,11 @@ struct array_t { // fixed-size array of elements of type T
     const_iterator cend() const noexcept { return elems+N; }
 
     reference operator[](size_t const i) noexcept { 
-        SDL_ASSERT((i < N) && "out of range"); 
+        MONIK_ASSERT((i < N) && "out of range"); 
         return elems[i];
     }        
     const_reference operator[](size_t const i) const noexcept {     
-        SDL_ASSERT((i < N) && "out of range"); 
+        MONIK_ASSERT((i < N) && "out of range"); 
         return elems[i]; 
     }
     reference front() noexcept { 
@@ -61,12 +61,12 @@ struct array_t { // fixed-size array of elements of type T
     }
     void fill_0(size_t const count) noexcept {
         A_STATIC_ASSERT_IS_POD(T);
-        SDL_ASSERT(count <= N);
+        MONIK_ASSERT(count <= N);
         memset(&elems, 0, sizeof(T) * count);
     }
     void copy_from(array_t const & src, size_t const count) noexcept {
         static_assert(std::is_nothrow_copy_assignable<value_type>::value, "");
-        SDL_ASSERT(count <= N);
+        MONIK_ASSERT(count <= N);
         std::copy(src.elems, src.elems + count, elems);
     }
 };
@@ -122,7 +122,7 @@ public:
     }
     vector_type const * cget() const {
         if (!m_p) {
-            SDL_ASSERT(!"unique_vec::cget");
+            MONIK_ASSERT(!"unique_vec::cget");
             const_cast<unique_vec *>(this)->m_p.reset(new vector_type);
         }
         return m_p.get();
@@ -202,11 +202,11 @@ public:
         return m_size;
     }
     const_iterator data() const noexcept {
-        SDL_ASSERT(use_buf() == m_vec.empty());
+        MONIK_ASSERT(use_buf() == m_vec.empty());
         return use_buf() ? m_buf.data() : m_vec.cget()->data();
     }
     iterator data() noexcept {
-        SDL_ASSERT(use_buf() == m_vec.empty());
+        MONIK_ASSERT(use_buf() == m_vec.empty());
         return use_buf() ? m_buf.data() : m_vec.get()->data();
     }
     const_iterator begin() const noexcept {
@@ -228,19 +228,19 @@ public:
         return data() + size(); 
     }
     const_reference front() const noexcept {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return * begin();
     } 
     reference front() noexcept {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return * begin();
     } 
     const_reference back() const noexcept {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return *(end() - 1);
     }
     reference back() noexcept {
-        SDL_ASSERT(!empty());
+        MONIK_ASSERT(!empty());
         return *(end() - 1);
     }
     template<size_t const i>
@@ -254,11 +254,11 @@ public:
         return begin()[i];
     }
     const_reference operator[](size_t const i) const noexcept {
-        SDL_ASSERT(i < m_size); 
+        MONIK_ASSERT(i < m_size); 
         return begin()[i];
     }
     reference operator[](size_t const i) noexcept { 
-        SDL_ASSERT(i < m_size); 
+        MONIK_ASSERT(i < m_size); 
         return begin()[i];
     }        
     void push_back(const T &);
@@ -274,7 +274,7 @@ public:
     }
     void clear() {
         if (!use_buf()) {
-            SDL_ASSERT(!m_vec.empty());
+            MONIK_ASSERT(!m_vec.empty());
             m_vec.clear();
         }
         m_size = 0;
@@ -296,7 +296,7 @@ public:
         return use_buf() ? N : m_vec.capacity();
     }
     void reserve(size_t s) noexcept {
-        SDL_ASSERT(s <= N);
+        MONIK_ASSERT(s <= N);
     }
     void insert(iterator const pos, const T & value); // inserts value before pos
 private:
@@ -328,17 +328,17 @@ template<class T, size_t N> vector_buf<T, N> &
 vector_buf<T, N>::operator=(vector_buf && src) noexcept {
     if (src.use_buf()) {
         if (!use_buf()) {
-            SDL_ASSERT(!m_vec.empty());
+            MONIK_ASSERT(!m_vec.empty());
             m_vec.clear();
         }
         m_buf.copy_from(src.m_buf, m_size = src.m_size);
     }
     else {
-        SDL_ASSERT(src.m_vec.size() == src.m_size);
+        MONIK_ASSERT(src.m_vec.size() == src.m_size);
         m_vec.swap(src.m_vec);
         std::swap(m_size, src.m_size);
     }
-    SDL_ASSERT(m_vec.size() == (use_buf() ? 0 : size()));
+    MONIK_ASSERT(m_vec.size() == (use_buf() ? 0 : size()));
     return *this;
 }
 
@@ -346,7 +346,7 @@ template<class T, size_t N>
 void vector_buf<T, N>::push_back(const T & value) {
     if (m_size < N) {
         m_buf[m_size++] = value;
-        SDL_ASSERT(use_buf());
+        MONIK_ASSERT(use_buf());
     }
     else {
         auto vec = m_vec.get();
@@ -355,9 +355,9 @@ void vector_buf<T, N>::push_back(const T & value) {
         }
         vec->push_back(value);
         ++m_size;
-        SDL_ASSERT(m_size == vec->size());
-        SDL_ASSERT(capacity() >= m_size);
-        SDL_ASSERT(!use_buf());
+        MONIK_ASSERT(m_size == vec->size());
+        MONIK_ASSERT(capacity() >= m_size);
+        MONIK_ASSERT(!use_buf());
     }
 }
 
@@ -375,18 +375,18 @@ void vector_buf<T, N>::swap(vector_buf & src) noexcept {
     }
     else {
         if (b1) {
-            SDL_ASSERT(!b2);
+            MONIK_ASSERT(!b2);
             src.m_buf.copy_from(m_buf, m_size);
         }
         else if (b2) {
-            SDL_ASSERT(!b1);
+            MONIK_ASSERT(!b1);
             m_buf.copy_from(src.m_buf, src.m_size);
         }
         m_vec.swap(src.m_vec);
     }
     std::swap(m_size, src.m_size);
-    SDL_ASSERT(use_buf() == b2);
-    SDL_ASSERT(src.use_buf() == b1);
+    MONIK_ASSERT(use_buf() == b2);
+    MONIK_ASSERT(src.use_buf() == b1);
 }
 
 template<class T, size_t N>
@@ -401,7 +401,7 @@ void vector_buf<T, N>::append(vector_buf && src)
             *p1++ = std::move(*p2++);
         }
         m_size = new_size;
-        SDL_ASSERT(use_buf());
+        MONIK_ASSERT(use_buf());
     }
     else {
         if (!m_size) {
@@ -415,20 +415,20 @@ void vector_buf<T, N>::append(vector_buf && src)
                 }
             }
             else {
-                SDL_ASSERT(!m_vec.empty());
-                SDL_ASSERT(!src.m_vec.empty());
+                MONIK_ASSERT(!m_vec.empty());
+                MONIK_ASSERT(!src.m_vec.empty());
                 m_vec->insert(m_vec->end(), src.begin(), src.end());
-                SDL_ASSERT(m_vec->size() == new_size);
+                MONIK_ASSERT(m_vec->size() == new_size);
                 m_size = new_size;
             }
         }
-        SDL_ASSERT(m_size == new_size);
+        MONIK_ASSERT(m_size == new_size);
     }
 }
 
 template<class T, size_t N> inline
 void vector_buf<T, N>::append(const_iterator first, const_iterator last) {
-    SDL_ASSERT(first <= last);
+    MONIK_ASSERT(first <= last);
     for (; first != last; ++first) {
         push_back(*first);
     }
@@ -436,20 +436,20 @@ void vector_buf<T, N>::append(const_iterator first, const_iterator last) {
 
 template<class T, size_t N> inline
 void vector_buf<T, N>::rotate(size_t const first, size_t const n_first) {
-    SDL_ASSERT(first < n_first);
-    SDL_ASSERT(n_first < size());
+    MONIK_ASSERT(first < n_first);
+    MONIK_ASSERT(n_first < size());
     auto const p = begin();
     std::rotate(p + first, p + n_first, p + size());
 }
 
 template<class T, size_t N>
 void vector_buf<T, N>::insert(iterator const pos, const T & value) { // inserts value before pos
-    SDL_ASSERT(pos >= begin());
-    SDL_ASSERT(pos <= end());
+    MONIK_ASSERT(pos >= begin());
+    MONIK_ASSERT(pos <= end());
     A_STATIC_ASSERT_IS_POD(T);
     size_t const i = pos - begin();
     push_back(value); // alloc space
-    SDL_ASSERT(i < size());
+    MONIK_ASSERT(i < size());
     iterator source = begin() + i;
     memmove(source + 1, source, (size() - 1 - i) * sizeof(T));
     *source = value;
@@ -482,4 +482,4 @@ public:
 
 } // namespace sdl
 
-#endif // __SDL_COMMON_ARRAY_H__
+#endif // __MONIK_COMMON_ARRAY_H__

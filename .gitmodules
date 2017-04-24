@@ -1,0 +1,5 @@
+[submodule "monik/log/third_party/openssl"]
+	path = monik/log/third_party/openssl
+	url = git://git.openssl.org/openssl.git
+    branch = OpenSSL_1_1_0-stable
+

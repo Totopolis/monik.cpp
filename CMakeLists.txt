@@ -1,17 +1,12 @@
 cmake_minimum_required(VERSION 2.6)
 project(monik C CXX)
 
-set(SDL_UNIX_CXX_FLAGS "" CACHE STRING "more C++ compiler flags if UNIX")
-message(STATUS "SDL_UNIX_CXX_FLAGS: ${SDL_UNIX_CXX_FLAGS}")
+set(MONIK_UNIX_CXX_FLAGS "" CACHE STRING "more C++ compiler flags if UNIX")
+message(STATUS "MONIK_UNIX_CXX_FLAGS: ${MONIK_UNIX_CXX_FLAGS}")
 
 if(UNIX)
-set(CMAKE_CXX_FLAGS "-Wall -std=c++14 ${SDL_UNIX_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++14 ${MONIK_UNIX_CXX_FLAGS}")
 endif(UNIX)
-
-set(SDL_VERSION_MAJOR 1)
-set(SDL_VERSION_MINOR 0)
-set(SDL_VERSION_REVISION 0)
-set(SDL_VERSION ${SDL_VERSION_MAJOR}.${SDL_VERSION_MINOR}.${SDL_VERSION_REVISION})
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -29,7 +24,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 if(WIN32)
   message(STATUS "WIN32: ${WIN32}")
-  add_definitions(-DSDL_OS_WIN32 -DWIN32)
+  add_definitions(-DMONIK_OS_WIN32 -DWIN32)
   IF (MSVC)
     ADD_DEFINITIONS(/bigobj)
   ENDIF (MSVC)  
@@ -37,20 +32,20 @@ endif(WIN32)
 
 if(UNIX)
   message(STATUS "UNIX: ${UNIX}")
-  add_definitions(-DSDL_OS_UNIX)
+  add_definitions(-DMONIK_OS_UNIX)
 endif(UNIX) 
 
 if(APPLE)
   message(STATUS "APPLE: ${APPLE}")
-  add_definitions(-DSDL_OS_APPLE)
+  add_definitions(-DMONIK_OS_APPLE)
   find_library(LIB_ICONV iconv)
 endif(APPLE) 
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    add_definitions(-DSDL_DEBUG=1)
+    add_definitions(-DMONIK_DEBUG=1)
 else()
-    add_definitions(-DSDL_DEBUG=0)
+    add_definitions(-DMONIK_DEBUG=0)
 endif()
 
 #set the default path for built executables to the "bin" directory
@@ -71,7 +66,7 @@ set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost REQUIRED COMPONENTS date_time chrono system )
 include_directories(${Boost_INCLUDE_DIR})
-add_definitions(-DSDL_INCLUDE_BOOST=1)
+add_definitions(-DMONIK_INCLUDE_BOOST=1)
 else()
 message(STATUS "Boost_INCLUDE_DIR: ${Boost_INCLUDE_DIR}")
 endif()
@@ -86,10 +81,10 @@ include_directories(
     monik/log/third_party
     monik/log/third_party/install/include )
 
-set( SDL_SOFTWARE_MAIN
+set( MONIK_SOFTWARE_MAIN
   monik/software/main.cpp )
 
-set( SDL_SOURCE_COMMON
+set( MONIK_SOURCE_COMMON
   monik/common/stdcommon.h
   monik/common/common.h
   monik/common/config.h
@@ -117,10 +112,10 @@ set( SDL_SOURCE_COMMON
   monik/common/forward_queue.cpp
   )
 
-set( SDL_HEADER_THIRD_PARTY
+set( MONIK_HEADER_THIRD_PARTY
   monik/third_party/cmdLine/cmdLine.h )
 
-set( SDL_SOURCE_LOG
+set( MONIK_SOURCE_LOG
   monik/log/spinlock.h
   monik/log/spinlock.cpp
   monik/log/thread.h
@@ -154,7 +149,7 @@ set( SDL_SOURCE_LOG
   monik/log/pattern_formatter.cpp
   )
 
-set( SDL_SOURCE_LOG_JSON
+set( MONIK_SOURCE_LOG_JSON
   monik/log/third_party/json/allocator.h
   monik/log/third_party/json/assertions.h
   monik/log/third_party/json/autolink.h
@@ -176,7 +171,7 @@ set( SDL_SOURCE_LOG_JSON
   monik/log/third_party/json/json_test.cpp
   )
   
-set( SDL_SOURCE_LOG_AMQP
+set( MONIK_SOURCE_LOG_AMQP
   monik/log/third_party/amqp/amqp_config.h
   monik/log/third_party/amqp/AmqpException.h
   monik/log/third_party/amqp/BasicMessage.h
@@ -198,24 +193,24 @@ set( SDL_SOURCE_LOG_AMQP
   monik/log/third_party/amqp/MessageSender.cpp
   )  
 
-set( SDL_SOURCE_LOG_PROTOBUF
+set( MONIK_SOURCE_LOG_PROTOBUF
   monik/log/protobuf/monik.pb.cc
   monik/log/protobuf/monik.pb.h
   )
   
-set( SDL_SOURCE_FILES
-  ${SDL_SOURCE_COMMON}
-  ${SDL_SOURCE_LOG}
-  ${SDL_SOURCE_LOG_JSON}
-  ${SDL_HEADER_THIRD_PARTY}
+set( MONIK_SOURCE_FILES
+  ${MONIK_SOURCE_COMMON}
+  ${MONIK_SOURCE_LOG}
+  ${MONIK_SOURCE_LOG_JSON}
+  ${MONIK_HEADER_THIRD_PARTY}
   )
 
-source_group(third_party FILES ${SDL_HEADER_THIRD_PARTY} )
-source_group(common FILES ${SDL_SOURCE_COMMON} )
-source_group(software FILES ${SDL_SOFTWARE_MAIN} )
-source_group(log FILES ${SDL_SOURCE_LOG} )
-source_group(third_party/json FILES ${SDL_SOURCE_LOG_JSON} )
-source_group(third_party/amqp FILES ${SDL_SOURCE_LOG_AMQP} )
+source_group(third_party FILES ${MONIK_HEADER_THIRD_PARTY} )
+source_group(common FILES ${MONIK_SOURCE_COMMON} )
+source_group(software FILES ${MONIK_SOFTWARE_MAIN} )
+source_group(log FILES ${MONIK_SOURCE_LOG} )
+source_group(third_party/json FILES ${MONIK_SOURCE_LOG_JSON} )
+source_group(third_party/amqp FILES ${MONIK_SOURCE_LOG_AMQP} )
 
 set(LIBRARY_THIRD_PARTY ${CMAKE_SOURCE_DIR}/monik/log/third_party/install/lib)
 message(STATUS "LIBRARY_THIRD_PARTY: ${LIBRARY_THIRD_PARTY}") 
@@ -233,25 +228,25 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "build monik/log/third_party/amqp")
 message(STATUS "build monik/log/protobuf")
-add_definitions(-DSDL_INCLUDE_AMQP=1)
+add_definitions(-DMONIK_INCLUDE_AMQP=1)
 add_library( monik STATIC 
-  ${SDL_SOURCE_FILES}
-  ${SDL_SOURCE_LOG_AMQP}
-  ${SDL_SOURCE_LOG_PROTOBUF}
+  ${MONIK_SOURCE_FILES}
+  ${MONIK_SOURCE_LOG_AMQP}
+  ${MONIK_SOURCE_LOG_PROTOBUF}
   )
 add_executable( test_monik
-  ${SDL_SOFTWARE_MAIN}
-  ${SDL_SOURCE_FILES}
-  ${SDL_SOURCE_LOG_AMQP}
-  ${SDL_SOURCE_LOG_PROTOBUF}
+  ${MONIK_SOFTWARE_MAIN}
+  ${MONIK_SOURCE_FILES}
+  ${MONIK_SOURCE_LOG_AMQP}
+  ${MONIK_SOURCE_LOG_PROTOBUF}
   )
-source_group(log/protobuf FILES ${SDL_SOURCE_LOG_PROTOBUF} )  
+source_group(log/protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
 message(STATUS "ignore monik/log/protobuf")
-add_definitions(-DSDL_INCLUDE_AMQP=0)
-add_library( monik STATIC ${SDL_SOURCE_FILES} ${SDL_HEADER_FILES} )
-add_executable( test_monik ${SDL_SOFTWARE_MAIN} ${SDL_SOURCE_FILES} ${SDL_HEADER_FILES} )
+add_definitions(-DMONIK_INCLUDE_AMQP=0)
+add_library( monik STATIC ${MONIK_SOURCE_FILES} ${MONIK_HEADER_FILES} )
+add_executable( test_monik ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} ${MONIK_HEADER_FILES} )
 endif()
 
 if (UNIX)

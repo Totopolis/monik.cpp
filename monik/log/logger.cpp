@@ -4,7 +4,7 @@
 #include "monik/log/console_log.h"
 #include "monik/log/pattern_formatter.h"
 #include "monik/common/format.h"
-#if SDL_DEBUG
+#if MONIK_DEBUG
 #include "monik/log/file_log.h"
 #endif
 
@@ -18,7 +18,7 @@ public:
         ex_handler handler;
         severity filter = severity::trace;
         array_severity<vector_channel> channel;
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
         array_severity<shared_keepalive> keepalive;
 #endif
     } d;
@@ -35,18 +35,18 @@ private:
 
 logger::impl::impl()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 logger::impl::~impl()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 void logger::impl::log_message_with_level(channel_format const & dest, 
     message_with_severity && s, message_source_ptr source) const
 {
-    SDL_ASSERT(!s.m_message.empty() || source);
+    MONIK_ASSERT(!s.m_message.empty() || source);
     if (dest.second.empty() || (dest.second == pattern_formatter::message_text())) {
         if (!s.m_message.empty()) {
             dest.first->log(std::move(s), source); // message text without formatting
@@ -96,17 +96,17 @@ void logger::impl::log(message_with_severity && s, message_source_ptr source) co
 logger::logger()
     : m_data(std::make_unique<impl>())
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 logger::~logger()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
 }
 
 void logger::reset()
 {
-    SDL_TRACE_FUNCTION;
+    MONIK_TRACE_FUNCTION;
     m_data = std::make_unique<impl>();
 }
 
@@ -132,7 +132,7 @@ void logger::set_handler(ex_handler && f)
 
 void logger::set_console(const std::initializer_list<severity> in, const std::string & aformat)
 {
-    SDL_ASSERT(in.size());
+    MONIK_ASSERT(in.size());
     if (in.size()) {
         const std::string format = trim_string(aformat);
         const shared_channel p(new console_log(0));
@@ -146,8 +146,8 @@ void logger::set_console(const std::initializer_list<severity> in, const std::st
 
 void logger::set_channel(const severity t, shared_channel const & p, const std::string & format)
 {
-    SDL_ASSERT(t < severity::_end);
-    SDL_ASSERT(p);
+    MONIK_ASSERT(t < severity::_end);
+    MONIK_ASSERT(p);
     if (p) {
         auto & dest = m_data->d.channel[t];
         dest.clear();
@@ -157,21 +157,21 @@ void logger::set_channel(const severity t, shared_channel const & p, const std::
 
 void logger::add_channel(const severity t, shared_channel const & p, const std::string & format)
 {
-    SDL_ASSERT(t < severity::_end);
-    SDL_ASSERT(p);
+    MONIK_ASSERT(t < severity::_end);
+    MONIK_ASSERT(p);
     if (p) {
         m_data->d.channel[t].emplace_back(p, trim_string(format));
     }
 }
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 bool logger::add_keepalive(shared_keepalive const & p)
 {
     if (p && !p->running()) {
         m_data->d.keepalive[p->get_severity()] = p;
         return p->launch();
     }
-    SDL_ASSERT(0);
+    MONIK_ASSERT(0);
     return false;
 }
 #endif
@@ -208,7 +208,7 @@ void logger::log(message_with_severity && s, message_source_ptr source) const
 
 char logger::abbreviated(const severity t)
 {
-    SDL_ASSERT(t < severity::_end);
+    MONIK_ASSERT(t < severity::_end);
     static char table[severity_size() + 1] = {
         'T', // trace
         'D', // debug
@@ -231,7 +231,7 @@ const char * logger::to_string(const severity t)
     case severity::error   : return "error";
     case severity::fatal   : return "fatal";
     default:
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return "";
     }
 }
@@ -246,7 +246,7 @@ severity logger::from_string(const char * const s)
         if (0 == strcmp(s, "error"))    { return severity::error; }
         if (0 == strcmp(s, "fatal"))    { return severity::fatal; }
     }
-    SDL_ASSERT(0);
+    MONIK_ASSERT(0);
     return severity::trace;
 }
 
@@ -266,7 +266,7 @@ init_logger_t & init_logger() {
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -275,17 +275,17 @@ namespace sdl { namespace log { namespace {
         {
             {
                 const auto old = init_logger();
-                SDL_ASSERT(get_logger());
+                MONIK_ASSERT(get_logger());
                 init_logger() = nullptr;
-                SDL_ASSERT(!get_logger());
+                MONIK_ASSERT(!get_logger());
                 init_logger() = old;
-                SDL_ASSERT(get_logger());
+                MONIK_ASSERT(get_logger());
             }
-            SDL_ASSERT(severity_all().size() == 6);
+            MONIK_ASSERT(severity_all().size() == 6);
             {
                 for (const severity t : severity_all()) {
-                    SDL_ASSERT(logger::from_string(logger::to_string(t)) == t);
-                    SDL_ASSERT((logger::abbreviated(t) - 'A' + 'a') == logger::to_string(t)[0]);
+                    MONIK_ASSERT(logger::from_string(logger::to_string(t)) == t);
+                    MONIK_ASSERT((logger::abbreviated(t) - 'A' + 'a') == logger::to_string(t)[0]);
                 }
             }
             if (0) {
@@ -318,7 +318,7 @@ namespace sdl { namespace log { namespace {
                     T::cinstance().log(t, std::move(s));
                 }
                 catch (...) {
-                    SDL_ASSERT(t == severity::fatal);
+                    MONIK_ASSERT(t == severity::fatal);
                 }
             }
         }

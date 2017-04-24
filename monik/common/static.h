@@ -1,16 +1,16 @@
 // static.h
 //
 #pragma once
-#ifndef __SDL_COMMON_STATIC_H__
-#define __SDL_COMMON_STATIC_H__
+#ifndef __MONIK_COMMON_STATIC_H__
+#define __MONIK_COMMON_STATIC_H__
 
 #include "monik/common/config.h"
 
-#if defined(SDL_OS_WIN32)
+#if defined(MONIK_OS_WIN32)
 #pragma warning(disable: 4996) //warning C4996: 'mbstowcs': This function or variable may be unsafe.
 #endif
 
-#if defined(SDL_OS_WIN32) && (_MSC_VER == 1800)
+#if defined(MONIK_OS_WIN32) && (_MSC_VER == 1800)
 #error constexpr does not compiled in Visual Studio 2013 
 #endif
 
@@ -141,7 +141,7 @@ inline constexpr bool fequal(double const f1, double const f2)
 }
 
 inline bool positive_fzero(double const f1) {
-    SDL_ASSERT(f1 >= 0);
+    MONIK_ASSERT(f1 >= 0);
     return f1 <= limits::fepsilon;
 }
 
@@ -307,7 +307,7 @@ void memcpy_array(Type(&dest)[size], Type const(&src)[size], size_t const count)
 {
     static_check_is_trivially_copyable(dest);
     static_check_is_trivially_copyable(src);
-    SDL_ASSERT(count <= size);
+    MONIK_ASSERT(count <= size);
     memcpy(&dest, &src, sizeof(Type) * a_min(count, size));
 }
 
@@ -350,7 +350,7 @@ class sdl_exception : public std::logic_error {
 public:
     sdl_exception(): base_type("unknown exception"){}
     explicit sdl_exception(const char* s): base_type(s){
-        SDL_ASSERT(s);
+        MONIK_ASSERT(s);
     }
     explicit sdl_exception(const std::string & s): base_type(s){}
 };
@@ -365,7 +365,7 @@ public:
 template<typename T, typename... Ts> inline
 void throw_error(Ts&&... params) {
     static_assert(std::is_base_of<sdl_exception, T>::value, "is_base_of");
-    SDL_ASSERT_WIN32(!"throw_error");
+    MONIK_ASSERT_WIN32(!"throw_error");
     throw T(std::forward<Ts>(params)...);
 }
 
@@ -373,7 +373,7 @@ template<typename T, typename... Ts> inline
 void throw_error_if(const bool condition, Ts&&... params) {
     static_assert(std::is_base_of<sdl_exception, T>::value, "is_base_of");
     if (condition) {
-        SDL_ASSERT_WIN32(!"throw_error_if");
+        MONIK_ASSERT_WIN32(!"throw_error_if");
         throw T(std::forward<Ts>(params)...);
     }
 }
@@ -382,7 +382,7 @@ template<typename T, typename... Ts> inline
 void throw_error_if_not(const bool condition, Ts&&... params) {
     static_assert(std::is_base_of<sdl_exception, T>::value, "is_base_of");
     if (!condition) {
-        SDL_ASSERT_WIN32(!"throw_error_if_not");
+        MONIK_ASSERT_WIN32(!"throw_error_if_not");
         throw T(std::forward<Ts>(params)...);
     }
 }
@@ -437,4 +437,4 @@ struct is_nothrow_copy_assignable {
 
 } // sdl
 
-#endif // __SDL_COMMON_STATIC_H__
+#endif // __MONIK_COMMON_STATIC_H__

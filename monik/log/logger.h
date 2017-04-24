@@ -1,12 +1,12 @@
 // logger.h
 //
 #pragma once
-#ifndef __SDL_LOG_LOGGER_H__
-#define __SDL_LOG_LOGGER_H__
+#ifndef __MONIK_LOG_LOGGER_H__
+#define __MONIK_LOG_LOGGER_H__
 
 #include "monik/log/message.h"
 #include "monik/common/singleton.h"
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 #include "monik/log/keepalive_log.h"
 #endif
 
@@ -26,7 +26,7 @@ public:
     void set_console(std::initializer_list<severity>, const std::string & format = {});
     void set_channel(severity, shared_channel const &, const std::string & format = {});
     void add_channel(severity, shared_channel const &, const std::string & format = {});
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
     bool add_keepalive(shared_keepalive const &);
 #endif
     void log(severity, std::string const &) const;
@@ -57,5 +57,5 @@ inline logger* get_logger() {
 } // log
 } // sdl
 
-#endif // __SDL_LOG_LOGGER_H__
+#endif // __MONIK_LOG_LOGGER_H__
 

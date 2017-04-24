@@ -46,10 +46,10 @@ file_log::data_type::data_type(
     , m_log_names(path1, path2)
     , m_log_second(false)
 {
-    SDL_TRACE("file_log1: ", m_log_names.first);
-    SDL_TRACE("file_log2: ", m_log_names.second);
-    SDL_ASSERT(!m_log_names.first.empty());
-    SDL_ASSERT(m_log_names.second.empty() || (m_log_names.first != m_log_names.second));
+    MONIK_TRACE("file_log1: ", m_log_names.first);
+    MONIK_TRACE("file_log2: ", m_log_names.second);
+    MONIK_ASSERT(!m_log_names.first.empty());
+    MONIK_ASSERT(m_log_names.second.empty() || (m_log_names.first != m_log_names.second));
     create_log(m_log_names.first, open_mode::append); // throw if error
     m_thread.reset(new log_thread(std::launch::async, s2, second_t(0),
         log_thread::overflow_policy::pop_front,
@@ -61,7 +61,7 @@ file_log::data_type::data_type(
             this->overflow(s);
         }
     ));
-    SDL_ASSERT(m_thread->running());
+    MONIK_ASSERT(m_thread->running());
 }
 
 file_log::data_type::~data_type()
@@ -77,7 +77,7 @@ bool file_log::data_type::wait_timeout_seconds(size_t seconds)
             return true;
         sleep_for_milliseconds(1000);
     }
-    SDL_WARNING(0);
+    MONIK_WARNING(0);
     return false;
 }
 
@@ -126,8 +126,8 @@ void file_log::data_type::write(const message_with_severity & s)
 
 void file_log::data_type::overflow(const message_with_severity & s)
 {
-    SDL_TRACE(s.m_message);
-    SDL_ASSERT(!"overflow");
+    MONIK_TRACE(s.m_message);
+    MONIK_ASSERT(!"overflow");
 }
 
 //--------------------------------------------------------
@@ -156,7 +156,7 @@ void file_log::log(message_with_severity && s)
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
         size_t count = 0;

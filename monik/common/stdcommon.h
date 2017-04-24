@@ -4,8 +4,8 @@
 //
 
 #pragma once
-#ifndef __SDL_COMMON_STDCOMMON_H__
-#define __SDL_COMMON_STDCOMMON_H__
+#ifndef __MONIK_COMMON_STDCOMMON_H__
+#define __MONIK_COMMON_STDCOMMON_H__
 
 #if defined(__clang__)
 #if (__cplusplus == 201402L)
@@ -40,4 +40,4 @@
 #include <type_traits>
 #include <assert.h>
 
-#endif // __SDL_COMMON_STDCOMMON_H__
+#endif // __MONIK_COMMON_STDCOMMON_H__

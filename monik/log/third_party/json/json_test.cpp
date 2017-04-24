@@ -4,7 +4,7 @@
 #include "monik/log/third_party/json/reader.h"
 #include "monik/log/third_party/json/writer.h"  
 
-#if defined(SDL_OS_WIN32) && SDL_DEBUG
+#if defined(MONIK_OS_WIN32) && MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -15,16 +15,16 @@ namespace sdl { namespace log { namespace {
                 const char protobuf[] = CMAKE_CURRENT_SOURCE_DIR R"(/dataserver/log/protobuf/)";
                 const std::string path(json_test);
                 try {
-                    SDL_ASSERT(test_read_file(path + "pass1.json"));
-                    SDL_ASSERT(test_read_file(path + "pass2.json"));
-                    SDL_ASSERT(test_read_file(path + "pass3.json"));
-                    SDL_ASSERT(test_read_file(path + "messaging.json"));
-                    SDL_ASSERT(test_proto(path + "messaging.json"));
-                    SDL_ASSERT(test_read_file(std::string(protobuf) + "logger.json"));
+                    MONIK_ASSERT(test_read_file(path + "pass1.json"));
+                    MONIK_ASSERT(test_read_file(path + "pass2.json"));
+                    MONIK_ASSERT(test_read_file(path + "pass3.json"));
+                    MONIK_ASSERT(test_read_file(path + "messaging.json"));
+                    MONIK_ASSERT(test_proto(path + "messaging.json"));
+                    MONIK_ASSERT(test_read_file(std::string(protobuf) + "logger.json"));
                 }
                 catch (const std::exception& e) {
-                    SDL_TRACE(e.what());
-                    SDL_ASSERT(0);
+                    MONIK_TRACE(e.what());
+                    MONIK_ASSERT(0);
                 }
             }
         }
@@ -35,19 +35,19 @@ namespace sdl { namespace log { namespace {
     
     bool unit_test::test_read_file(std::string const & filename, const bool trace)
     {
-        SDL_TRACE("test_read_file: ", filename);
+        MONIK_TRACE("test_read_file: ", filename);
         const std::string str = json_parser::read_text_file(filename.c_str());
         if (!str.empty()) {
             Json::Value root; // will contains the root value after parsing
             Json::Reader reader;
             if (reader.parse(str, root)) {
                 if (trace) {
-                    SDL_TRACE(root);
+                    MONIK_TRACE(root);
                 }
                 return true;
             }
         }
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return false;
     }
 
@@ -57,11 +57,11 @@ namespace sdl { namespace log { namespace {
         if (!str.empty()) {
             const auto s2 = json_parser::json_to_proto(str, json_parser::proto_syntax::_2);
             const auto s3 = json_parser::json_to_proto(str, json_parser::proto_syntax::_3);
-            SDL_TRACE(s2);
-            SDL_TRACE(s3);
+            MONIK_TRACE(s2);
+            MONIK_TRACE(s3);
             return !(s2.empty() || s3.empty());
         }
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return false;
     }
 

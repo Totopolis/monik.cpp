@@ -1,12 +1,12 @@
 // monik_log.h
 //
 #pragma once
-#ifndef __SDL_LOG_MONIK_LOG_H__
-#define __SDL_LOG_MONIK_LOG_H__
+#ifndef __MONIK_LOG_MONIK_LOG_H__
+#define __MONIK_LOG_MONIK_LOG_H__
 
 #include "monik/log/remote_log.h"
 
-#if SDL_INCLUDE_AMQP
+#if MONIK_INCLUDE_AMQP
 
 namespace sdl { namespace log { 
 
@@ -18,7 +18,7 @@ public:
     bool empty() const override;
     void log(message_with_severity &&) override; 
     void log(message_with_severity &&, message_source_ptr) override; 
-#if SDL_DEBUG
+#if MONIK_DEBUG
     void test();
 #endif
 private:
@@ -29,6 +29,6 @@ private:
 } // log
 } // sdl
 
-#endif // SDL_INCLUDE_AMQP
-#endif // __SDL_LOG_MONIK_LOG_H__
+#endif // MONIK_INCLUDE_AMQP
+#endif // __MONIK_LOG_MONIK_LOG_H__
 

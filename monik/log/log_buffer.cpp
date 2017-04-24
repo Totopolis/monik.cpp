@@ -8,7 +8,7 @@ log_buffer::log_buffer(const buf_size_t max_size, const overflow_policy p)
     : m_capacity(max_size.value() > 0 ? max_size.value() : default_capacity)
     , m_policy(p)
 {
-    SDL_ASSERT(m_capacity);
+    MONIK_ASSERT(m_capacity);
 }
 
 bool log_buffer::empty() const
@@ -50,7 +50,7 @@ log_buffer::push_back_ex(value_type && s)
 log_buffer::push_t
 log_buffer::push_back_nolock(value_type && s)
 {
-    SDL_ASSERT(!s.m_message.empty());
+    MONIK_ASSERT(!s.m_message.empty());
     if (m_messages_size < m_capacity) {
         m_messages.push_back(std::move(s));
         m_messages_size += s.mem_size();
@@ -67,7 +67,7 @@ log_buffer::push_back_nolock(value_type && s)
             m_messages_size -= free_size;
         }
         else {
-            SDL_ASSERT(0);
+            MONIK_ASSERT(0);
             m_messages.clear();
             m_messages_size = 0;
         }
@@ -80,17 +80,17 @@ log_buffer::push_back_nolock(value_type && s)
 
 size_t log_buffer::append(container_type && data, container_type::iterator first)
 {
-    SDL_ASSERT(!data.empty());
-    SDL_ASSERT(first != data.end());
+    MONIK_ASSERT(!data.empty());
+    MONIK_ASSERT(first != data.end());
     std::unique_lock<std::mutex> lock(m_mutex);
     if (m_messages.empty() && (first == data.begin())) {
-        SDL_ASSERT(!m_messages_size);
+        MONIK_ASSERT(!m_messages_size);
         m_messages.swap(data);
         m_messages_size = 0;
         for (const auto & s : m_messages) {
             m_messages_size += s.mem_size();
         }
-        SDL_ASSERT(m_messages_size);
+        MONIK_ASSERT(m_messages_size);
         return m_messages.size();
     }
     else {
@@ -98,7 +98,7 @@ size_t log_buffer::append(container_type && data, container_type::iterator first
         const auto end = data.end();
         for (; first != end; ++first) {
             if (push_back_nolock(std::move(*first)) == push_t::false_) {
-                SDL_ASSERT(0);
+                MONIK_ASSERT(0);
                 break;
             }
             ++count;
@@ -111,7 +111,7 @@ size_t log_buffer::append(container_type && data, container_type::iterator first
 } // log
 } // sdl
 
-#if SDL_DEBUG
+#if MONIK_DEBUG
 namespace sdl { namespace log { namespace {
     class unit_test {
     public:
@@ -119,21 +119,21 @@ namespace sdl { namespace log { namespace {
         {
             if (1) {
                 log_buffer buf(megabyte<1>::value);
-                SDL_ASSERT(buf.empty());
+                MONIK_ASSERT(buf.empty());
                 size_t count = 0;
                 while (buf.push_back(message_with_severity(severity::trace, __FUNCTION__))) {
                     ++count;
                 }
-                SDL_ASSERT(buf.full());
+                MONIK_ASSERT(buf.full());
                 auto data = buf.pop();
-                SDL_ASSERT(data.size() == count);
-                SDL_ASSERT(buf.empty());
+                MONIK_ASSERT(data.size() == count);
+                MONIK_ASSERT(buf.empty());
             }
             if (1) {
                 message_with_severity s1(severity::trace, std::string(__FUNCTION__));
                 message_with_severity s2 = std::move(s1);
-                SDL_ASSERT(!s2.m_message.empty());
-                SDL_ASSERT(s1.m_message.empty());
+                MONIK_ASSERT(!s2.m_message.empty());
+                MONIK_ASSERT(s1.m_message.empty());
             }
             if (1) {
                 log_buffer buf(megabyte<1>::value, log_buffer::overflow_policy::pop_front);
@@ -143,7 +143,7 @@ namespace sdl { namespace log { namespace {
                     if (result == log_buffer::push_t::true_pop_front) {
                         break;
                     }
-                    SDL_ASSERT(result == log_buffer::push_t::true_);
+                    MONIK_ASSERT(result == log_buffer::push_t::true_);
                 }
             }
         }

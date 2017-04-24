@@ -1,8 +1,8 @@
 // log_buffer.h
 //
 #pragma once
-#ifndef __SDL_LOG_LOG_BUFFER_H__
-#define __SDL_LOG_LOG_BUFFER_H__
+#ifndef __MONIK_LOG_LOG_BUFFER_H__
+#define __MONIK_LOG_LOG_BUFFER_H__
 
 #include "monik/common/forward_queue.h"
 #include "monik/log/message.h"
@@ -47,5 +47,5 @@ private:
 } // log
 } // sdl
 
-#endif // __SDL_LOG_LOG_BUFFER_H__
+#endif // __MONIK_LOG_LOG_BUFFER_H__
 
