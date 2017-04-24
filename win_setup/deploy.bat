@@ -10,7 +10,10 @@ mkdir %DEPLOY_DIR_BASE%
 mkdir %DEPLOY_DIR%
 
 cd %SCRIPTS_DIR%
-call deploy_dependencies.bat
+call build_protobuf.bat
+call build_openssl.bat
+call build_rabbitmq-c.bat
+
 cd %SCRIPTS_DIR%
 call monik_build.bat
 
