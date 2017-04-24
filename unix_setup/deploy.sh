@@ -20,4 +20,4 @@ cd ${SCRIPTS_DIR}
 ./build_rabbitmq-c.sh
 
 cd ${SCRIPTS_DIR}
-#./monik_build.sh
+./monik_build.sh
