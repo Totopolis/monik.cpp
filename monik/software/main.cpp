@@ -1,9 +1,9 @@
 // main.cpp : Defines the entry point for the console application.
-#include "monik/third_party/cmdLine/cmdLine.h"
 #include "monik/log/logger_config.h"
 #include "monik/log/logger.h"
 #include "monik/log/log_define.h"
 #include "monik/common/locale.h"
+#include "monik/software/cmdLine.h"
 #include <fstream>
 #include <thread>
 

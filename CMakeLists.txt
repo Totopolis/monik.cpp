@@ -83,7 +83,7 @@ include_directories(
 
 set( MONIK_SOFTWARE_MAIN
   monik/software/main.cpp
-  monik/third_party/cmdLine/cmdLine.h
+  monik/software/cmdLine.h
   )
 
 set( MONIK_SOURCE_COMMON
