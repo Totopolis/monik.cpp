@@ -19,6 +19,7 @@ x64/
 x86/
 build/
 install/
+lib/
 bld/
 [Bb]in/
 [Oo]bj/
