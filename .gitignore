@@ -23,7 +23,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 monik/log/third_party/install/
-monik/log/protobuf/monik.pb.*
+monik/protobuf/monik.pb.*
 CMakeLists.txt.*
 *.inl.1
 *.h.1
