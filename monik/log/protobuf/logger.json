@@ -1,0 +1,57 @@
+{
+	"filter": "trace",
+	"loggers": [
+		{
+			"channel": "console",
+			"severity": "trace",
+			"format": "%H:%M:%S.%i %I %q: %t",
+			"bufsize": 0
+		},
+		{
+			"channel": "file",
+			"severity": "trace,debug,info,warning,error,fatal",
+			"format": "%y-%m-%d %H:%M:%S %I %q: %t",
+			"path1": "file1.log",
+			"path2": "file2.log",
+			"logsize": 0,
+			"bufsize": 0
+		},
+		{
+			"channel": "monik",
+			"severity": "trace,debug,info,warning,error,fatal",
+			"format": "%t",
+			"params": {
+				"host": "",
+				"port": 0,
+				"user": "",
+				"password": "",
+				"exchange": "",
+				"source": "",
+				"instance": "",
+				"tags": "",
+				"durable": false,
+				"retrytimeout": 30
+			},
+			"bufsize": 0
+		},
+		{
+			"channel": "keepalive",
+			"severity": "trace,debug,info,warning,error,fatal",
+			"format": "%t",
+			"params": {
+				"host": "",
+				"port": 0,
+				"user": "",
+				"password": "",
+				"exchange": "",
+				"source": "",
+				"instance": "",
+				"tags": "",
+				"durable": false,
+				"period": 60,
+				"retrytimeout": 30
+			},
+			"bufsize": 0
+		}
+	]
+}

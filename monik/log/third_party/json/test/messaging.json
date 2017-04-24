@@ -1,0 +1,101 @@
+{
+	"package": "Messaging",
+	"option": "optimize_for = SPEED",
+	"messages": [
+		{
+			"message": "Event",
+			"enums": [
+				{
+					"enum": "EventType1",
+					"values": [
+						{
+							"name": "Unknown",
+							"tag": 0,
+                            "comment": "Unknown"
+						},
+						{
+							"name": "Timed",
+							"tag": 1,
+                            "comment": "Timed"
+						},
+						{
+							"name": "Other",
+							"tag": 100,
+							"comment": "Other = 100"
+						}
+					]
+				},
+				{
+					"enum": "EventType2",
+					"values": [
+						{
+							"name": "Unknown",
+							"tag": 0
+						},
+						{
+							"name": "Timed",
+							"tag": 1
+						},
+						{
+							"name": "Other",
+							"tag": 100,
+							"comment": "Other = 100"
+						}
+					]
+				}                
+			],
+			"fields": [
+				{
+					"type": "string",
+					"name": "query",
+					"tag": 1,
+					"comment": "string query = 1"
+				},
+				{
+					"type": "repeated uint32",
+					"name": "page_number",
+					"tag": 2,
+					"comment": "repeated uint32 page_number = 2"
+				}
+			]
+		},
+		{
+			"message": "Result",
+			"fields": [
+				{
+					"type": "string",
+					"name": "url",
+					"tag": 1,
+					"comment": "string url = 1"
+				},
+				{
+					"type": "string",
+					"name": "title",
+					"tag": 2,
+					"comment": "string title = 2"
+				},
+				{
+					"type": "repeated string",
+					"name": "snippets",
+					"tag": 3,
+					"comments": [
+						"repeated string snippets = 3",
+						"etc",
+						"etc"
+					]
+				}
+			]
+		},
+		{
+			"message": "SearchResponse",
+			"fields": [
+				{
+					"type": "repeated Result",
+					"name": "results",
+					"tag": 1,
+					"comment": "repeated Result results = 1"
+				}
+			]
+		}
+	]
+}

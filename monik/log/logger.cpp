@@ -1,0 +1,345 @@
+// logger.cpp
+//
+#include "monik/log/logger.h"
+#include "monik/log/console_log.h"
+#include "monik/log/pattern_formatter.h"
+#include "monik/common/format.h"
+#if SDL_DEBUG
+#include "monik/log/file_log.h"
+#endif
+
+namespace sdl { namespace log {
+
+class logger::impl final : noncopyable {
+public:
+    using channel_format = std::pair<shared_channel, std::string>;
+    using vector_channel = std::vector<channel_format>;
+    struct data_type {
+        ex_handler handler;
+        severity filter = severity::trace;
+        array_severity<vector_channel> channel;
+#if SDL_INCLUDE_AMQP
+        array_severity<shared_keepalive> keepalive;
+#endif
+    } d;
+    void log(message_with_severity &&, message_source_ptr) const;
+    impl();
+    ~impl();
+    bool is_pass(const severity t) const {
+        return (d.filter <= t);
+    }
+private:
+    void log_message_with_level(channel_format const &,
+        message_with_severity &&, message_source_ptr) const;
+};
+
+logger::impl::impl()
+{
+    SDL_TRACE_FUNCTION;
+}
+
+logger::impl::~impl()
+{
+    SDL_TRACE_FUNCTION;
+}
+
+void logger::impl::log_message_with_level(channel_format const & dest, 
+    message_with_severity && s, message_source_ptr source) const
+{
+    SDL_ASSERT(!s.m_message.empty() || source);
+    if (dest.second.empty() || (dest.second == pattern_formatter::message_text())) {
+        if (!s.m_message.empty()) {
+            dest.first->log(std::move(s), source); // message text without formatting
+        }
+    }
+    else {
+        std::string text = pattern_formatter::format(dest.second, s, source);
+        if (!text.empty()) {
+            dest.first->log(message_with_severity(s.m_severity, std::move(text)), source);
+        }
+    }
+}
+
+void logger::impl::log(message_with_severity && s, message_source_ptr source) const
+{
+    const severity t = s.m_severity;
+    if (is_pass(t) && (!s.m_message.empty() || source)) {
+        try {
+            const auto & channels = d.channel[t];
+            const size_t size = channels.size();
+            if (size) {
+                if (size == 1) {
+                    log_message_with_level(channels[0], std::move(s), source);
+                }
+                else {
+                    for (size_t i = 0, end = size - 1; i < end; ++i) {
+                        const message_with_severity & cs = s;
+                        log_message_with_level(channels[i], message_with_severity(cs), source); // copy message
+                    }
+                    log_message_with_level(channels.back(), std::move(s), source); // move message
+                }
+            }
+        }
+        catch (...) {
+            if (d.handler != nullptr) {
+                d.handler(t, std::current_exception());
+            }
+            else {
+                throw;
+            }
+        }
+    }
+}
+
+//----------------------------------------------------
+
+logger::logger()
+    : m_data(std::make_unique<impl>())
+{
+    SDL_TRACE_FUNCTION;
+}
+
+logger::~logger()
+{
+    SDL_TRACE_FUNCTION;
+}
+
+void logger::reset()
+{
+    SDL_TRACE_FUNCTION;
+    m_data = std::make_unique<impl>();
+}
+
+bool logger::is_pass(severity t) const
+{
+    return m_data->is_pass(t);
+}
+
+severity logger::get_filter() const
+{
+    return m_data->d.filter;
+}
+
+void logger::set_filter(const severity t)
+{
+    m_data->d.filter = t;
+}
+
+void logger::set_handler(ex_handler && f)
+{
+    m_data->d.handler = std::move(f);
+}
+
+void logger::set_console(const std::initializer_list<severity> in, const std::string & aformat)
+{
+    SDL_ASSERT(in.size());
+    if (in.size()) {
+        const std::string format = trim_string(aformat);
+        const shared_channel p(new console_log(0));
+        for (const severity t : in) {
+            auto & dest = m_data->d.channel[t];
+            dest.clear();
+            dest.emplace_back(p, format);
+        }
+    }
+}
+
+void logger::set_channel(const severity t, shared_channel const & p, const std::string & format)
+{
+    SDL_ASSERT(t < severity::_end);
+    SDL_ASSERT(p);
+    if (p) {
+        auto & dest = m_data->d.channel[t];
+        dest.clear();
+        dest.emplace_back(p, trim_string(format));
+    }
+}
+
+void logger::add_channel(const severity t, shared_channel const & p, const std::string & format)
+{
+    SDL_ASSERT(t < severity::_end);
+    SDL_ASSERT(p);
+    if (p) {
+        m_data->d.channel[t].emplace_back(p, trim_string(format));
+    }
+}
+
+#if SDL_INCLUDE_AMQP
+bool logger::add_keepalive(shared_keepalive const & p)
+{
+    if (p && !p->running()) {
+        m_data->d.keepalive[p->get_severity()] = p;
+        return p->launch();
+    }
+    SDL_ASSERT(0);
+    return false;
+}
+#endif
+
+void logger::log(const severity t, std::string const & s) const
+{
+    m_data->log(message_with_severity(t, s), nullptr);
+}
+
+void logger::log(const severity t, std::string const & s, message_source_ptr source) const
+{
+    m_data->log(message_with_severity(t, s), source);
+}
+
+void logger::log(const severity t, std::string && s) const
+{
+    m_data->log(message_with_severity(t, std::move(s)), nullptr);
+}
+
+void logger::log(const severity t, std::string && s, message_source_ptr source) const
+{
+    m_data->log(message_with_severity(t, std::move(s)), source);
+}
+
+void logger::log(message_with_severity && s) const
+{
+    m_data->log(std::move(s), nullptr);
+}
+
+void logger::log(message_with_severity && s, message_source_ptr source) const
+{
+    m_data->log(std::move(s), source);
+}
+
+char logger::abbreviated(const severity t)
+{
+    SDL_ASSERT(t < severity::_end);
+    static char table[severity_size() + 1] = {
+        'T', // trace
+        'D', // debug
+        'I', // info
+        'W', // warning
+        'E', // error
+        'F', // fatal
+        char(0)
+    };
+    return table[static_cast<size_t>(t)];
+}
+
+const char * logger::to_string(const severity t)
+{
+    switch (t) {
+    case severity::trace   : return "trace";
+    case severity::debug   : return "debug";
+    case severity::info    : return "info";
+    case severity::warning : return "warning";
+    case severity::error   : return "error";
+    case severity::fatal   : return "fatal";
+    default:
+        SDL_ASSERT(0);
+        return "";
+    }
+}
+
+severity logger::from_string(const char * const s)
+{
+    if (is_str_valid(s)) {
+        if (0 == strcmp(s, "trace"))    { return severity::trace; }
+        if (0 == strcmp(s, "debug"))    { return severity::debug; }
+        if (0 == strcmp(s, "info"))     { return severity::info; }
+        if (0 == strcmp(s, "warning"))  { return severity::warning; }
+        if (0 == strcmp(s, "error"))    { return severity::error; }
+        if (0 == strcmp(s, "fatal"))    { return severity::fatal; }
+    }
+    SDL_ASSERT(0);
+    return severity::trace;
+}
+
+init_logger_t & init_logger() {
+    struct initialize {
+        init_logger_t obj;
+        initialize() {
+            obj = [](){
+                return &logger::ST::instance();
+            };
+        }
+    };
+    static initialize init;
+    return init.obj;
+}
+
+} // log
+} // sdl
+
+#if SDL_DEBUG
+namespace sdl { namespace log { namespace {
+    class unit_test {
+    public:
+        using T = singleton<logger>;
+        unit_test()
+        {
+            {
+                const auto old = init_logger();
+                SDL_ASSERT(get_logger());
+                init_logger() = nullptr;
+                SDL_ASSERT(!get_logger());
+                init_logger() = old;
+                SDL_ASSERT(get_logger());
+            }
+            SDL_ASSERT(severity_all().size() == 6);
+            {
+                for (const severity t : severity_all()) {
+                    SDL_ASSERT(logger::from_string(logger::to_string(t)) == t);
+                    SDL_ASSERT((logger::abbreviated(t) - 'A' + 'a') == logger::to_string(t)[0]);
+                }
+            }
+            if (0) {
+                T::instance().set_filter(severity::trace);
+                T::instance().set_console(severity_all());
+                set_handler();
+                set_file_log();
+                test_log();
+            }
+        }
+    private:
+        void set_file_log()
+        {
+            if (0) {
+                auto f = std::make_shared<file_log>(
+                    (log_size_t) megabyte<10>::value,
+                    (buf_size_t) megabyte<1>::value,
+                    R"(D:\TEST_LOG\fatal.log)"
+                    );
+                T::instance().add_channel(severity::error, f);
+                T::instance().add_channel(severity::fatal, f);
+            }
+        }
+        void test_log()
+        {
+            for (size_t i = 0; i < severity_size(); ++i) {
+                const severity t = static_cast<severity>(i);
+                try {
+                    auto s = std::string("log_") + logger::to_string(t) + "," + __DATE__ + "," + __TIME__;
+                    T::cinstance().log(t, std::move(s));
+                }
+                catch (...) {
+                    SDL_ASSERT(t == severity::fatal);
+                }
+            }
+        }
+        void set_handler()
+        {
+            T::instance().set_handler([](severity t, std::exception_ptr p) {
+                if (t == severity::fatal) {
+                    std::rethrow_exception(p);
+                }
+                else {
+                    try {
+                        std::rethrow_exception(p);
+                    }
+                    catch(const std::exception& e) {
+                        std::cout << e.what() << std::endl;
+                    }
+                }
+            });
+        }
+    };
+    static unit_test s_test;
+
+}}} // sdl
+#endif //#if SV_DEBUG

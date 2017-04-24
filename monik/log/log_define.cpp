@@ -1,0 +1,78 @@
+// log_define.cpp
+//
+#include "monik/log/log_define.h"
+
+#if SDL_DEBUG
+namespace sdl { namespace log { namespace {
+
+inline constexpr const char * maybe_constexpr(const char * s) { 
+    return s;
+}
+
+#define is_constexpr(e) noexcept(maybe_constexpr(e))
+
+const char * foo_runtime(const char * s){
+    return "foo_runtime";
+}
+
+constexpr const char * foo_compiletime(const char * s) {
+    return "foo_compiletime";
+}
+
+#define foo(X) (is_constexpr(X)?foo_compiletime(X):foo_runtime(X))
+
+class unit_test {
+public:
+    unit_test()
+    {
+        if (0) {
+            SDL_LOG_TRACE(__FUNCTION__, " at line ", __LINE__);
+            SDL_LOG_TRACE(__FUNCTION__);
+            SDL_LOG_DEBUG(__FUNCTION__);
+            SDL_LOG_INFO(__FUNCTION__);
+            SDL_LOG_WARNING(__FUNCTION__);
+            SDL_LOG_ERROR(__FUNCTION__);
+            SDL_LOG_FATAL(__FUNCTION__);
+        }
+        if (0) {
+            SDL_LOG_TRACE_SOURCE(monik_source::application, " at line ", __LINE__);
+            SDL_LOG_TRACE_SOURCE(monik_source::application, "message");
+            SDL_LOG_TRACE_SOURCE(monik_source::application);
+            //
+            SDL_LOG_TRACE_SOURCE(__FUNCTION__);
+            SDL_LOG_DEBUG_SOURCE(__FUNCTION__);
+            SDL_LOG_INFO_SOURCE(__FUNCTION__);
+            SDL_LOG_WARNING_SOURCE(__FUNCTION__);
+            SDL_LOG_ERROR_SOURCE(__FUNCTION__);
+            SDL_LOG_FATAL_SOURCE(__FUNCTION__);
+            //
+            SDL_LOG_TRACE_SYSTEM(__FUNCTION__);
+            SDL_LOG_TRACE_APPLICATION(__FUNCTION__);
+            SDL_LOG_TRACE_LOGIC(__FUNCTION__);
+            SDL_LOG_TRACE_SECURITY(__FUNCTION__);
+            //
+            SDL_LOG_DEBUG_SYSTEM(__FUNCTION__);
+            SDL_LOG_INFO_SYSTEM(__FUNCTION__);
+            SDL_LOG_WARNING_SYSTEM(__FUNCTION__);
+            SDL_LOG_ERROR_SYSTEM(__FUNCTION__);
+            SDL_LOG_FATAL_SYSTEM(__FUNCTION__);
+        }
+        if (0) {
+            const char * a = "a";
+            constexpr const char * c = "c";
+            SDL_TRACE(a, " = ", foo(a));
+            SDL_TRACE(c, " = ", foo(c));
+            SDL_TRACE(__FUNCTION__, " = ", foo(__FUNCTION__));
+            static_assert(!is_constexpr(a), "");
+            static_assert(is_constexpr(c), "");
+            static_assert(is_constexpr(__FUNCTION__), "");
+        }
+    }
+};
+static unit_test s_test;
+
+}}} // sdl
+#endif //#if SV_DEBUG
+
+
+
