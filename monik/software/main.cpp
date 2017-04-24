@@ -11,7 +11,7 @@ namespace {
 
 using namespace monik;
 
-struct cmd_option : noncopyable {
+struct cmd_option final : noncopyable {
     struct {
         std::string config;
         std::string message;
@@ -24,10 +24,10 @@ void trace_log(cmd_option const & opt)
 {
     if (!opt.log.config.empty()) {
         std::cout
-            << "\nlog_config = " << opt.log.config
-            << "\nlog_message = " << opt.log.message
-            << "\nlog_severity = " << opt.log.severity
-            << "\nlog_source = " << opt.log.source
+            << "\nconfig = " << opt.log.config
+            << "\nmessage = " << opt.log.message
+            << "\nseverity = " << opt.log.severity
+            << "\nsource = " << opt.log.source
             << std::endl;
         using T = log::logger::ST;
         if (log::logger_config::setup_logs_file(T::instance(), opt.log.config.c_str())) {
@@ -80,10 +80,10 @@ void print_help(int argc, char* argv[])
     print_version();
     std::cout
         << "\nUsage: " << argv[0]
-        << "\n[--log_config] json config file"
-        << "\n[--log_message] test message"
-        << "\n[--log_severity] trace|debug|info|warning|error|fatal"
-        << "\n[--log_source] system|application|logic|security"
+        << "\n[-i|--config] json config file"
+        << "\n[-m|--message] test message"
+        << "\n[-s|--severity] trace|debug|info|warning|error|fatal"
+        << "\n[-u|--source] system|application|logic|security"
         << std::endl;
 }
 
@@ -98,10 +98,10 @@ int run_main(int argc, char* argv[])
 #if MONIK_DEBUG
     cmd.add(make_option(0, debug::warning_level(), "warning"));
 #endif
-    cmd.add(make_option(0, opt.log.config, "log_config"));    
-    cmd.add(make_option(0, opt.log.message, "log_message"));    
-    cmd.add(make_option(0, opt.log.severity, "log_severity"));    
-    cmd.add(make_option(0, opt.log.source, "log_source"));    
+    cmd.add(make_option('i', opt.log.config, "config"));    
+    cmd.add(make_option('m', opt.log.message, "message"));    
+    cmd.add(make_option('s', opt.log.severity, "severity"));    
+    cmd.add(make_option('u', opt.log.source, "source"));    
     try {
         if (argc == 1) {
             print_help(argc, argv);
