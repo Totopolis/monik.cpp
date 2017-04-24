@@ -1,13 +1,13 @@
 // amqp_config.h
 //
 #pragma once
-#ifndef __SDL_LOG_AMQP_INCLUDE_H__
-#define __SDL_LOG_AMQP_INCLUDE_H__
+#ifndef __MONIK_LOG_AMQP_INCLUDE_H__
+#define __MONIK_LOG_AMQP_INCLUDE_H__
 
 #include <amqp.h>
 #include <amqp_framing.h>
 
-#include "dataserver/common/common.h"
+#include "monik/common/common.h"
 
 #if defined(AMQP_NOEXCEPT)
 #error AMQP_NOEXCEPT
@@ -19,8 +19,8 @@
 #define AMQP_NOEXCEPT   noexcept
 #endif
 
-namespace AmqpClient {
-    using sdl::noncopyable;
+namespace AmqpClient { 
+    using monik::noncopyable;
 }
 
-#endif // __SDL_LOG_AMQP_INCLUDE_H__
+#endif // __MONIK_LOG_AMQP_INCLUDE_H__

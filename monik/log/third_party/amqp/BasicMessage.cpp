@@ -1,7 +1,7 @@
 // BasicMessage.cpp
 //
-#include "dataserver/log/third_party/amqp/BasicMessage.h"
-#include "dataserver/log/third_party/amqp/TableImpl.h"
+#include "monik/log/third_party/amqp/BasicMessage.h"
+#include "monik/log/third_party/amqp/TableImpl.h"
 
 namespace AmqpClient { namespace Detail {
 

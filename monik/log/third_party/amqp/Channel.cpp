@@ -5,11 +5,11 @@
 #include <amqp_ssl_socket.h>
 #endif
 
-#include "dataserver/log/third_party/amqp/Channel.h"
-#include "dataserver/log/third_party/amqp/AmqpException.h"
-#include "dataserver/log/third_party/amqp/ChannelImpl.h"
-#include "dataserver/log/third_party/amqp/MessageReturnedException.h"
-#include "dataserver/log/third_party/amqp/TableImpl.h"
+#include "monik/log/third_party/amqp/Channel.h"
+#include "monik/log/third_party/amqp/AmqpException.h"
+#include "monik/log/third_party/amqp/ChannelImpl.h"
+#include "monik/log/third_party/amqp/MessageReturnedException.h"
+#include "monik/log/third_party/amqp/TableImpl.h"
 
 #include <map>
 #include <queue>
@@ -170,9 +170,9 @@ void Channel::DeclareExchange(const std::string &exchange_name,
                               const bool auto_delete,
                               const Table &arguments)
 {
-    SDL_ASSERT(!exchange_name.empty());
-    SDL_ASSERT(!exchange_type.empty());
-    SDL_TRACE(__FUNCTION__, 
+    MONIK_ASSERT(!exchange_name.empty());
+    MONIK_ASSERT(!exchange_type.empty());
+    MONIK_TRACE(__FUNCTION__, 
         "\nexchange_name = ", exchange_name,
         "\nexchange_type = ", exchange_type
     );

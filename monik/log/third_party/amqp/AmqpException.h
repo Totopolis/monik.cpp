@@ -4,7 +4,7 @@
 #ifndef SIMPLEAMQPCLIENT_AMQPEXCEPTION_H
 #define SIMPLEAMQPCLIENT_AMQPEXCEPTION_H
 
-#include "dataserver/log/third_party/amqp/amqp_config.h"
+#include "monik/log/third_party/amqp/amqp_config.h"
 
 struct amqp_rpc_reply_t_;
 struct amqp_channel_close_t_;

@@ -4,9 +4,9 @@
 #ifndef SIMPLEAMQPCLIENT_CHANNELIMPL_H
 #define SIMPLEAMQPCLIENT_CHANNELIMPL_H
 
-#include "dataserver/log/third_party/amqp/AmqpException.h"
-#include "dataserver/log/third_party/amqp/Envelope.h"
-#include "dataserver/log/third_party/amqp/MessageReturnedException.h"
+#include "monik/log/third_party/amqp/AmqpException.h"
+#include "monik/log/third_party/amqp/Envelope.h"
+#include "monik/log/third_party/amqp/MessageReturnedException.h"
 #include <map>
 
 namespace AmqpClient { namespace Detail {

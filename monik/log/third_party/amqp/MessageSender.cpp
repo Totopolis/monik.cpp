@@ -1,7 +1,7 @@
 // MessageSender.cpp
 //
-#include "dataserver/log/third_party/amqp/MessageSender.h"
-#include "dataserver/log/third_party/amqp/Channel.h"
+#include "monik/log/third_party/amqp/MessageSender.h"
+#include "monik/log/third_party/amqp/Channel.h"
 
 namespace AmqpClient {
 
@@ -81,7 +81,7 @@ void MessageSenderImpl::set_message_type(const char * const mime_type,
 
 void MessageSenderImpl::send(const void * const data, const size_t data_size, const bool persistent)
 {
-    SDL_ASSERT(!persistent || durable_);
+    MONIK_ASSERT(!persistent || durable_);
 
     msg_props_.delivery_mode = persistent ? 2 : 1;
 
@@ -116,8 +116,8 @@ bool MessageSenderImpl::connect()
 
 void MessageSenderImpl::create_queue(const char * const queue_name)
 {
-    SDL_ASSERT(channel_);
-    sdl::sdl_throw_error_if(sdl::is_str_empty(queue_name), "queue name is empty");
+    MONIK_ASSERT(channel_);
+    monik::sdl_throw_error_if(monik::is_str_empty(queue_name), "queue name is empty");
 
 /*
  * See:
@@ -150,7 +150,7 @@ void MessageSenderImpl::create_queue(const char * const queue_name)
  */
                 false   // auto_delete
                 );
-    SDL_ASSERT(qname == queue_name);
+    MONIK_ASSERT(qname == queue_name);
     channel_->BindQueue(qname, exchange_name_);
 }
 

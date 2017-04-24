@@ -1,10 +1,10 @@
 // MessageSender.h
 //
 #pragma once
-#ifndef __SDL_LOG_AMQP_MESSAGESENDER_H__
-#define __SDL_LOG_AMQP_MESSAGESENDER_H__
+#ifndef __MONIK_LOG_AMQP_MESSAGESENDER_H__
+#define __MONIK_LOG_AMQP_MESSAGESENDER_H__
 
-#include "dataserver/log/third_party/amqp/amqp_config.h"
+#include "monik/log/third_party/amqp/amqp_config.h"
 
 namespace AmqpClient {
 
@@ -48,5 +48,5 @@ private:
 
 } // AmqpClient
 
-#endif // __SDL_LOG_AMQP_MESSAGESENDER_H__
+#endif // __MONIK_LOG_AMQP_MESSAGESENDER_H__
 

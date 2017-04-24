@@ -4,7 +4,7 @@
 #ifndef SIMPLEAMQPCLIENT_BASICMESSAGE_H
 #define SIMPLEAMQPCLIENT_BASICMESSAGE_H
 
-#include "dataserver/log/third_party/amqp/Table.h"
+#include "monik/log/third_party/amqp/Table.h"
 
 struct amqp_bytes_t_;
 struct amqp_basic_properties_t_;

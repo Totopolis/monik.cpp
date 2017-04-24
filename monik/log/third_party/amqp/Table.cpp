@@ -1,7 +1,7 @@
 // Table.cpp
 //
-#include "dataserver/log/third_party/amqp/Table.h"
-#include "dataserver/log/third_party/amqp/TableImpl.h"
+#include "monik/log/third_party/amqp/Table.h"
+#include "monik/log/third_party/amqp/TableImpl.h"
 
 namespace AmqpClient {
 TableValue::TableValue()
@@ -90,27 +90,27 @@ TableValue::ValueType TableValue::GetType() const {
 }
 
 bool TableValue::GetBool() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_bool);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_bool);
   return m_impl->m_value.variant.boolean;
 }
 
 std::int8_t TableValue::GetInt8() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_int8);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_int8);
   return m_impl->m_value.variant.i8;
 }
 
 std::int16_t TableValue::GetInt16() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_int16);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_int16);
   return m_impl->m_value.variant.i16;
 }
 
 std::int32_t TableValue::GetInt32() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_int32);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_int32);
   return m_impl->m_value.variant.i32;
 }
 
 std::int64_t TableValue::GetInt64() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_int64);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_int64);
   return m_impl->m_value.variant.i64;
 }
 
@@ -130,12 +130,12 @@ std::int64_t TableValue::GetInteger() const {
 }
 
 float TableValue::GetFloat() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_float);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_float);
   return m_impl->m_value.variant.f32;
 }
 
 double TableValue::GetDouble() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_double);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_double);
   return m_impl->m_value.variant.f64;
 }
 
@@ -151,17 +151,17 @@ double TableValue::GetReal() const {
 }
 
 std::string TableValue::GetString() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_string);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_string);
   return m_impl->m_value.string_;
 }
 
 std::vector<TableValue> TableValue::GetArray() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_array);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_array);
   return m_impl->m_value.array_;
 }
 
 Table TableValue::GetTable() const {
-  SDL_ASSERT(m_impl->m_value.kind == VT_table);
+  MONIK_ASSERT(m_impl->m_value.kind == VT_table);
   return m_impl->m_value.table_;
 }
 

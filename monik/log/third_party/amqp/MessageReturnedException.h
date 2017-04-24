@@ -4,7 +4,7 @@
 #ifndef SIMPLEAMQPCLIENT_MESSAGERETURNEDEXCEPTION_H
 #define SIMPLEAMQPCLIENT_MESSAGERETURNEDEXCEPTION_H
 
-#include "dataserver/log/third_party/amqp/BasicMessage.h"
+#include "monik/log/third_party/amqp/BasicMessage.h"
 
 namespace AmqpClient {
 

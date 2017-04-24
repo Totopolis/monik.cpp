@@ -4,15 +4,15 @@
 #define _SCL_SECURE_NO_WARNINGS
 #endif
 
-#include "dataserver/log/third_party/amqp/TableImpl.h"
+#include "monik/log/third_party/amqp/TableImpl.h"
 
 namespace AmqpClient { namespace Detail {
 
 bool value_t::operator == (value_t const & v) const
 {
-    A_STATIC_ASSERT_IS_POD(value_t::union_t);
-    SDL_ASSERT(kind != TableValue::VT_void);
-    SDL_ASSERT(v.kind != TableValue::VT_void);
+    M_STATIC_ASSERT_IS_POD(value_t::union_t);
+    MONIK_ASSERT(kind != TableValue::VT_void);
+    MONIK_ASSERT(v.kind != TableValue::VT_void);
     if (kind != v.kind) return false;
     switch(kind) {
     case TableValue::VT_bool:      return (variant.boolean == v.variant.boolean);
@@ -26,7 +26,7 @@ bool value_t::operator == (value_t const & v) const
     case TableValue::VT_array:     return (array_ == v.array_);
     case TableValue::VT_table:     return (table_ == v.table_);
     default:
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return false;
     }
 }
@@ -106,7 +106,7 @@ amqp_field_value_t TableValueImpl::generate_field_value::operator()(
 amqp_field_value_t TableValueImpl::generate_field_value::operator()(
     const value_t& value) const
 {
-    SDL_ASSERT(value.kind != TableValue::VT_void);
+    MONIK_ASSERT(value.kind != TableValue::VT_void);
     switch(value.kind) {
     case TableValue::VT_bool:      return operator()(value.variant.boolean);
     case TableValue::VT_int8:      return operator()(value.variant.i8);
@@ -119,7 +119,7 @@ amqp_field_value_t TableValueImpl::generate_field_value::operator()(
     case TableValue::VT_array:     return operator()(value.array_);
     case TableValue::VT_table:     return operator()(value.table_);
     default:
-        SDL_ASSERT(0);
+        MONIK_ASSERT(0);
         return{};
     }
 }

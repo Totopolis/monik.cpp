@@ -4,7 +4,7 @@
 #ifndef SIMPLEAMQPCLIENT_CHANNEL_H
 #define SIMPLEAMQPCLIENT_CHANNEL_H
 
-#include "dataserver/log/third_party/amqp/Envelope.h"
+#include "monik/log/third_party/amqp/Envelope.h"
 
 namespace AmqpClient {
 

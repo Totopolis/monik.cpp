@@ -11,9 +11,9 @@
 #include <sys/types.h>
 #endif
 
-#include "dataserver/log/third_party/amqp/AmqpException.h"
-#include "dataserver/log/third_party/amqp/ChannelImpl.h"
-#include "dataserver/common/algorithm.h" // for sdl::algo::lex::split
+#include "monik/log/third_party/amqp/AmqpException.h"
+#include "monik/log/third_party/amqp/ChannelImpl.h"
+#include "monik/common/algorithm.h" // for monik::algo::lex::split
 
 #define BROKER_HEARTBEAT 0
 
@@ -192,7 +192,7 @@ MessageReturnedException ChannelImpl::CreateMessageReturnedException(
 
 BasicMessage::ptr_t ChannelImpl::ReadContent(amqp_channel_t channel)
 {
-  A_STATIC_ASSERT_IS_POD(amqp_frame_t);
+  M_STATIC_ASSERT_IS_POD(amqp_frame_t);
   amqp_frame_t frame {};
 
   GetNextFrameOnChannel(channel, frame);
@@ -454,7 +454,7 @@ std::uint32_t ChannelImpl::ComputeBrokerVersion(
   std::string version_string(
       static_cast<char *>(version_entry->value.value.bytes.bytes),
       version_entry->value.value.bytes.len);
-  std::vector<std::string> version_components = sdl::algo::lex::split(version_string, '.');
+  std::vector<std::string> version_components = monik::algo::lex::split(version_string, '.');
   if (version_components.size() != 3) {
     return 0;
   }

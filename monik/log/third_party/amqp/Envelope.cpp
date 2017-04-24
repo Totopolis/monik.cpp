@@ -1,6 +1,6 @@
 // Envelope.cpp
 //
-#include "dataserver/log/third_party/amqp/Envelope.h"
+#include "monik/log/third_party/amqp/Envelope.h"
 
 namespace AmqpClient {
 

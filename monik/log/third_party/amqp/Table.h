@@ -4,7 +4,7 @@
 #ifndef SIMPLEAMQPCLIENT_TABLE_H
 #define SIMPLEAMQPCLIENT_TABLE_H
 
-#include "dataserver/log/third_party/amqp/amqp_config.h"
+#include "monik/log/third_party/amqp/amqp_config.h"
 #include <map>
 
 namespace AmqpClient {
