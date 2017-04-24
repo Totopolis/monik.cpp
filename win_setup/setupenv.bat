@@ -12,8 +12,6 @@ set VS12_2013="Visual Studio 12 2013 Win64"
 set VS14_2015="Visual Studio 14 2015 Win64"
 
 set CMAKETOOLCHAIN=%VS14_2015%
-rem set CMAKETOOLCHAIN=%VS12_2013%
-
 set TOOLCHAINPATH=%CMAKETOOLCHAIN: =_%
 
 rem choose build type from one of possible constants

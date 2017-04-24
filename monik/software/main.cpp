@@ -64,10 +64,11 @@ void print_version()
 #else
     std::cout << "\nDEBUG version";
 #endif
-#if MONIK_DEBUG
-    std::cout << "\nMONIK_DEBUG=1";
-#else
-    std::cout << "\nMONIK_DEBUG=0";
+#if defined(MONIK_DEBUG)
+    std::cout << "\nMONIK_DEBUG = " << MONIK_DEBUG;
+#endif
+#if defined(MONIK_INCLUDE_AMQP)
+    std::cout << "\nMONIK_INCLUDE_AMQP = " << MONIK_INCLUDE_AMQP;
 #endif
     std::cout
         << "\nBuild date: " << __DATE__
