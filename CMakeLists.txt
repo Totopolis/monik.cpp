@@ -32,7 +32,7 @@ if(UNIX)
   add_definitions(-DMONIK_OS_UNIX)
 endif(UNIX) 
 
-#if(UNIX) #need for libprotobuf_files
+#if(UNIX) need for libprotobuf_files
 #find_package(Threads REQUIRED)
 #if (CMAKE_USE_PTHREADS_INIT)
 #  add_definitions(-DHAVE_PTHREAD)
@@ -351,8 +351,6 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
-#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
-#target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
 target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 else()
