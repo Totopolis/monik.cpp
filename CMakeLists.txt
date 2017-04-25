@@ -52,27 +52,11 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-MESSAGE( STATUS "CMAKE_CURRENT_SOURCE_DIR: " ${CMAKE_CURRENT_SOURCE_DIR} )
+message( STATUS "CMAKE_CURRENT_SOURCE_DIR: " ${CMAKE_CURRENT_SOURCE_DIR} )
 
 if(WIN32)
 add_definitions(-DCMAKE_CURRENT_SOURCE_DIR=R\"\(${CMAKE_CURRENT_SOURCE_DIR}\)\")
 endif(WIN32)
-
-if (Boost_INCLUDE_DIR) #optional
-message(STATUS "Boost_INCLUDE_DIR: ${Boost_INCLUDE_DIR}")
-# Require boost system library
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
-find_package(Boost REQUIRED COMPONENTS date_time chrono system )
-include_directories(${Boost_INCLUDE_DIR})
-add_definitions(-DMONIK_INCLUDE_BOOST=1)
-else()
-message(STATUS "Boost_INCLUDE_DIR: ${Boost_INCLUDE_DIR}")
-endif()
-
-if (WIN32)
-set(SOCKET_LIBRARY ws2_32)
-endif ()
 
 include_directories(
     ${ADDITIONAL_INCLUDE_DIRS}
@@ -222,7 +206,6 @@ if(WIN32)
 set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} libprotobuf-lite${LIB_TYPE} libprotoc${LIB_TYPE})
 else(WIN32)
 set(PROTOBUF_LIBS -lprotobuf -lprotobuf-lite -lprotoc)
-#set(PROTOBUF_LIBS -lprotobuf${LIB_TYPE} -lprotobuf-lite${LIB_TYPE} -lprotoc${LIB_TYPE})
 endif(WIN32)
 endif()
 
@@ -230,38 +213,37 @@ if (Rabbitmqc_LIBRARY)
 message(STATUS "build monik/log/third_party/amqp")
 message(STATUS "build monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=1)
-add_library( monikcpp${LIB_TYPE} STATIC 
+add_library(monikcpp${LIB_TYPE} STATIC 
   ${MONIK_SOURCE_FILES}
   ${MONIK_SOURCE_LOG_AMQP}
   ${MONIK_SOURCE_LOG_PROTOBUF}
   )
-add_executable( test_monik${LIB_TYPE}
-  ${MONIK_SOFTWARE_MAIN}
-  ${MONIK_SOURCE_FILES}
-  ${MONIK_SOURCE_LOG_AMQP}
-  ${MONIK_SOURCE_LOG_PROTOBUF}
-  )
+#add_executable( test_monik${LIB_TYPE}
+#${MONIK_SOFTWARE_MAIN}
+#${MONIK_SOURCE_FILES}
+#${MONIK_SOURCE_LOG_AMQP}
+#${MONIK_SOURCE_LOG_PROTOBUF} )
 source_group(protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
 message(STATUS "ignore monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=0)
 add_library( monikcpp${LIB_TYPE} STATIC ${MONIK_SOURCE_FILES} )
-add_executable( test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
+#add_executable(test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
 endif()
 
-if (UNIX)
-target_link_libraries(test_monik${LIB_TYPE} -lpthread)
-endif (UNIX)
+#if (UNIX)
+#target_link_libraries(test_monik${LIB_TYPE} -lpthread)
+#endif (UNIX)
 
-if (Boost_LIBRARIES) #optional
-message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
-target_link_libraries(test_monik${LIB_TYPE} ${Boost_LIBRARIES})
+if (WIN32)
+set(SOCKET_LIBRARY ws2_32)
 endif()
 
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
-target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
+#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 endif()
+
