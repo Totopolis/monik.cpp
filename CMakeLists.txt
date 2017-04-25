@@ -29,14 +29,19 @@ endif(NOT CMAKE_BUILD_TYPE)
 if(WIN32)
   message(STATUS "WIN32: ${WIN32}")
   add_definitions(-DMONIK_OS_WIN32 -DWIN32)
-  IF (MSVC)
-    ADD_DEFINITIONS(/bigobj)
-  ENDIF (MSVC)  
+
 endif(WIN32)
 
 if(UNIX)
   message(STATUS "UNIX: ${UNIX}")
   add_definitions(-DMONIK_OS_UNIX)
+endif(UNIX) 
+
+if(UNIX)
+find_package(Threads REQUIRED)
+if (CMAKE_USE_PTHREADS_INIT)
+  add_definitions(-DHAVE_PTHREAD)
+endif (CMAKE_USE_PTHREADS_INIT)
 endif(UNIX) 
 
 if(APPLE)
@@ -292,13 +297,13 @@ endif()
 
 message(STATUS "LIB_TYPE: ${LIB_TYPE}")
 
-if (Rabbitmqc_LIBRARY)
-if(WIN32)
+#if (Rabbitmqc_LIBRARY)
+#if(WIN32)
 #set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} )
-else(WIN32)
+#else(WIN32)
 #set(PROTOBUF_LIBS -lprotobuf )
-endif(WIN32)
-endif()
+#endif(WIN32)
+#endif()
 
 if (Rabbitmqc_LIBRARY)
 message(STATUS "build monik/log/third_party/amqp")
@@ -324,12 +329,23 @@ else()
 message(STATUS "ignore monik/log/third_party/amqp")
 message(STATUS "ignore monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=0)
-add_library( monikcpp${LIB_TYPE} STATIC ${MONIK_SOURCE_FILES} )
-add_executable(test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
+add_library( monikcpp${LIB_TYPE} STATIC 
+    ${MONIK_SOURCE_FILES}
+    ${MONIK_SOURCE_LOG_PROTOBUF} 
+    ${libprotobuf_files}
+    ${libprotobuf_lite_files}
+    )
+add_executable(test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN}
+    ${MONIK_SOURCE_FILES}
+    ${MONIK_SOURCE_LOG_PROTOBUF} 
+    ${libprotobuf_files}
+    ${libprotobuf_lite_files}
+    )
 endif()
 
 if (UNIX)
 target_link_libraries(test_monik${LIB_TYPE} -lpthread)
+target_link_libraries(monikcpp${LIB_TYPE} -lpthread)
 endif (UNIX)
 
 if (WIN32)
@@ -339,9 +355,9 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
-#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
-#target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
-target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
-target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
+target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
+target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
+#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
+#target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 endif()
 
