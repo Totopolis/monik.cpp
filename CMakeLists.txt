@@ -62,11 +62,14 @@ if(WIN32)
 add_definitions(-DCMAKE_CURRENT_SOURCE_DIR=R\"\(${CMAKE_CURRENT_SOURCE_DIR}\)\")
 endif(WIN32)
 
+set(protobuf_source_dir monik/third_party/libprotobuf )
+
 include_directories(
     ${ADDITIONAL_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}
     monik/log/third_party
     "${DEPLOY_DIR}/include"
+    ${protobuf_source_dir}/src
   )
 
 set( MONIK_SOFTWARE_MAIN
@@ -189,11 +192,95 @@ set( MONIK_SOURCE_FILES
   ${MONIK_SOURCE_LOG_JSON}
   )
 
+set(libprotobuf_files
+  ${protobuf_source_dir}/src/google/protobuf/any.cc
+  ${protobuf_source_dir}/src/google/protobuf/any.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/api.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/importer.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/parser.cc
+  ${protobuf_source_dir}/src/google/protobuf/descriptor.cc
+  ${protobuf_source_dir}/src/google/protobuf/descriptor.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/descriptor_database.cc
+  ${protobuf_source_dir}/src/google/protobuf/duration.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/dynamic_message.cc
+  ${protobuf_source_dir}/src/google/protobuf/empty.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/extension_set_heavy.cc
+  ${protobuf_source_dir}/src/google/protobuf/field_mask.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/generated_message_reflection.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/gzip_stream.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/printer.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/strtod.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/tokenizer.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/zero_copy_stream_impl.cc
+  ${protobuf_source_dir}/src/google/protobuf/map_field.cc
+  ${protobuf_source_dir}/src/google/protobuf/message.cc
+  ${protobuf_source_dir}/src/google/protobuf/reflection_ops.cc
+  ${protobuf_source_dir}/src/google/protobuf/service.cc
+  ${protobuf_source_dir}/src/google/protobuf/source_context.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/struct.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/mathlimits.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/substitute.cc
+  ${protobuf_source_dir}/src/google/protobuf/text_format.cc
+  ${protobuf_source_dir}/src/google/protobuf/timestamp.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/type.pb.cc
+  ${protobuf_source_dir}/src/google/protobuf/unknown_field_set.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/field_comparator.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/field_mask_util.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/datapiece.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/default_value_objectwriter.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/error_listener.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/field_mask_utility.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/json_escaping.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/json_objectwriter.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/json_stream_parser.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/object_writer.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/proto_writer.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/protostream_objectsource.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/protostream_objectwriter.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/type_info.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/type_info_test_helper.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/internal/utility.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/json_util.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/message_differencer.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/time_util.cc
+  ${protobuf_source_dir}/src/google/protobuf/util/type_resolver_util.cc
+  ${protobuf_source_dir}/src/google/protobuf/wire_format.cc
+  ${protobuf_source_dir}/src/google/protobuf/wrappers.pb.cc
+)  
+
+set(libprotobuf_lite_files
+  ${protobuf_source_dir}/src/google/protobuf/arena.cc
+  ${protobuf_source_dir}/src/google/protobuf/arenastring.cc
+  ${protobuf_source_dir}/src/google/protobuf/extension_set.cc
+  ${protobuf_source_dir}/src/google/protobuf/generated_message_util.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/coded_stream.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/zero_copy_stream.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/zero_copy_stream_impl_lite.cc
+  ${protobuf_source_dir}/src/google/protobuf/message_lite.cc
+  ${protobuf_source_dir}/src/google/protobuf/repeated_field.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/atomicops_internals_x86_gcc.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/atomicops_internals_x86_msvc.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/bytestream.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/common.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/int128.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/once.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/status.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/statusor.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/stringpiece.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/stringprintf.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/structurally_valid.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/strutil.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/time.cc
+  ${protobuf_source_dir}/src/google/protobuf/wire_format_lite.cc
+)
+
 source_group(common FILES ${MONIK_SOURCE_COMMON} )
 source_group(software FILES ${MONIK_SOFTWARE_MAIN} )
 source_group(log FILES ${MONIK_SOURCE_LOG} )
 source_group(third_party/json FILES ${MONIK_SOURCE_LOG_JSON} )
 source_group(third_party/amqp FILES ${MONIK_SOURCE_LOG_AMQP} )
+source_group(libprotobuf_files FILES ${libprotobuf_files} )
+source_group(libprotobuf_lite_files FILES ${libprotobuf_lite_files} )
 
 link_directories(
    "${DEPLOY_DIR}/lib" 
@@ -207,9 +294,9 @@ message(STATUS "LIB_TYPE: ${LIB_TYPE}")
 
 if (Rabbitmqc_LIBRARY)
 if(WIN32)
-set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} )
+#set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} )
 else(WIN32)
-set(PROTOBUF_LIBS -lprotobuf )
+#set(PROTOBUF_LIBS -lprotobuf )
 endif(WIN32)
 endif()
 
@@ -220,12 +307,18 @@ add_definitions(-DMONIK_INCLUDE_AMQP=1)
 add_library(monikcpp${LIB_TYPE} STATIC 
     ${MONIK_SOURCE_FILES}
     ${MONIK_SOURCE_LOG_AMQP}
-    ${MONIK_SOURCE_LOG_PROTOBUF} )
+    ${MONIK_SOURCE_LOG_PROTOBUF} 
+    ${libprotobuf_files}
+    ${libprotobuf_lite_files}
+    )
 add_executable(test_monik${LIB_TYPE}
     ${MONIK_SOFTWARE_MAIN}
     ${MONIK_SOURCE_FILES}
     ${MONIK_SOURCE_LOG_AMQP}
-    ${MONIK_SOURCE_LOG_PROTOBUF} )
+    ${MONIK_SOURCE_LOG_PROTOBUF}
+    ${libprotobuf_files}
+    ${libprotobuf_lite_files}
+    )
 source_group(protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
@@ -246,6 +339,8 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
+#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
+#target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY})
 target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 endif()

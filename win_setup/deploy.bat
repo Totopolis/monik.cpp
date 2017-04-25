@@ -17,7 +17,7 @@ mkdir %DEPLOY_DIR_BASE%
 mkdir %DEPLOY_DIR%
 
 cd %SCRIPTS_DIR%
-call build_protobuf.bat
+rem call build_protobuf.bat
 rem call build_openssl.bat
 call build_rabbitmq-c.bat
 
