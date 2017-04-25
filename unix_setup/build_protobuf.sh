@@ -15,6 +15,6 @@ cd build
 mkdir ${CMAKE_BUILD_TYPE}
 cd ${CMAKE_BUILD_TYPE}
 
-cmake -Dprotobuf_MSVC_STATIC_RUNTIME=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${DEPLOY_DIR} ${BUILD_DIR}/protobuf/cmake
+cmake -Dprotobuf_MSVC_STATIC_RUNTIME=OFF -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${DEPLOY_DIR} ${BUILD_DIR}/protobuf/cmake
 cmake --build . --target install --config ${CMAKE_BUILD_TYPE}
 cd ${SCRIPTS_DIR}

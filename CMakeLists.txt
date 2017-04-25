@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 2.6)
 project(monik C CXX)
 
-set(MONIK_UNIX_CXX_FLAGS "" CACHE STRING "more C++ compiler flags if UNIX")
-message(STATUS "MONIK_UNIX_CXX_FLAGS: ${MONIK_UNIX_CXX_FLAGS}")
+#if(WIN32) #experimental
+#set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+#set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+#endif(WIN32)
 
 if(UNIX)
-set(CMAKE_CXX_FLAGS "-Wall -std=c++14 ${MONIK_UNIX_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 endif(UNIX)
+
+message(STATUS "CXXFLAGS: ${CMAKE_CXX_FLAGS}")
 
 # guard against in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -203,9 +207,9 @@ message(STATUS "LIB_TYPE: ${LIB_TYPE}")
 
 if (Rabbitmqc_LIBRARY)
 if(WIN32)
-set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} libprotobuf-lite${LIB_TYPE} libprotoc${LIB_TYPE})
+set(PROTOBUF_LIBS libprotobuf${LIB_TYPE} )
 else(WIN32)
-set(PROTOBUF_LIBS -lprotobuf -lprotobuf-lite -lprotoc)
+set(PROTOBUF_LIBS -lprotobuf )
 endif(WIN32)
 endif()
 
@@ -214,27 +218,26 @@ message(STATUS "build monik/log/third_party/amqp")
 message(STATUS "build monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=1)
 add_library(monikcpp${LIB_TYPE} STATIC 
-  ${MONIK_SOURCE_FILES}
-  ${MONIK_SOURCE_LOG_AMQP}
-  ${MONIK_SOURCE_LOG_PROTOBUF}
-  )
-#add_executable( test_monik${LIB_TYPE}
-#${MONIK_SOFTWARE_MAIN}
-#${MONIK_SOURCE_FILES}
-#${MONIK_SOURCE_LOG_AMQP}
-#${MONIK_SOURCE_LOG_PROTOBUF} )
+    ${MONIK_SOURCE_FILES}
+    ${MONIK_SOURCE_LOG_AMQP}
+    ${MONIK_SOURCE_LOG_PROTOBUF} )
+add_executable(test_monik${LIB_TYPE}
+    ${MONIK_SOFTWARE_MAIN}
+    ${MONIK_SOURCE_FILES}
+    ${MONIK_SOURCE_LOG_AMQP}
+    ${MONIK_SOURCE_LOG_PROTOBUF} )
 source_group(protobuf FILES ${MONIK_SOURCE_LOG_PROTOBUF} )  
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
 message(STATUS "ignore monik/protobuf")
 add_definitions(-DMONIK_INCLUDE_AMQP=0)
 add_library( monikcpp${LIB_TYPE} STATIC ${MONIK_SOURCE_FILES} )
-#add_executable(test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
+add_executable(test_monik${LIB_TYPE} ${MONIK_SOFTWARE_MAIN} ${MONIK_SOURCE_FILES} )
 endif()
 
-#if (UNIX)
-#target_link_libraries(test_monik${LIB_TYPE} -lpthread)
-#endif (UNIX)
+if (UNIX)
+target_link_libraries(test_monik${LIB_TYPE} -lpthread)
+endif (UNIX)
 
 if (WIN32)
 set(SOCKET_LIBRARY ws2_32)
@@ -243,7 +246,7 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
-#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
+target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 endif()
 
