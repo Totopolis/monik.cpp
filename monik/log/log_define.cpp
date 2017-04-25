@@ -3,7 +3,7 @@
 #include "monik/log/log_define.h"
 
 #if MONIK_DEBUG
-namespace monik { namespace log { namespace {
+namespace {
 
 inline constexpr const char * maybe_constexpr(const char * s) { 
     return s;
@@ -35,9 +35,9 @@ public:
             MONIK_LOG_FATAL(__FUNCTION__);
         }
         if (0) {
-            MONIK_LOG_TRACE_SOURCE(monik_source::application, " at line ", __LINE__);
-            MONIK_LOG_TRACE_SOURCE(monik_source::application, "message");
-            MONIK_LOG_TRACE_SOURCE(monik_source::application);
+            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application, " at line ", __LINE__);
+            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application, "message");
+            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application);
             //
             MONIK_LOG_TRACE_SOURCE(__FUNCTION__);
             MONIK_LOG_DEBUG_SOURCE(__FUNCTION__);
@@ -70,8 +70,7 @@ public:
     }
 };
 static unit_test s_test;
-
-}}} // monik
+}
 #endif //#if SV_DEBUG
 
 
