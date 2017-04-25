@@ -15,12 +15,18 @@ set CMAKETOOLCHAIN=%VS14_2015%
 set TOOLCHAINPATH=%CMAKETOOLCHAIN: =_%
 
 rem choose build type from one of possible constants
-set BUILD_TYPE_DEBUG=Debug
-set BUILD_TYPE_RELEASE=Release
-set BUILD_TYPE_RELWITHDEBINFO=RelWithDebInfo
-set BUILD_TYPE_MINSIZEREL=MinSizeRel
+rem set BUILD_TYPE_DEBUG=Debug
+rem set BUILD_TYPE_RELEASE=Release
+rem set BUILD_TYPE_RELWITHDEBINFO=RelWithDebInfo
+rem set BUILD_TYPE_MINSIZEREL=MinSizeRel
 
-set BUILD_TYPE=%BUILD_TYPE_RELEASE%
+if %DEPLOY_BUILD_TYPE%.==. GOTO No1
+set BUILD_TYPE=%DEPLOY_BUILD_TYPE%
+GOTO No2
+:No1
+set BUILD_TYPE=Release
+:No2
+
 rem set BUILD_TYPE=%BUILD_TYPE_DEBUG%
 
 set CMAKEGENERATOR=-G %CMAKETOOLCHAIN%
@@ -28,10 +34,7 @@ set TOOLCHAINTAG=%TOOLCHAINPATH:~1,-1%_%BUILD_TYPE%
 set SCRIPTS_DIR=%CD%
 set PROJECT_ROOT_DIR=%SCRIPTS_DIR%\..
 set BUILD_DIR=%PROJECT_ROOT_DIR%\build
-
-rem the directory where all built libraries will be installed
-set DEPLOY_DIR_BASE=%PROJECT_ROOT_DIR%\install
-set DEPLOY_DIR=%DEPLOY_DIR_BASE%\%TOOLCHAINTAG%
+set DEPLOY_DIR=%PROJECT_ROOT_DIR%\install\%BUILD_TYPE%
 
 rem setup msvs environment to build openssl
 call setup_msvs_env.bat
