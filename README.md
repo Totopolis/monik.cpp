@@ -24,13 +24,20 @@ Minimal dependencies
 Compilation
 -----------
 
-The application can be built using these four commands:
+The library can be built using these four commands:
 
     mkdir build
     cd build
     cmake .. 
     make
 
+To build the library with remote logging use one on these commands:
+
+* win_setup/deploy.bat 
+* win_setup/deploy.bat Debug
+* unix_setup/deploy.sh
+* unix_setup/deploy.sh Debug
+    
 LICENSE
 =======
 
