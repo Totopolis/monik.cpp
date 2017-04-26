@@ -10,7 +10,7 @@
 		{
 			"channel": "file",
 			"severity": "trace,debug,info,warning,error,fatal",
-            "format": "%y-%m-%d %H:%M:%S %I %q: %t",
+            "format": "%y-%m-%d %H:%M:%S %E %q: %t",
 			"path1": "monik.log",
 			"path2": "monik2.log",
 			"logsize": 0,
@@ -19,7 +19,7 @@
 		{
 			"channel": "monik",
 			"severity": "trace,debug,info,warning,error,fatal",
-            "format": "%y-%m-%d %H:%M:%S %I %q: %t",
+            "format": "%y-%m-%d %H:%M:%S %E %q: %t",
 			"params": {
 				"host": "",
 				"port": 0,
