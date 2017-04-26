@@ -31,7 +31,7 @@ The library can be built using these four commands:
     cmake .. 
     make
 
-To build the library with remote logging use one on these commands:
+To build the library with remote logging use one of these commands:
 
 * win_setup/deploy.bat 
 * win_setup/deploy.bat Debug
