@@ -26,32 +26,29 @@ public:
     unit_test()
     {
         if (0) {
-            MONIK_LOG_TRACE(__FUNCTION__, " at line ", __LINE__);
-            MONIK_LOG_TRACE(__FUNCTION__);
-            MONIK_LOG_DEBUG(__FUNCTION__);
+            MONIK_LOG_VERBOSE(__FUNCTION__, " at line ", __LINE__);
+            MONIK_LOG_VERBOSE(__FUNCTION__);
             MONIK_LOG_INFO(__FUNCTION__);
             MONIK_LOG_WARNING(__FUNCTION__);
             MONIK_LOG_ERROR(__FUNCTION__);
             MONIK_LOG_FATAL(__FUNCTION__);
         }
         if (0) {
-            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application, " at line ", __LINE__);
-            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application, "message");
-            MONIK_LOG_TRACE_SOURCE(monik::log::monik_source::application);
+            MONIK_LOG_VERBOSE_SOURCE(monik::log::monik_source::application, " at line ", __LINE__);
+            MONIK_LOG_VERBOSE_SOURCE(monik::log::monik_source::application, "message");
+            MONIK_LOG_VERBOSE_SOURCE(monik::log::monik_source::application);
             //
-            MONIK_LOG_TRACE_SOURCE(__FUNCTION__);
-            MONIK_LOG_DEBUG_SOURCE(__FUNCTION__);
+            MONIK_LOG_VERBOSE_SOURCE(__FUNCTION__);
             MONIK_LOG_INFO_SOURCE(__FUNCTION__);
             MONIK_LOG_WARNING_SOURCE(__FUNCTION__);
             MONIK_LOG_ERROR_SOURCE(__FUNCTION__);
             MONIK_LOG_FATAL_SOURCE(__FUNCTION__);
             //
-            MONIK_LOG_TRACE_SYSTEM(__FUNCTION__);
-            MONIK_LOG_TRACE_APPLICATION(__FUNCTION__);
-            MONIK_LOG_TRACE_LOGIC(__FUNCTION__);
-            MONIK_LOG_TRACE_SECURITY(__FUNCTION__);
+            MONIK_LOG_VERBOSE_SYSTEM(__FUNCTION__);
+            MONIK_LOG_VERBOSE_APPLICATION(__FUNCTION__);
+            MONIK_LOG_VERBOSE_LOGIC(__FUNCTION__);
+            MONIK_LOG_VERBOSE_SECURITY(__FUNCTION__);
             //
-            MONIK_LOG_DEBUG_SYSTEM(__FUNCTION__);
             MONIK_LOG_INFO_SYSTEM(__FUNCTION__);
             MONIK_LOG_WARNING_SYSTEM(__FUNCTION__);
             MONIK_LOG_ERROR_SYSTEM(__FUNCTION__);

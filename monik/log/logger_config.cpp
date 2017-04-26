@@ -7,7 +7,6 @@
 #include "monik/log/monik_log.h"
 #include "monik/log/third_party/json/json_parser.h"
 #include "monik/log/third_party/json/reader.h"
-#include "monik/common/algorithm.h" // for monik::algo::lex::split
 
 namespace monik { namespace log { 
 
@@ -25,11 +24,11 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
             {
                 const auto filter = root["filter"].asString();
                 if (!filter.empty()) {
-                    dest.set_filter(logger::from_string(filter.c_str()));
+                    dest.set_filter(severity_str::from_string(filter.c_str()));
                 }
             }
             for (const auto & m : root["loggers"]) {
-                const auto severity_arr = algo::lex::split(m["severity"].asString(), ',');
+                const auto severity_arr = severity_str::parse(m["severity"].asString());
                 MONIK_ASSERT(!severity_arr.empty());
                 if (!severity_arr.empty()) {
                     const buf_size_t bufsize = m["bufsize"].asInt(); // can be 0
@@ -89,7 +88,7 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
                                 MONIK_ASSERT(params.retrytimeout.value() > 0);
                                 for (const auto & s : severity_arr) {
                                     dest.add_keepalive(std::make_shared<keepalive_log>(
-                                        logger::from_string(s), period, std::move(params)));
+                                        s, period, std::move(params)));
                                 }
                             }
                             else {
@@ -100,7 +99,7 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
 #endif
                     if (sp) {
                         for (const auto & s : severity_arr) {
-                            dest.add_channel(logger::from_string(s), sp, format);
+                            dest.add_channel(s, sp, format);
                         }
                     }
                 }
@@ -125,9 +124,9 @@ namespace monik { namespace log { namespace {
             if (0) {
                 const char test_path[] = CMAKE_CURRENT_SOURCE_DIR R"(/dataserver/log/ignore/logger.json)";
                 if (logger_config::setup_logs_file(logger::ST::instance(), test_path)) {
-                    logger::ST::cinstance().log(severity::debug, "debug", nullptr);
+                    logger::ST::cinstance().log(severity::verbose, "verbose", nullptr);
                     for (const severity t : severity_all()) {
-                        std::string s("severity_"); s += logger::to_string(t);
+                        std::string s("severity_"); s += severity_str::to_string(t);
                         logger::ST::cinstance().log(t, std::move(s), nullptr);
                     }
                 }

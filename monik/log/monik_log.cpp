@@ -49,7 +49,7 @@ tutorial::SeverityType monik_severity(const severity t)
     case severity::error:      return tutorial::SeverityType::ERROR;
     case severity::fatal:      return tutorial::SeverityType::FATAL;
     default:
-        MONIK_ASSERT((t == severity::trace) || (t == severity::debug));
+        MONIK_ASSERT(t == severity::verbose);
         return tutorial::SeverityType::VERBOSE;
     }
 }

@@ -35,15 +35,19 @@ public:
     void log(severity, std::string &&, message_source_ptr) const;
     void log(message_with_severity &&) const;
     void log(message_with_severity &&, message_source_ptr) const;
+private:
+    class impl;
+    std::unique_ptr<impl> m_data;
+};
+
+struct severity_str : is_static {
     static char abbreviated(severity);
     static const char * to_string(severity);
     static severity from_string(const char *);
     static severity from_string(std::string const & s) {
         return from_string(s.c_str());
     }
-private:
-    class impl;
-    std::unique_ptr<impl> m_data;
+    static std::vector<severity> parse(std::string const &);
 };
 
 using init_logger_t = std::function<logger *()>;

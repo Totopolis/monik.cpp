@@ -109,7 +109,7 @@ void remote_log::data_type::write(const message_with_severity & s)
 {
     MONIK_ASSERT(!s.m_message.empty());
     if (connect()) {
-        const bool persistent = (s.m_severity > severity::debug);
+        const bool persistent = (s.m_severity != severity::verbose);
         m_sender->send(s.m_message.c_str(), s.m_message.size(), 
            persistent);
     }

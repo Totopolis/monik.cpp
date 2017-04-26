@@ -231,10 +231,10 @@ void format_with_time(std::string & text, const char key,
         text += std::to_string(static_cast<int>(msg.m_severity));
         break;
     case 'p': // %p - message priority (Fatal, Critical, Error, Warning, Notice, Information, Debug, Trace)
-        text += logger::to_string(msg.m_severity);
+        text += severity_str::to_string(msg.m_severity);
         break;
     case 'q': // %q - abbreviated message priority (F, C, E, W, N, I, D, T)
-        text += logger::abbreviated(msg.m_severity);
+        text += severity_str::abbreviated(msg.m_severity);
         break;
     case 'I': // %I - message thread identifier (numeric)
         {
@@ -397,7 +397,7 @@ namespace monik { namespace log { namespace {
             }
             {
                 const auto s = pattern_formatter::format("%t [%s]", 
-                    message_with_severity(severity::trace, "msg"),
+                    message_with_severity(severity::verbose, "msg"),
                     "source");
                 MONIK_ASSERT(s == "msg [source]");
             }
@@ -405,7 +405,7 @@ namespace monik { namespace log { namespace {
                 const auto s = pattern_formatter::format(
                     "year %Y, %y-%m-%d %h-%H:%M:%S, centisecond %c,"
                     "microseconds %F, millisecond %i, thread %I, priority %q: %t [%s], day %e", 
-                    message_with_severity(severity::trace, "msg"),
+                    message_with_severity(severity::verbose, "msg"),
                     "source");
                 MONIK_ASSERT(!s.empty());
             }
@@ -413,7 +413,7 @@ namespace monik { namespace log { namespace {
                 const auto s = pattern_formatter::format(
                     "timestamp %E, year %Y, %y-%m-%d, UTC %h-%H:%M:%S, Local %L%h-%H:%M:%S, UTC again %U%h-%H:%M:%S, centisecond %c,"
                     "microseconds %F, millisecond %i, thread %I, priority %q: %t [%s], day %e", 
-                    message_with_severity(severity::trace, "msg"),
+                    message_with_severity(severity::verbose, "msg"),
                     "source");
                 MONIK_ASSERT(!s.empty());
             }

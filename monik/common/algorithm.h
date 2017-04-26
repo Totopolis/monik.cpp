@@ -79,6 +79,18 @@ inline bool is_unique(T const & result) {
     return std::adjacent_find(std::begin(result), std::end(result)) == std::end(result);
 }
 
+template<class T>
+inline void erase_unique(T & result) {
+    MONIK_ASSERT(is_sorted(result));
+    result.erase(std::unique(result.begin(), result.end()), result.end());
+}
+
+template<class T>
+inline void sort_erase_unique(T & result) {
+    std::sort(result.begin(), result.end());
+    erase_unique(result);
+}
+
 namespace detail {
 
 inline size_t strlen_t(std::string const & s) {

@@ -4,6 +4,7 @@
 #include "monik/log/console_log.h"
 #include "monik/log/pattern_formatter.h"
 #include "monik/common/format.h"
+#include "monik/common/algorithm.h" // for monik::algo::lex::split
 #if MONIK_DEBUG
 #include "monik/log/file_log.h"
 #endif
@@ -16,7 +17,7 @@ public:
     using vector_channel = std::vector<channel_format>;
     struct data_type {
         ex_handler handler;
-        severity filter = severity::trace;
+        severity filter = severity::verbose;
         array_severity<vector_channel> channel;
 #if MONIK_INCLUDE_AMQP
         array_severity<shared_keepalive> keepalive;
@@ -206,12 +207,11 @@ void logger::log(message_with_severity && s, message_source_ptr source) const
     m_data->log(std::move(s), source);
 }
 
-char logger::abbreviated(const severity t)
+char severity_str::abbreviated(const severity t)
 {
     MONIK_ASSERT(t < severity::_end);
     static char table[severity_size() + 1] = {
-        'T', // trace
-        'D', // debug
+        'V', // verbose
         'I', // info
         'W', // warning
         'E', // error
@@ -221,11 +221,10 @@ char logger::abbreviated(const severity t)
     return table[static_cast<size_t>(t)];
 }
 
-const char * logger::to_string(const severity t)
+const char * severity_str::to_string(const severity t)
 {
     switch (t) {
-    case severity::trace   : return "trace";
-    case severity::debug   : return "debug";
+    case severity::verbose : return "verbose";
     case severity::info    : return "info";
     case severity::warning : return "warning";
     case severity::error   : return "error";
@@ -236,18 +235,37 @@ const char * logger::to_string(const severity t)
     }
 }
 
-severity logger::from_string(const char * const s)
+severity severity_str::from_string(const char * const s)
 {
     if (is_str_valid(s)) {
-        if (0 == strcmp(s, "trace"))    { return severity::trace; }
-        if (0 == strcmp(s, "debug"))    { return severity::debug; }
+        if (0 == strcmp(s, "verbose"))  { return severity::verbose; }
         if (0 == strcmp(s, "info"))     { return severity::info; }
         if (0 == strcmp(s, "warning"))  { return severity::warning; }
         if (0 == strcmp(s, "error"))    { return severity::error; }
         if (0 == strcmp(s, "fatal"))    { return severity::fatal; }
     }
     MONIK_ASSERT(0);
-    return severity::trace;
+    return severity::verbose;
+}
+
+std::vector<severity> 
+severity_str::parse(std::string const & str)
+{
+    if (!str.empty()) {
+        if (str == "all") {
+            return { severity_all() };
+        }
+        const auto arr = algo::lex::split(str, ',');
+        std::vector<severity> result;
+        result.reserve(arr.size());
+        for (const auto & s : arr) {
+            result.push_back(severity_str::from_string(s));
+        }
+        algo::sort_erase_unique(result);
+        MONIK_ASSERT(result.size() == arr.size());
+        return result;
+    }
+    return{};
 }
 
 init_logger_t & init_logger() {
@@ -281,15 +299,14 @@ namespace monik { namespace log { namespace {
                 init_logger() = old;
                 MONIK_ASSERT(get_logger());
             }
-            MONIK_ASSERT(severity_all().size() == 6);
             {
                 for (const severity t : severity_all()) {
-                    MONIK_ASSERT(logger::from_string(logger::to_string(t)) == t);
-                    MONIK_ASSERT((logger::abbreviated(t) - 'A' + 'a') == logger::to_string(t)[0]);
+                    MONIK_ASSERT(severity_str::from_string(severity_str::to_string(t)) == t);
+                    MONIK_ASSERT((severity_str::abbreviated(t) - 'A' + 'a') == severity_str::to_string(t)[0]);
                 }
             }
             if (0) {
-                T::instance().set_filter(severity::trace);
+                T::instance().set_filter(severity::verbose);
                 T::instance().set_console(severity_all());
                 set_handler();
                 set_file_log();
@@ -314,7 +331,7 @@ namespace monik { namespace log { namespace {
             for (size_t i = 0; i < severity_size(); ++i) {
                 const severity t = static_cast<severity>(i);
                 try {
-                    auto s = std::string("log_") + logger::to_string(t) + "," + __DATE__ + "," + __TIME__;
+                    auto s = std::string("log_") + severity_str::to_string(t) + "," + __DATE__ + "," + __TIME__;
                     T::cinstance().log(t, std::move(s));
                 }
                 catch (...) {

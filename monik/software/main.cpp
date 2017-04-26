@@ -32,16 +32,12 @@ void trace_log(cmd_option const & opt)
         using T = log::logger::ST;
         if (log::logger_config::setup_logs_file(T::instance(), opt.log.config.c_str())) {
             if (!opt.log.message.empty()) {
-                log::severity t = log::severity::trace;
+                log::severity t = log::severity::verbose;
                 if (!opt.log.severity.empty()) {
-                    t = log::logger::from_string(opt.log.severity.c_str());
-                    MONIK_ASSERT(log::logger::to_string(t) == opt.log.severity);
+                    t = log::severity_str::from_string(opt.log.severity.c_str());
+                    MONIK_ASSERT(log::severity_str::to_string(t) == opt.log.severity);
                 }
                 T::cinstance().log(t, opt.log.message, opt.log.source.c_str());
-            }
-            if (0) { // test api
-                MONIK_LOG_TRACE(__FUNCTION__, " at line ", __LINE__);
-                MONIK_LOG_TRACE_SOURCE(__FILE__);
             }
         }
         else {

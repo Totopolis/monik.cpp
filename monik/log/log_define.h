@@ -63,38 +63,22 @@ public:
 } // log
 } // monik
 
-#if 0 // todo
-#define MONIK_LOG_TRACE(...)      ((void)0)
-#define MONIK_LOG_DEBUG(...)      ((void)0)
-#define MONIK_LOG_INFO(...)       ((void)0)
-#define MONIK_LOG_WARNING(...)    ((void)0)
-#define MONIK_LOG_ERROR(...)      ((void)0)
-#define MONIK_LOG_FATAL(...)      ((void)0)
-#endif
+#define MONIK_LOG_VERBOSE(...)      monik::log::log_define::write(monik::log::severity::verbose, __VA_ARGS__)
+#define MONIK_LOG_INFO(...)         monik::log::log_define::write(monik::log::severity::info, __VA_ARGS__)
+#define MONIK_LOG_WARNING(...)      monik::log::log_define::write(monik::log::severity::warning, __VA_ARGS__)
+#define MONIK_LOG_ERROR(...)        monik::log::log_define::write(monik::log::severity::error, __VA_ARGS__)
+#define MONIK_LOG_FATAL(...)        monik::log::log_define::write(monik::log::severity::fatal, __VA_ARGS__)
 
-#define MONIK_LOG_TRACE(...)      monik::log::log_define::write(monik::log::severity::trace, __VA_ARGS__)
-#define MONIK_LOG_DEBUG(...)      monik::log::log_define::write(monik::log::severity::debug, __VA_ARGS__)
-#define MONIK_LOG_INFO(...)       monik::log::log_define::write(monik::log::severity::info, __VA_ARGS__)
-#define MONIK_LOG_WARNING(...)    monik::log::log_define::write(monik::log::severity::warning, __VA_ARGS__)
-#define MONIK_LOG_ERROR(...)      monik::log::log_define::write(monik::log::severity::error, __VA_ARGS__)
-#define MONIK_LOG_FATAL(...)      monik::log::log_define::write(monik::log::severity::fatal, __VA_ARGS__)
-
-#define MONIK_LOG_TRACE_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::trace, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::debug, __VA_ARGS__)
+#define MONIK_LOG_VERBOSE_SOURCE(...)    monik::log::log_define::write_with_source(monik::log::severity::verbose, __VA_ARGS__)
 #define MONIK_LOG_INFO_SOURCE(...)       monik::log::log_define::write_with_source(monik::log::severity::info, __VA_ARGS__)
 #define MONIK_LOG_WARNING_SOURCE(...)    monik::log::log_define::write_with_source(monik::log::severity::warning, __VA_ARGS__)
 #define MONIK_LOG_ERROR_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::error, __VA_ARGS__)
 #define MONIK_LOG_FATAL_SOURCE(...)      monik::log::log_define::write_with_source(monik::log::severity::fatal, __VA_ARGS__)
 
-#define MONIK_LOG_TRACE_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::trace, monik::log::monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_TRACE_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::trace, monik::log::monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_TRACE_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::trace, monik::log::monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_TRACE_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::trace, monik::log::monik_source::security, __VA_ARGS__)
-
-#define MONIK_LOG_DEBUG_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::debug, monik::log::monik_source::system, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::debug, monik::log::monik_source::application, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::debug, monik::log::monik_source::logic, __VA_ARGS__)
-#define MONIK_LOG_DEBUG_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::debug, monik::log::monik_source::security, __VA_ARGS__)
+#define MONIK_LOG_VERBOSE_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::verbose, monik::log::monik_source::system, __VA_ARGS__)
+#define MONIK_LOG_VERBOSE_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::verbose, monik::log::monik_source::application, __VA_ARGS__)
+#define MONIK_LOG_VERBOSE_LOGIC(...)        monik::log::log_define::write_with_source(monik::log::severity::verbose, monik::log::monik_source::logic, __VA_ARGS__)
+#define MONIK_LOG_VERBOSE_SECURITY(...)     monik::log::log_define::write_with_source(monik::log::severity::verbose, monik::log::monik_source::security, __VA_ARGS__)
 
 #define MONIK_LOG_INFO_SYSTEM(...)       monik::log::log_define::write_with_source(monik::log::severity::info, monik::log::monik_source::system, __VA_ARGS__)
 #define MONIK_LOG_INFO_APPLICATION(...)  monik::log::log_define::write_with_source(monik::log::severity::info, monik::log::monik_source::application, __VA_ARGS__)
@@ -118,29 +102,22 @@ public:
 
 #else // !MONIK_LOG_ENABLE
 
-#define MONIK_LOG_TRACE(...)      ((void)0)
-#define MONIK_LOG_DEBUG(...)      ((void)0)
+#define MONIK_LOG_VERBOSE(...)    ((void)0)
 #define MONIK_LOG_INFO(...)       ((void)0)
 #define MONIK_LOG_WARNING(...)    ((void)0)
 #define MONIK_LOG_ERROR(...)      ((void)0)
 #define MONIK_LOG_FATAL(...)      ((void)0)
 
-#define MONIK_LOG_TRACE_SOURCE(...)      ((void)0)
-#define MONIK_LOG_DEBUG_SOURCE(...)      ((void)0)
+#define MONIK_LOG_VERBOSE_SOURCE(...)    ((void)0)
 #define MONIK_LOG_INFO_SOURCE(...)       ((void)0)
 #define MONIK_LOG_WARNING_SOURCE(...)    ((void)0)
 #define MONIK_LOG_ERROR_SOURCE(...)      ((void)0)
 #define MONIK_LOG_FATAL_SOURCE(...)      ((void)0)
 
-#define MONIK_LOG_TRACE_SYSTEM(...)       ((void)0)
-#define MONIK_LOG_TRACE_APPLICATION(...)  ((void)0)
-#define MONIK_LOG_TRACE_LOGIC(...)        ((void)0)
-#define MONIK_LOG_TRACE_SECURITY(...)     ((void)0)
-
-#define MONIK_LOG_DEBUG_SYSTEM(...)       ((void)0)
-#define MONIK_LOG_DEBUG_APPLICATION(...)  ((void)0)
-#define MONIK_LOG_DEBUG_LOGIC(...)        ((void)0)
-#define MONIK_LOG_DEBUG_SECURITY(...)     ((void)0)
+#define MONIK_LOG_VERBOSE_SYSTEM(...)       ((void)0)
+#define MONIK_LOG_VERBOSE_APPLICATION(...)  ((void)0)
+#define MONIK_LOG_VERBOSE_LOGIC(...)        ((void)0)
+#define MONIK_LOG_VERBOSE_SECURITY(...)     ((void)0)
 
 #define MONIK_LOG_INFO_SYSTEM(...)       ((void)0)
 #define MONIK_LOG_INFO_APPLICATION(...)  ((void)0)

@@ -10,24 +10,22 @@
 namespace monik { namespace log {
 
 enum class severity : uint8 {
-    trace = 0,
-    debug,      // 1
-    info,       // 2
-    warning,    // 3
-    error,      // 4
-    fatal,      // 5
+    verbose = 0,
+    info,           // 1
+    warning,        // 2
+    error,          // 3
+    fatal,          // 4
     //
-    _end
+    _end,
 };
 
 inline std::initializer_list<severity> severity_all() {
-    static const std::initializer_list<severity> all = {
-        severity::trace,       // 0
-        severity::debug,       // 1
-        severity::info,        // 2
-        severity::warning,     // 3
-        severity::error,       // 4
-        severity::fatal        // 5
+    static const std::initializer_list<severity> all {
+        severity::verbose,     // 0
+        severity::info,        // 1
+        severity::warning,     // 2
+        severity::error,       // 3
+        severity::fatal        // 4
     };
     return all;
 }

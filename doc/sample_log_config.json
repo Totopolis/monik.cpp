@@ -1,15 +1,15 @@
 {
-	"filter": "trace",
+	"filter": "verbose",
 	"loggers": [
 		{
 			"channel": "console",
-			"severity": "trace",
+			"severity": "verbose",
 			"format": "%H:%M:%S.%i %I %q: %t",
 			"bufsize": 1048576
 		},
 		{
 			"channel": "file",
-			"severity": "trace,debug,info,warning,error,fatal",
+			"severity": "all",
             "format": "%y-%m-%d %H:%M:%S %E %q: %t",
 			"path1": "monik.log",
 			"path2": "monik2.log",
@@ -18,7 +18,7 @@
 		},
 		{
 			"channel": "monik",
-			"severity": "trace,debug,info,warning,error,fatal",
+			"severity": "verbose,info,warning,error,fatal",
             "format": "%y-%m-%d %H:%M:%S %E %q: %t",
 			"params": {
 				"host": "",
@@ -36,7 +36,7 @@
 		},
 		{
 			"channel": "keepalive",
-			"severity": "trace",
+			"severity": "verbose",
 			"format": "%t",
 			"params": {
 				"host": "",

@@ -66,7 +66,7 @@ namespace monik { namespace log { namespace {
             if (0) {
                 console_log test(megabyte<1>::value);
                 for (size_t i = 0; i < 10; ++i) {
-                    test.log(message_with_severity(severity::trace, "console_log: " + std::to_string(i)));
+                    test.log(message_with_severity(severity::verbose, "console_log: " + std::to_string(i)));
                 }
                 while (!test.empty()) {
                     sleep_for_milliseconds(100);

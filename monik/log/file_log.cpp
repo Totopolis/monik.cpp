@@ -162,7 +162,7 @@ namespace monik { namespace log { namespace {
         size_t count = 0;
         void test_trace(file_log & test) {
             auto s = log_util::to_string("file_log_", std::to_string(count++), ",", __DATE__, ",", __TIME__);
-            test.log(message_with_severity(severity::trace, std::move(s)));
+            test.log(message_with_severity(severity::verbose, std::move(s)));
         }
     public:
         unit_test()

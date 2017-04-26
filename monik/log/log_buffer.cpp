@@ -121,7 +121,7 @@ namespace monik { namespace log { namespace {
                 log_buffer buf(megabyte<1>::value);
                 MONIK_ASSERT(buf.empty());
                 size_t count = 0;
-                while (buf.push_back(message_with_severity(severity::trace, __FUNCTION__))) {
+                while (buf.push_back(message_with_severity(severity::verbose, __FUNCTION__))) {
                     ++count;
                 }
                 MONIK_ASSERT(buf.full());
@@ -130,7 +130,7 @@ namespace monik { namespace log { namespace {
                 MONIK_ASSERT(buf.empty());
             }
             if (1) {
-                message_with_severity s1(severity::trace, std::string(__FUNCTION__));
+                message_with_severity s1(severity::verbose, std::string(__FUNCTION__));
                 message_with_severity s2 = std::move(s1);
                 MONIK_ASSERT(!s2.m_message.empty());
                 MONIK_ASSERT(s1.m_message.empty());
@@ -138,7 +138,7 @@ namespace monik { namespace log { namespace {
             if (1) {
                 log_buffer buf(megabyte<1>::value, log_buffer::overflow_policy::pop_front);
                 while (true) {
-                    message_with_severity msg(severity::trace, __FUNCTION__);
+                    message_with_severity msg(severity::verbose, __FUNCTION__);
                     const auto result = buf.push_back_ex(std::move(msg));
                     if (result == log_buffer::push_t::true_pop_front) {
                         break;

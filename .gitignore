@@ -25,6 +25,7 @@ bld/
 [Oo]bj/
 monik/third_party/
 monik/protobuf/monik.pb.*
+doc/*.docx
 CMakeLists.txt.*
 *.inl.1
 *.h.1
