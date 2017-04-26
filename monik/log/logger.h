@@ -54,6 +54,12 @@ inline logger* get_logger() {
     return p ? p() : nullptr;
 }
 
+inline void reset_logger() {
+    if (logger * p = get_logger()) {
+        p->reset();
+    }
+}
+
 } // log
 } // monik
 
