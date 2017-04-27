@@ -9,7 +9,6 @@ timer_thread::timer_thread(
         const second_t period,
         function_timer && fun)
     : m_shutdown(false)
-    , m_ready(false)
     , m_running(false)
     , m_period(period.value())
     , m_timer(std::move(fun))
@@ -45,7 +44,6 @@ void timer_thread::shutdown()
 {
     MONIK_WARNING(!m_shutdown);
     m_shutdown = true;
-    m_ready = true;
     m_cv.notify_one();
 }
 
@@ -58,10 +56,13 @@ void timer_thread::worker_thread()
             if (period > 0) {
                 std::unique_lock<std::mutex> lock(m_mutex);
                 m_cv.wait_for(lock, std::chrono::seconds(period), [this]{
-                    return m_ready.load();
+                    return m_shutdown.load();
                 });
-                m_ready = false;
             }
+        }
+        if (m_shutdown) {
+            MONIK_TRACE(__FUNCTION__, " shutdown");
+            break;
         }
         try {
             if (is_break(m_timer())) {

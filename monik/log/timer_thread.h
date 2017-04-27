@@ -25,7 +25,6 @@ public:
 private:
     void worker_thread();
     std::atomic_bool m_shutdown;
-    std::atomic_bool m_ready;
     std::atomic_bool m_running;
     std::atomic<int> m_period; // in seconds
     const function_timer m_timer;

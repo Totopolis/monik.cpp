@@ -80,6 +80,10 @@ void log_thread::worker_thread()
             MONIK_ASSERT(m_ready);
             m_ready = false;
         }
+        if (m_shutdown) {
+            MONIK_TRACE(__FUNCTION__, " shutdown");
+            break;
+        }
         if (auto data = m_buf.pop()) { // data can be empty
             const auto end = data.end();
             auto first = data.begin();

@@ -17,6 +17,7 @@ struct cmd_option final : noncopyable {
         std::string message;
         std::string severity;
         std::string source;
+        int sleep_for = 0;
     } log;
 };
 
@@ -28,6 +29,7 @@ void trace_log(cmd_option const & opt)
             << "\nmessage = " << opt.log.message
             << "\nseverity = " << opt.log.severity
             << "\nsource = " << opt.log.source
+            << "\nsleep_for = " << opt.log.sleep_for
             << std::endl;
         using T = log::logger::ST;
         if (log::logger_config::setup_logs_file(T::instance(), opt.log.config.c_str())) {
@@ -44,8 +46,8 @@ void trace_log(cmd_option const & opt)
             MONIK_ASSERT(0);
         }
     }
-    if (0) {
-        for (size_t i = 0; i < 30; ++i) {
+    if (opt.log.sleep_for > 0) {
+        for (int i = 0; i < opt.log.sleep_for; ++i) {
             std::cout << ".";
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
@@ -82,6 +84,7 @@ void print_help(int argc, char* argv[])
         << "\n[-m|--message] test message"
         << "\n[-s|--severity] trace|debug|info|warning|error|fatal"
         << "\n[-u|--source] system|application|logic|security"
+        << "\n[-t|--sleep_for] seconds"
         << std::endl;
 }
 
@@ -99,7 +102,8 @@ int run_main(int argc, char* argv[])
     cmd.add(make_option('i', opt.log.config, "config"));    
     cmd.add(make_option('m', opt.log.message, "message"));    
     cmd.add(make_option('s', opt.log.severity, "severity"));    
-    cmd.add(make_option('u', opt.log.source, "source"));    
+    cmd.add(make_option('u', opt.log.source, "source"));
+    cmd.add(make_option('t', opt.log.sleep_for, "sleep_for"));
     try {
         if (argc == 1) {
             print_help(argc, argv);
@@ -127,8 +131,7 @@ int run_main(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
     try {
-        const int ret = run_main(argc, argv);
-        return ret;
+        return run_main(argc, argv);
     }
     catch (sdl_exception & e) {
         (void)e;
