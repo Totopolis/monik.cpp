@@ -16,8 +16,8 @@ which are replaced by the corresponding value.
 %s - message source
 %t - message text
 %l - message priority level (1 .. 7)
-%p - message priority (Fatal, Critical, Error, Warning, Notice, Information, Debug, Trace)
-%q - abbreviated message priority (F, C, E, W, N, I, D, T)
+%p - message priority (verbose, info, warning, error, fatal)
+%q - abbreviated message priority (V, I, W, E, F)
 (not supported) %P - message process identifier
 (not supported) %T - message thread name
 %I - message thread identifier (numeric)
