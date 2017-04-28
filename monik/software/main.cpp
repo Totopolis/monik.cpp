@@ -4,6 +4,7 @@
 #include "monik/log/log_define.h"
 #include "monik/common/locale.h"
 #include "monik/software/cmdLine.h"
+#include "monik/common/algorithm.h"
 #include <fstream>
 #include <thread>
 
@@ -130,6 +131,9 @@ int run_main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+    MONIK_UTILITY_SCOPE_EXIT([](){
+        log::reset_logger();
+    });
     try {
         return run_main(argc, argv);
     }

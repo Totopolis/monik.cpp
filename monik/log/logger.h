@@ -18,6 +18,7 @@ public:
     logger();
     ~logger();
     using ex_handler = std::function<void(severity, std::exception_ptr)>;
+    bool empty() const;
     void reset();
     void set_handler(ex_handler &&);
     severity get_filter() const;

@@ -13,7 +13,7 @@ namespace monik { namespace log {
 
 class logger::impl final : noncopyable {
 public:
-    using channel_format = std::pair<shared_channel, std::string>;
+    using channel_format = std::pair<shared_channel, std::string>; // pair<channel, format>
     using vector_channel = std::vector<channel_format>;
     struct data_type {
         ex_handler handler;
@@ -29,6 +29,7 @@ public:
     bool is_pass(const severity t) const {
         return (d.filter <= t);
     }
+    bool empty() const;
 private:
     void log_message_with_level(channel_format const &,
         message_with_severity &&, message_source_ptr) const;
@@ -42,6 +43,19 @@ logger::impl::impl()
 logger::impl::~impl()
 {
     MONIK_TRACE_FUNCTION;
+}
+
+bool logger::impl::empty() const
+{
+    for (const auto & p : d.channel) {
+        if (!p.empty())
+            return false;
+    }
+    for (const auto & p : d.keepalive) {
+        if (p != nullptr)
+            return false;
+    }
+    return true;
 }
 
 void logger::impl::log_message_with_level(channel_format const & dest, 
@@ -103,6 +117,12 @@ logger::logger()
 logger::~logger()
 {
     MONIK_TRACE_FUNCTION;
+    MONIK_ASSERT(empty() && "call reset_logger before ~logger for safety");
+}
+
+bool logger::empty() const
+{
+    return m_data->empty();
 }
 
 void logger::reset()
@@ -269,15 +289,15 @@ severity_str::parse(std::string const & str)
 }
 
 init_logger_t & init_logger() {
-    struct initialize {
+    struct initialize_once {
         init_logger_t obj;
-        initialize() {
+        initialize_once() {
             obj = [](){
                 return &logger::ST::instance();
             };
         }
     };
-    static initialize init;
+    static initialize_once init;
     return init.obj;
 }
 
