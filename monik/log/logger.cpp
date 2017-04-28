@@ -117,6 +117,7 @@ logger::logger()
 logger::~logger()
 {
     MONIK_TRACE_FUNCTION;
+    MONIK_TRACE_IF(!empty(), "call reset_logger before ~logger for safety");
     MONIK_ASSERT(empty() && "call reset_logger before ~logger for safety");
 }
 

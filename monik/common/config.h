@@ -20,7 +20,14 @@ namespace monik {
         static void trace() { std::cout << std::endl; }
         template<typename T, typename... Ts>
         static void trace(T && value, Ts&&... params) {
-            std::cout << value; trace(params...);
+            std::cout << value;
+            trace(std::forward<Ts>(params)...);
+        }
+        template<typename T, typename... Ts>
+        static void trace_if(const bool condition, T && value, Ts&&... params) {
+            if (condition) {
+                trace(std::forward<T>(value), std::forward<Ts>(params)...);
+            }
         }
         static void warning(const char * message, const char * fun, const int line) {
             if (warning_level()) {
@@ -34,11 +41,13 @@ namespace monik {
 
 #if MONIK_DEBUG
 #define MONIK_TRACE(...)              monik::debug::trace(__VA_ARGS__)
+#define MONIK_TRACE_IF(...)           monik::debug::trace_if(__VA_ARGS__)
 #define MONIK_TRACE_FILE              ((void)0)
 #define MONIK_TRACE_FUNCTION          MONIK_TRACE(__FUNCTION__)
 #define MONIK_DEBUG_SETPRECISION(...) std::cout << std::setprecision(__VA_ARGS__)
 #else
 #define MONIK_TRACE(...)              ((void)0)
+#define MONIK_TRACE_IF(...)           ((void)0)
 #define MONIK_TRACE_FILE              ((void)0)
 #define MONIK_TRACE_FUNCTION          ((void)0)
 #define MONIK_DEBUG_SETPRECISION(...) ((void)0)
