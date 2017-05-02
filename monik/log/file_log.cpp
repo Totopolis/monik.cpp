@@ -132,6 +132,13 @@ void file_log::data_type::overflow(const message_with_severity & s)
 
 //--------------------------------------------------------
 
+file_log::file_log(Params const & p)
+    : m_data(new data_type(p.logsize, p.bufsize, p.path1, p.path2))
+{
+    static_assert(megabyte<1>::value == 1048576, "");
+    static_assert(megabyte<10>::value == 10485760, "");
+}
+
 file_log::file_log(log_size_t s1, buf_size_t s2,
                    const std::string & path1, 
                    const std::string & path2)

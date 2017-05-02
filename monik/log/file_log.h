@@ -10,6 +10,13 @@ namespace monik { namespace log {
 
 class file_log final : public channel { // thread safe
 public:
+    struct Params final {
+        buf_size_t bufsize = megabyte<1>::value; // 1048576
+        log_size_t logsize = megabyte<10>::value; // 10485760
+        std::string path1;
+        std::string path2;
+    };
+    explicit file_log(Params const &);
     file_log(log_size_t, buf_size_t,
              const std::string & path1,
              const std::string & path2 = "");

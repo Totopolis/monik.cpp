@@ -39,11 +39,13 @@ bool logger_config::setup_logs_json(logger & dest, const std::string & json)
                         sp = std::make_shared<console_log>(bufsize);
                     }
                     else if (channel == "file") {
-                        const auto path1 = m["path1"].asString();
-                        const auto path2 = m["path2"].asString();
-                        const log_size_t logsize = m["logsize"].asInt(); // can be 0
-                        if (!path1.empty()) {
-                            sp = std::make_shared<file_log>(logsize, bufsize, path1, path2);
+                        file_log::Params params {};
+                        params.bufsize = bufsize;
+                        params.path1 = m["path1"].asString();
+                        params.path2 = m["path2"].asString();
+                        params.logsize = m["logsize"].asInt(); // can be 0
+                        if (!params.path1.empty()) {
+                            sp = std::make_shared<file_log>(params);
                         }
                         else {
                             MONIK_ASSERT(0);
