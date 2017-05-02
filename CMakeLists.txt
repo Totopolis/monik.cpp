@@ -322,14 +322,14 @@ add_library(monikcpp${LIB_TYPE} STATIC
     #${libprotobuf_files}
     #${libprotobuf_lite_files}
     )
-add_executable(test_monik${LIB_TYPE}
-    ${MONIK_SOFTWARE_MAIN}
-    ${MONIK_SOURCE_FILES}
-    ${MONIK_SOURCE_LOG_AMQP}
-    ${MONIK_SOURCE_PROTOBUF}
+#add_executable(test_monik${LIB_TYPE}
+    #${MONIK_SOFTWARE_MAIN}
+    #${MONIK_SOURCE_FILES}
+    #${MONIK_SOURCE_LOG_AMQP}
+    #${MONIK_SOURCE_PROTOBUF}
     #${libprotobuf_files}
     #${libprotobuf_lite_files}
-    )
+    #)
 else()
 message(STATUS "ignore monik/log/third_party/amqp")
 message(STATUS "ignore monik/protobuf")
@@ -337,14 +337,14 @@ add_definitions(-DMONIK_INCLUDE_AMQP=0)
 add_library( monikcpp${LIB_TYPE} STATIC 
     ${MONIK_SOURCE_FILES}
     )
-add_executable(test_monik${LIB_TYPE}
-    ${MONIK_SOFTWARE_MAIN}
-    ${MONIK_SOURCE_FILES}
-    )
+#add_executable(test_monik${LIB_TYPE}
+    #${MONIK_SOFTWARE_MAIN}
+    #${MONIK_SOURCE_FILES}
+    #)
 endif()
 
 if (UNIX)
-target_link_libraries(test_monik${LIB_TYPE} -lpthread)
+#target_link_libraries(test_monik${LIB_TYPE} -lpthread)
 target_link_libraries(monikcpp${LIB_TYPE} -lpthread)
 endif (UNIX)
 
@@ -355,10 +355,10 @@ endif()
 if (Rabbitmqc_LIBRARY)
 message(STATUS "Rabbitmqc_LIBRARY: ${Rabbitmqc_LIBRARY}") #librabbitmq.4.lib or rabbitmq
 message(STATUS "SOCKET_LIBRARY: ${SOCKET_LIBRARY}")
-target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
+#target_link_libraries(test_monik${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 target_link_libraries(monikcpp${LIB_TYPE} ${Rabbitmqc_LIBRARY} ${SOCKET_LIBRARY} ${PROTOBUF_LIBS})
 else()
-target_link_libraries(test_monik${LIB_TYPE})
+#target_link_libraries(test_monik${LIB_TYPE})
 target_link_libraries(monikcpp${LIB_TYPE})
 endif()
 
