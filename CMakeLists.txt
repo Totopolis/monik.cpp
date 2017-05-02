@@ -291,6 +291,12 @@ link_directories(
    "${DEPLOY_DIR}/lib" 
 )
 
+if (UNIX)
+link_directories(
+   "${DEPLOY_DIR}/lib/x86_64-linux-gnu" 
+)
+endif (UNIX)
+
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
 set(LIB_TYPE "d")
 endif()
