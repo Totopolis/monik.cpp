@@ -3,7 +3,7 @@
 #include "monik/common/forward_queue.h"
 
 #if MONIK_DEBUG
-namespace monik { namespace log { namespace {
+namespace monik { namespace {
     class unit_test {
     public:
         unit_test()
@@ -39,5 +39,5 @@ namespace monik { namespace log { namespace {
     };
     static unit_test s_test;
 
-}}} // monik
+}} // monik
 #endif //#if SV_DEBUG

@@ -6,7 +6,7 @@
 
 #include "monik/common/common.h"
 
-namespace monik { namespace log {
+namespace monik {
 
 template<class T, size_t N>
 class circular_buffer {
@@ -70,16 +70,27 @@ public:
         --m_size;
     }
     template<class fun_type>
-    void for_each(size_t count, fun_type && fun) {
-        MONIK_ASSERT(count <= m_size);
-        if (count > m_size)
-            count = m_size;
+    T * find_if(const size_t first, const size_t last, fun_type && fun) {
+        MONIK_ASSERT(first <= m_size);
+        MONIK_ASSERT(first <= last);
+        size_t count = a_min(last - first, m_size - first);
         size_t i = m_index;
+        increment(i, first);
         while (count--) {
-            fun(m_data[i]);
+            T & item = m_data[i];
+            if (fun(item)) {
+                return &item;
+            }
             increment(i);
         }
+        return nullptr;
     }
+#if MONIK_DEBUG
+    template<class fun_type>
+    T * find_if(fun_type && fun) {
+        return find_if(0, capacity(), std::forward<fun_type>(fun));
+    }
+#else
     template<class fun_type>
     T * find_if(fun_type && fun) {
         size_t count = m_size;
@@ -93,6 +104,7 @@ public:
         }
         return nullptr;
     }
+#endif
 private:
     static void increment(size_t & i) {
         MONIK_ASSERT(i < N);
@@ -121,7 +133,6 @@ private:
     }
 };
 
-} // log
 } // monik
 
 #endif // __MONIK_LOG_COMMON_CIRCULAR_BUFFER_H__
