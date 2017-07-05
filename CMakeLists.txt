@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 project(monik C CXX)
 
 if(UNIX)
-set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
+#set(CMAKE_CXX_FLAGS "-Wall -std=c++14") #before MapnikPlugin use monikcpp
+set(CMAKE_CXX_FLAGS "-Wall -std=c++14 -fPIC")
 endif(UNIX)
 
 message(STATUS "CXXFLAGS: ${CMAKE_CXX_FLAGS}")
