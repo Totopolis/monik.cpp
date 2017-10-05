@@ -25,7 +25,6 @@ endif(NOT CMAKE_BUILD_TYPE)
 if(WIN32)
   message(STATUS "WIN32: ${WIN32}")
   add_definitions(-DMONIK_OS_WIN32 -DWIN32)
-
 endif(WIN32)
 
 if(UNIX)
