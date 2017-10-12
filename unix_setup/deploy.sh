@@ -16,7 +16,7 @@ mkdir -p ${DEPLOY_DIR}
 
 cd ${SCRIPTS_DIR}
 ./build_protobuf.sh
-./build_openssl.sh
+#./build_openssl.sh # replaced by: sudo apt-get install libssl-dev
 ./build_rabbitmq-c.sh
 
 cd ${SCRIPTS_DIR}
